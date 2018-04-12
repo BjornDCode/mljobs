@@ -8,7 +8,7 @@ $factory->define(Job::class, function (Faker $faker) {
         'title' => $faker->jobTitle,
         'description' => $faker->text(1000),
         'company' => $faker->company,
-        'company_logo' => 'http://placeholder.com/100x100',
+        'company_logo' => 'http://via.placeholder.com/100x100',
         'location' => $faker->city,
         'salary' => '$110k',
         'type' => 'Full Time',
