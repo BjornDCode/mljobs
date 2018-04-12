@@ -150,7 +150,7 @@ return [
         /*
          * Package Service Providers...
          */
-
+        BladeSvg\BladeSvgServiceProvider::class,
         /*
          * Application Service Providers...
          */
