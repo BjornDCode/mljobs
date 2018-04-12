@@ -8,6 +8,8 @@
     <title>{{ config('app.name', 'Machine Learning Jobs') }}</title>
 
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:700">
+    <link rel="stylesheet" href="https://use.typekit.net/evl3rav.css">
 </head>
 <body>
     

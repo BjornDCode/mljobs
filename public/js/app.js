@@ -985,8 +985,6 @@ if (token) {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
-console.log('yo');
-
 window.Vue = __webpack_require__(30);
 
 Vue.component('example-component', __webpack_require__(33));

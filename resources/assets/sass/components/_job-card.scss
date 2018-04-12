@@ -1,0 +1,96 @@
+
+.job-card {
+    margin-bottom: 3rem;
+
+    > a {    
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &--image {
+        display: block;
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+    }
+
+    &--content {
+        flex: 1;
+        margin: 0 1rem;
+        position: relative;
+
+        &:after {
+            content: '';
+            position: absolute;
+            top: -1rem;
+            width: 3rem;
+            height: 0.5rem;
+            background-color: $color-dark;
+        }
+
+    }
+
+    &--meta {
+        display: flex;
+        flex-wrap: wrap;
+        font-weight: 500;
+        color: $color-dark__lighter;
+        font-size: 0.875rem;
+
+        > * {
+            margin-right: 1rem;
+            display: flex;
+            align-items: flex-end;
+            margin-bottom: 0.5rem;  
+        }
+
+        .icon {
+            height: 16px;
+            margin-right: 0.25rem;
+
+            path {
+                fill: lighten($color-dark__lighter, 25%);
+            }
+        }
+
+    }
+
+    &--timeago {
+        color: $color-dark__lightest;
+        font-size: 0.875rem;
+    }
+
+    @include breakpoint('tablet') {
+        &--image {
+            width: 4rem;
+            height: 4rem;
+        }
+    }
+
+    @include breakpoint('desktop') {
+        > a:hover {
+            .job-card--content {
+
+                h2 {
+                    color: $color-brand;
+                }
+
+                &:after {
+                    background-color: $color-brand;
+                }
+            }
+
+            .job-card--meta {
+                color: $color-brand;
+
+                .icon {
+                    path {
+                        fill: lighten($color-brand, 20%);
+                    }
+                }
+            }
+        }
+    }
+
+}

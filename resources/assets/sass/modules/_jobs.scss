@@ -1,0 +1,16 @@
+.jobs {
+    padding: 0 1rem;
+    margin-top: 50px;
+
+    @include breakpoint('tablet') {
+        max-width: 535px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+
+    @include breakpoint('desktop') {
+        max-width: 600px;
+    }
+
+}
