@@ -44,4 +44,15 @@ class ViewJobsTest extends TestCase
         ], $response->data('jobs')->pluck('id')->values()->all());
     }
 
+    /** @test */
+    public function a_user_can_view_a_single_job()
+    {
+        $job = factory(Job::class)->create();
+
+        $response = $this->get("/job/{$job->id}");
+        
+        $response->assertStatus(200);
+        $response->assertViewHas('job', $job->toArray());
+    }
+
 }
