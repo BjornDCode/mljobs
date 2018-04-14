@@ -55,4 +55,14 @@ class ViewJobsTest extends TestCase
         $response->assertViewHas('job', $job->toArray());
     }
 
+    /** @test */
+    public function a_user_cant_view_a_job_that_does_not_exist()
+    {
+
+        $response = $this->withExceptionHandling()->get("/job/1");
+
+
+        $response->assertStatus(404);
+    }
+
 }
