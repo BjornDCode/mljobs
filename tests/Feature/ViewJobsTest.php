@@ -37,7 +37,6 @@ class ViewJobsTest extends TestCase
         
         $response = $this->get('/');
 
-        // Assert the order is $jobC, $jobA, jobB
         $this->assertEquals([
             $jobC->id,
             $jobA->id,
