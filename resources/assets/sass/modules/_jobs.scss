@@ -1,6 +1,6 @@
 .jobs, .job {
     padding: 0 1rem;
-    margin-top: 4rem;
+    margin-top: 2rem;
 
     @include breakpoint('tablet') {
         max-width: 35rem;
