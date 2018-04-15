@@ -163,6 +163,121 @@ a {
   text-decoration: none;
 }
 
+.job-card {
+  margin-bottom: 3rem;
+}
+
+.job-card > a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.job-card--content {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  margin: 0 1rem;
+  position: relative;
+}
+
+.job-card--content:after {
+  content: '';
+  position: absolute;
+  top: -1rem;
+  width: 3rem;
+  height: 0.5rem;
+  background-color: #181818;
+}
+
+@media (min-width: 768px) {
+  .job-card--image {
+    width: 4rem;
+    height: 4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .job-card > a:hover .job-card--content h2 {
+    color: #F4DD4D;
+  }
+
+  .job-card > a:hover .job-card--content:after {
+    background-color: #F4DD4D;
+  }
+
+  .job-card > a:hover .job-card--meta {
+    color: #F4DD4D;
+  }
+
+  .job-card > a:hover .job-card--meta .icon path {
+    fill: #faefad;
+  }
+}
+
+.job--meta,
+.job-card--meta {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  font-weight: 500;
+  color: #848484;
+  font-size: 0.875rem;
+}
+
+.job--meta > *,
+.job-card--meta > * {
+  margin-right: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  margin-bottom: 0.5rem;
+}
+
+.job--meta .icon,
+.job-card--meta .icon {
+  height: 16px;
+  margin-right: 0.25rem;
+}
+
+.job--meta .icon path,
+.job-card--meta .icon path {
+  fill: #c4c4c4;
+}
+
+.job--timeago,
+.job-card--timeago {
+  color: #D0D0D0;
+  font-size: 0.875rem;
+}
+
+.job--image,
+.job-card--image {
+  display: block;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+}
+
+@media (min-width: 768px) {
+  .job--image,
+  .job-card--image {
+    width: 4rem;
+    height: 4rem;
+  }
+}
+
 .jobs,
 .job {
   padding: 0 1rem;
@@ -313,121 +428,6 @@ a {
 
   .job--timeago {
     display: block;
-  }
-}
-
-.job-card {
-  margin-bottom: 3rem;
-}
-
-.job-card > a {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-.job-card--content {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-  margin: 0 1rem;
-  position: relative;
-}
-
-.job-card--content:after {
-  content: '';
-  position: absolute;
-  top: -1rem;
-  width: 3rem;
-  height: 0.5rem;
-  background-color: #181818;
-}
-
-@media (min-width: 768px) {
-  .job-card--image {
-    width: 4rem;
-    height: 4rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .job-card > a:hover .job-card--content h2 {
-    color: #F4DD4D;
-  }
-
-  .job-card > a:hover .job-card--content:after {
-    background-color: #F4DD4D;
-  }
-
-  .job-card > a:hover .job-card--meta {
-    color: #F4DD4D;
-  }
-
-  .job-card > a:hover .job-card--meta .icon path {
-    fill: #faefad;
-  }
-}
-
-.job--meta,
-.job-card--meta {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  font-weight: 500;
-  color: #848484;
-  font-size: 0.875rem;
-}
-
-.job--meta > *,
-.job-card--meta > * {
-  margin-right: 1rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: end;
-      -ms-flex-align: end;
-          align-items: flex-end;
-  margin-bottom: 0.5rem;
-}
-
-.job--meta .icon,
-.job-card--meta .icon {
-  height: 16px;
-  margin-right: 0.25rem;
-}
-
-.job--meta .icon path,
-.job-card--meta .icon path {
-  fill: #c4c4c4;
-}
-
-.job--timeago,
-.job-card--timeago {
-  color: #D0D0D0;
-  font-size: 0.875rem;
-}
-
-.job--image,
-.job-card--image {
-  display: block;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 50%;
-}
-
-@media (min-width: 768px) {
-  .job--image,
-  .job-card--image {
-    width: 4rem;
-    height: 4rem;
   }
 }
 

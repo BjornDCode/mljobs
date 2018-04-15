@@ -8,12 +8,12 @@
 
 @import "base";
 
-// Modules
-@import "modules/jobs";
-
 // Components
-@import "components/single-job";
 @import "components/job-card";
 @import "components/job-meta";
 @import "components/job-timeago";
 @import "components/job-image";
+
+// Modules
+@import "modules/jobs";
+@import "modules/single-job";
