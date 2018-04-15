@@ -15,9 +15,9 @@ class ViewJobsTest extends TestCase
     /** @test */
     public function a_user_can_see_a_list_of_latest_jobs()
     {
-        $jobA = factory(Job::class)->create();
-        $jobB = factory(Job::class)->create();
-        $jobC = factory(Job::class)->create();
+        $jobA = factory(Job::class)->states('full')->create();
+        $jobB = factory(Job::class)->states('full')->create();
+        $jobC = factory(Job::class)->states('full')->create();
 
         $response = $this->get('/');
         $response->assertStatus(200);
@@ -31,9 +31,9 @@ class ViewJobsTest extends TestCase
     /** @test */
     public function jobs_are_displayed_in_descending_order() 
     {
-        $jobA = factory(Job::class)->create(['created_at' => Carbon::parse('-2 weeks')]);
-        $jobB = factory(Job::class)->create(['created_at' => Carbon::parse('-3 weeks')]);
-        $jobC = factory(Job::class)->create(['created_at' => Carbon::parse('-1 week')]);
+        $jobA = factory(Job::class)->states('full')->create(['created_at' => Carbon::parse('-2 weeks')]);
+        $jobB = factory(Job::class)->states('full')->create(['created_at' => Carbon::parse('-3 weeks')]);
+        $jobC = factory(Job::class)->states('full')->create(['created_at' => Carbon::parse('-1 week')]);
         
         $response = $this->get('/');
 
@@ -47,7 +47,7 @@ class ViewJobsTest extends TestCase
     /** @test */
     public function a_user_can_view_a_single_job()
     {
-        $job = factory(Job::class)->create();
+        $job = factory(Job::class)->states('full')->create();
 
         $response = $this->get("/job/{$job->id}");
         
