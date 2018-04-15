@@ -141,26 +141,37 @@ table {
   font-weight: 400;
 }
 
+h1,
 h2 {
   font-family: 'Montserrat';
   font-weight: bold;
-  font-size: 1.5rem;
   line-height: 1.25;
-  margin-bottom: 0.5rem;
   color: #181818;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
 }
 
 a {
   text-decoration: none;
 }
 
-.jobs {
+.jobs,
+.job {
   padding: 0 1rem;
   margin-top: 50px;
 }
 
 @media (min-width: 768px) {
-  .jobs {
+  .jobs,
+  .job {
     max-width: 535px;
     margin-right: auto;
     margin-left: auto;
@@ -168,8 +179,140 @@ a {
 }
 
 @media (min-width: 1024px) {
-  .jobs {
+  .jobs,
+  .job {
     max-width: 600px;
+  }
+}
+
+.job {
+  margin-bottom: 2rem;
+}
+
+.job--image {
+  display: none;
+}
+
+.job--content {
+  position: relative;
+}
+
+.job--content:after {
+  content: '';
+  position: absolute;
+  top: -1rem;
+  width: 3rem;
+  height: 0.5rem;
+  background-color: #181818;
+}
+
+.job--description {
+  color: #848484;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.job--actions {
+  margin-top: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.job--actions .apply,
+.job--actions .twitter,
+.job--actions .facebook {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 2.5rem;
+}
+
+.job--actions .apply {
+  background: #F4DD4D;
+  padding: 0 3rem;
+  color: #181818;
+  font-size: 0.875rem;
+  font-family: 'Montserrat';
+}
+
+.job--actions .social {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  text-align: right;
+}
+
+.job--actions .twitter,
+.job--actions .facebook {
+  width: 2.5rem;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.job--actions .twitter .icon,
+.job--actions .facebook .icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.job--actions .twitter .icon path,
+.job--actions .facebook .icon path {
+  fill: #fff;
+}
+
+.job--actions .twitter {
+  background-color: #1DA1F2;
+  margin-right: 0.5rem;
+}
+
+.job--actions .facebook {
+  background-color: #3B5998;
+}
+
+.job--timeago {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .job {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+  }
+
+  .job--image {
+    display: block;
+  }
+
+  .job--content {
+    margin: 0 1rem;
+  }
+
+  .job--actions .apply:hover {
+    background-color: #f1d41d;
+  }
+
+  .job--actions .twitter:hover {
+    background-color: #0c85d0;
+  }
+
+  .job--actions .facebook:hover {
+    background-color: #2d4373;
+  }
+
+  .job--timeago {
+    display: block;
   }
 }
 
@@ -189,13 +332,6 @@ a {
           align-items: center;
 }
 
-.job-card--image {
-  display: block;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 50%;
-}
-
 .job-card--content {
   -webkit-box-flex: 1;
       -ms-flex: 1;
@@ -213,6 +349,32 @@ a {
   background-color: #181818;
 }
 
+@media (min-width: 768px) {
+  .job-card--image {
+    width: 4rem;
+    height: 4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .job-card > a:hover .job-card--content h2 {
+    color: #F4DD4D;
+  }
+
+  .job-card > a:hover .job-card--content:after {
+    background-color: #F4DD4D;
+  }
+
+  .job-card > a:hover .job-card--meta {
+    color: #F4DD4D;
+  }
+
+  .job-card > a:hover .job-card--meta .icon path {
+    fill: #faefad;
+  }
+}
+
+.job--meta,
 .job-card--meta {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -224,6 +386,7 @@ a {
   font-size: 0.875rem;
 }
 
+.job--meta > *,
 .job-card--meta > * {
   margin-right: 1rem;
   display: -webkit-box;
@@ -235,42 +398,36 @@ a {
   margin-bottom: 0.5rem;
 }
 
+.job--meta .icon,
 .job-card--meta .icon {
   height: 16px;
   margin-right: 0.25rem;
 }
 
+.job--meta .icon path,
 .job-card--meta .icon path {
   fill: #c4c4c4;
 }
 
+.job--timeago,
 .job-card--timeago {
   color: #D0D0D0;
   font-size: 0.875rem;
 }
 
+.job--image,
+.job-card--image {
+  display: block;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+}
+
 @media (min-width: 768px) {
+  .job--image,
   .job-card--image {
     width: 4rem;
     height: 4rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .job-card > a:hover .job-card--content h2 {
-    color: #58B19F;
-  }
-
-  .job-card > a:hover .job-card--content:after {
-    background-color: #58B19F;
-  }
-
-  .job-card > a:hover .job-card--meta {
-    color: #58B19F;
-  }
-
-  .job-card > a:hover .job-card--meta .icon path {
-    fill: #9ed1c7;
   }
 }
 

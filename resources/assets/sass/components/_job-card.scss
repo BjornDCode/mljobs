@@ -7,14 +7,7 @@
         justify-content: space-between;
         align-items: center;
     }
-
-    &--image {
-        display: block;
-        width: 2.5rem;
-        height: 2.5rem;
-        border-radius: 50%;
-    }
-
+    
     &--content {
         flex: 1;
         margin: 0 1rem;
@@ -29,36 +22,6 @@
             background-color: $color-dark;
         }
 
-    }
-
-    &--meta {
-        display: flex;
-        flex-wrap: wrap;
-        font-weight: 500;
-        color: $color-dark__lighter;
-        font-size: 0.875rem;
-
-        > * {
-            margin-right: 1rem;
-            display: flex;
-            align-items: flex-end;
-            margin-bottom: 0.5rem;  
-        }
-
-        .icon {
-            height: 16px;
-            margin-right: 0.25rem;
-
-            path {
-                fill: lighten($color-dark__lighter, 25%);
-            }
-        }
-
-    }
-
-    &--timeago {
-        color: $color-dark__lightest;
-        font-size: 0.875rem;
     }
 
     @include breakpoint('tablet') {
