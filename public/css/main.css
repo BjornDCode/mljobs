@@ -299,13 +299,13 @@ a {
 .jobs,
 .job {
   padding: 0 1rem;
-  margin-top: 50px;
+  margin-top: 4rem;
 }
 
 @media (min-width: 768px) {
   .jobs,
   .job {
-    max-width: 535px;
+    max-width: 35rem;
     margin-right: auto;
     margin-left: auto;
   }
@@ -314,7 +314,7 @@ a {
 @media (min-width: 1024px) {
   .jobs,
   .job {
-    max-width: 600px;
+    max-width: 40rem;
   }
 }
 
