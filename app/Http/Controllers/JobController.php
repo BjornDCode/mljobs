@@ -20,7 +20,7 @@ class JobController extends Controller
         $job = Job::findOrFail($id);
 
         return view('jobs.show', [
-            'job' => $job->toArray()
+            'job' => $job
         ]);
     }
 
