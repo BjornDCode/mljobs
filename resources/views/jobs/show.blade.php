@@ -25,10 +25,10 @@
             <div class="job--actions">
                 <a class="apply" target="_blank" href="{{ $job->apply_url }}">Apply</a>
                 <div class="social">
-                    <a class="twitter" href="#">
+                    <a class="twitter" target="_blank" href="https://twitter.com/home?status=Check out this awesome maching learning job!+{{ url()->current() }}">
                         @svg('twitter')
                     </a>
-                    <a class="facebook" href="#">
+                    <a class="facebook" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ url()->current() }}">
                         @svg('facebook')
                     </a>
                 </div>
