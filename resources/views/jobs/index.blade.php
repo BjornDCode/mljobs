@@ -7,7 +7,15 @@
                 @foreach($jobs as $job)
                     <li class="job-card">
                         <a href="/job/{{ $job->id }}">
-                            <img class="job-card--image" src="{{ $job->company_logo }}" alt="{{ $job->company }}">
+                            @if ($job->company_logo)
+                                <img class="job-card--image" src="{{ $job->company_logo }}" alt="{{ $job->company }}">
+                            @else
+                                <div class="placeholder-image">
+                                    <span>
+                                        {{ substr($job->company, 0, 1) }}
+                                    </span>
+                                </div>
+                            @endif
                             <div class="job-card--content">
                                 <h2>{{ $job->title }}</h2>
                                 <div class="job-card--meta">

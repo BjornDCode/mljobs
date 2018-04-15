@@ -2,7 +2,15 @@
 
 @section('content')
     <main class="job">
-        <img class="job--image" src="{{ $job->company_logo }}" alt="{{ $job->company }}">
+        @if ($job->company_logo)
+            <img class="job--image" src="{{ $job->company_logo }}" alt="{{ $job->company }}">
+        @else
+            <div class="placeholder-image">
+                <span>
+                    {{ substr($job->company, 0, 1) }}
+                </span>
+            </div>
+        @endif
         <div class="job--content">
             <h1>{{ $job->title }}</h1>
             <div class="job--description">

@@ -5,7 +5,6 @@
     > a {    
         display: flex;
         justify-content: space-between;
-        align-items: center;
     }
     
     &--content {
@@ -22,13 +21,6 @@
             background-color: $color-dark;
         }
 
-    }
-
-    @include breakpoint('tablet') {
-        &--image {
-            width: 4rem;
-            height: 4rem;
-        }
     }
 
     @include breakpoint('desktop') {
