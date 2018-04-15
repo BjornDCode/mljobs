@@ -12,5 +12,6 @@ $factory->define(Job::class, function (Faker $faker) {
         'location' => $faker->city,
         'salary' => '$110k',
         'type' => 'Full Time',
+        'apply_url' => 'http://example.com'
     ];
 });
