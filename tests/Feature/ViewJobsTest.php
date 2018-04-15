@@ -63,4 +63,26 @@ class ViewJobsTest extends TestCase
         $response->assertStatus(404);
     }
 
+    /** @test */
+    public function a_user_can_filter_jobs_by_type()
+    {
+        $fulltimeJob = factory(Job::class)->states('full')->create(['type' => 'Full Time']);
+        $anotherFulltimeJob = factory(Job::class)->states('full')->create(['type' => 'Full Time']);
+        $parttimeJob = factory(Job::class)->states('full')->create(['type' => 'Part Time']);
+
+        $response = $this->get('/?filter=full-time');
+
+        $this->assertTrue($response->data('jobs')->contains($fulltimeJob));
+        $this->assertTrue($response->data('jobs')->contains($anotherFulltimeJob));
+        $this->assertFalse($response->data('jobs')->contains($parttimeJob));
+
+
+        $response = $this->get('/?filter=part-time');
+        
+        $this->assertTrue($response->data('jobs')->contains($parttimeJob));
+        $this->assertFalse($response->data('jobs')->contains($fulltimeJob));
+        $this->assertFalse($response->data('jobs')->contains($anotherFulltimeJob));
+
+    }
+
 }
