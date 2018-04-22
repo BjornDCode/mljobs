@@ -13,3 +13,5 @@
 
 Route::get('/', 'JobController@index');
 Route::get('/job/{id}', 'JobController@show');
+
+Route::post('/newsletter', 'NewsletterController@store');
