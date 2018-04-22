@@ -26,3 +26,10 @@ a {
     font-family: 'proxima-nova';
     color: $color-dark;
 }
+
+p {
+    font-family: 'proxima-nova';
+    color: $color-dark__lighter;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+}

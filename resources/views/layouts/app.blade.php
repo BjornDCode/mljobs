@@ -8,7 +8,7 @@
     <title>{{ config('app.name', 'Machine Learning Jobs') }}</title>
 
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700">
     <link rel="stylesheet" href="https://use.typekit.net/evl3rav.css">
 </head>
 <body>
@@ -18,6 +18,7 @@
             <a class="logo" href="/">
                 @svg('logo')
             </a>
+            <newsletter-form></newsletter-form>
             @include('partials.navigation')
         </header>
         @yield('content')

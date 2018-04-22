@@ -31,7 +31,7 @@
                 @endif
             </div>
             <div class="job--actions">
-                <a class="apply" target="_blank" href="{{ $job->apply_url }}">Apply</a>
+                <a class="button" target="_blank" href="{{ $job->apply_url }}">Apply</a>
                 <div class="social">
                     <a class="twitter" target="_blank" href="https://twitter.com/home?status=Check out this awesome maching learning job!+{{ url()->current() }}">
                         @svg('twitter')
