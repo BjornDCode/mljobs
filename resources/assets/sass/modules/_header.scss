@@ -15,11 +15,8 @@ header {
         flex-wrap: wrap;
         justify-content: center;
         a {
-            line-height: 1.5;
-            padding: 0 1rem;
-            font-size: 1rem;
             display: block;
-
+            padding: 0.5rem;
             &.active {
                 background-color: $color-dark;
                 color: $color-light;
@@ -35,12 +32,24 @@ header {
         }
 
         nav {
+            max-width: 35rem;
+            margin: 0 auto;
             a {
-                font-size: 1.25rem;
+                border-bottom: 1px solid $color-dark__lighter;
+                flex: 1;
+
                 &:hover {
                     background-color: $color-dark;
                     color: $color-light;
                 }
+
+                &.active {
+                    background-color: transparent;
+                    color: $color-dark;
+                    border: 1px solid $color-dark__lighter;
+                    border-bottom: none;
+                }
+
             }
         }
     }
