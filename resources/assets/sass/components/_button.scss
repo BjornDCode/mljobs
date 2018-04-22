@@ -8,9 +8,52 @@
     font-family: 'Montserrat';
     font-weight: 500;
 
+    &.loading, &.successful {
+        color: transparent !important;
+        position: relative;
+
+        &:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 1.5rem;
+            height: 1.5rem;
+            margin-top: -0.75rem;
+            margin-left: -0.75rem;
+            
+        }
+    }
+
+
+    &.loading {
+        &:before {
+            box-sizing: border-box;
+            border-radius: 50%;
+            border: 3px solid rgba($color-light, 0.6);
+            border-top-color: $color-light;
+            animation: spinner .6s linear infinite;
+        }
+    }
+
+    &.successful {
+        &:before {
+            display: block;
+            background-image: url('../../icons/check.svg');
+            background-size: contain;
+        }
+    }
+
+
     @include breakpoint('tablet') {
         &:hover {
             background-color: darken($color-brand, 10%);
+        }
+        &.loading, &.successful {
+            &:hover {
+                cursor: not-allowed;
+                background-color: $color-brand;
+            }
         }
     }
 }
@@ -24,3 +67,8 @@ button.button {
     border: none;
     cursor: pointer;
 }
+
+@keyframes spinner {
+  to {transform: rotate(360deg);}
+}
+ 

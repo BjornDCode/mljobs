@@ -3,6 +3,17 @@
     text-align: left;
     position: relative;
 
+    form {
+        position: relative;
+    }
+
+    .error {
+        font-size: 0.875rem;
+        color: $color-error;
+        position: absolute;
+        top: calc(100% + 0.5rem);
+    }
+
     &:after {
         content: '';
         position: absolute;
@@ -22,6 +33,7 @@
 
             input {
                 margin-right: 1rem;
+                margin-bottom: 0;
             }
         }
     }
