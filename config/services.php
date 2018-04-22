@@ -35,4 +35,14 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'jobs' => [
+        'Careercast' => [],
+        'Github' => [],
+        'Govt' => [],
+        'Ieee' => [],
+        'Jobinventory' => [],
+        'Monster' => [],
+        'Stackoverflow' => [],
+    ],
+
 ];
