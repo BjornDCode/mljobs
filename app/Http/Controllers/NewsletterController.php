@@ -11,11 +11,10 @@ class NewsletterController extends Controller
     public function store(Request $request, MailchimpGateway $gateway) 
     {
         $data = $request->validate([
-            'name' => 'required',
             'email' => 'required|email',
         ]);
 
-        $gateway->subscribe($data['name'], $data['email']);
+        $gateway->subscribe($data['email']);
 
         return response(200);
     }

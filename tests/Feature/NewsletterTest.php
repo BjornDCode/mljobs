@@ -27,7 +27,6 @@ class NewsletterTest extends TestCase
         $this->app->instance(MailchimpGateway::class, $gateway);
 
         $response = $this->json('POST', '/newsletter', [
-            'name' => 'bjorny',
             'email' => 'test@example.com'
         ]);
 
@@ -41,26 +40,10 @@ class NewsletterTest extends TestCase
         $mailchimp = Mockery::mock(MailchimpGateway::class);
 
         $response = $this->json('POST', '/newsletter', [
-            'name' => 'bjorny',
             'email' => 'not-an-email'
         ]);
 
         $response->assertStatus(422);
     }
-
-    /** @test */
-    public function a_user_cannot_subscribe_without_a_name()
-    {
-        $mailchimp = Mockery::mock(MailchimpGateway::class);
-
-        $response = $this->json('POST', '/newsletter', [
-            'name' => null,
-            'email' => 'test@example.com',
-        ]);
-
-        $response->assertStatus(422);
-    }
-
-
 
 }

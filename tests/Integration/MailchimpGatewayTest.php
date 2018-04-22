@@ -15,7 +15,7 @@ class MailchimpGatewayTest extends TestCase
     {
         $mailchimp = new MailchimpGateway;
 
-        $mailchimp->subscribe('bjorny', 'asbjorn.lindholm@gmail.com');
+        $mailchimp->subscribe('asbjorn.lindholm@gmail.com');
 
         $this->assertTrue(Newsletter::hasMember('asbjorn.lindholm@gmail.com'));
     }
@@ -25,7 +25,7 @@ class MailchimpGatewayTest extends TestCase
     {
         $mailchimp = new MailchimpGateway;
 
-        $response = $mailchimp->subscribe('bjorny', 'asbjorn.lindholm');
+        $response = $mailchimp->subscribe('asbjorn.lindholm');
 
         $this->assertFalse($response);
     }

@@ -7,9 +7,9 @@ use Newsletter;
 class MailchimpGateway 
 {
 
-    public function subscribe($name, $email) 
+    public function subscribe($email) 
     {
-        $response = Newsletter::subscribeOrUpdate($email, ['NAME' => $name]);
+        $response = Newsletter::subscribeOrUpdate($email);
 
         if (!Newsletter::lastActionSucceeded()) {
             return false;
