@@ -322,10 +322,8 @@ header nav {
 }
 
 header nav a {
-  line-height: 1.5;
-  padding: 0 1rem;
-  font-size: 1rem;
   display: block;
+  padding: 0.5rem;
 }
 
 header nav a.active {
@@ -342,13 +340,28 @@ header nav a.active {
     width: 6rem;
   }
 
+  header nav {
+    max-width: 35rem;
+    margin: 0 auto;
+  }
+
   header nav a {
-    font-size: 1.25rem;
+    border-bottom: 1px solid #848484;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
   }
 
   header nav a:hover {
     background-color: #181818;
     color: #fff;
+  }
+
+  header nav a.active {
+    background-color: transparent;
+    color: #181818;
+    border: 1px solid #848484;
+    border-bottom: none;
   }
 }
 
