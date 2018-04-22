@@ -13293,8 +13293,50 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            email: '',
+            error: false,
+            loading: false,
+            successful: false
+        };
+    },
+
+
+    methods: {
+        submit: function submit() {
+            var _this = this;
+
+            this.loading = true;
+
+            axios.post('/newsletter', { email: this.email }).then(function (response) {
+                _this.loading = false;
+                _this.successful = true;
+                _this.error = false;
+            }).catch(function (error) {
+                _this.loading = false;
+                _this.successful = false;
+                _this.error = true;
+            });
+        }
+    }
+});
 
 /***/ }),
 /* 44 */
@@ -13304,35 +13346,70 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "newsletter" }, [
-      _c("h2", [_vm._v("Get the latest jobs in your inbox!")]),
-      _vm._v(" "),
-      _c("p", [
-        _vm._v(
-          "Receive a weekly email with the most interesting positions. We promise not to spam you!"
-        )
-      ]),
-      _vm._v(" "),
-      _c("form", { attrs: { action: "" } }, [
+  return _c("div", { staticClass: "newsletter" }, [
+    _c("h2", [_vm._v("Get the latest jobs in your inbox!")]),
+    _vm._v(" "),
+    _c("p", [
+      _vm._v(
+        "Receive a weekly email with the most interesting positions. We promise not to spam you!"
+      )
+    ]),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.submit($event)
+          }
+        }
+      },
+      [
         _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.email,
+              expression: "email"
+            }
+          ],
           staticClass: "input",
-          attrs: { type: "email", placeholder: "Email" }
+          attrs: {
+            type: "email",
+            placeholder: "Email",
+            disabled: _vm.successful
+          },
+          domProps: { value: _vm.email },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.email = $event.target.value
+            }
+          }
         }),
         _vm._v(" "),
-        _c("button", { staticClass: "button", attrs: { type: "submit" } }, [
-          _vm._v("Subscribe")
-        ])
-      ])
-    ])
-  }
-]
+        _c(
+          "button",
+          {
+            staticClass: "button",
+            class: { loading: _vm.loading, successful: _vm.successful },
+            attrs: { disabled: _vm.loading || _vm.successful, type: "submit" }
+          },
+          [_vm._v("\n            Subscribe\n        ")]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _vm.error
+      ? _c("p", { staticClass: "error" }, [_vm._v("An error occurred")])
+      : _vm._e()
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

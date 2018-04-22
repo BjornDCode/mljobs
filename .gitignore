@@ -13,3 +13,6 @@ yarn-error.log
 .env
 
 .DS_Store
+/public/css
+/public/js
+/public/images
