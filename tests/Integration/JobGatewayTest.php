@@ -26,15 +26,27 @@ class JobGatewayTest extends TestCase
     }
 
     /** @test */
-    public function it_can_filter_jobs()
+    public function it_can_filter_jobs_by_keyword()
     {
         $keyword = 'test keyword';
 
         $this->assertNull($this->getProtectedProperty($this->gateway->client(), 'keyword'));
 
-        $this->gateway->filter($keyword);
+        $this->gateway->filterByKeyword($keyword);
 
         $this->assertEquals($this->getProtectedProperty($this->gateway->client(), 'keyword'), $keyword);
+    }
+
+    /** @test */
+    public function it_can_filter_jobs_by_age()
+    {
+        $ageInDays = 1;
+
+        $this->assertNull($this->getProtectedProperty($this->gateway->client(), 'maxAge'));
+
+        $this->gateway->filterByAgeInDays($ageInDays);
+
+        $this->assertEquals($this->getProtectedProperty($this->gateway->client(), 'maxAge'), $ageInDays);
     }
 
     private function getProtectedProperty($object, $property = null)

@@ -20,9 +20,16 @@ class JobGateway
         return $this->client->getAllJobs();
     }
 
-    public function filter($keyword = '') 
+    public function filterByKeyword($keyword = '') 
     {
         $this->client->setKeyword($keyword);
+        return $this;
+    }
+
+    public function filterByAgeInDays($days = 90) 
+    {
+        $this->client->setOptions([ 'maxAge' => $days ]);
+
         return $this;
     }
 
