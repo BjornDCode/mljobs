@@ -13,12 +13,22 @@ class JobGateway
         $providers = config('services.jobs');
 
         $this->client = new JobsMulti($providers);
-        $this->client->setKeyword('machine learning');
     }
 
     public function fetch() 
     {
         return $this->client->getAllJobs();
+    }
+
+    public function filter($keyword = '') 
+    {
+        $this->client->setKeyword($keyword);
+        return $this;
+    }
+
+    public function client() 
+    {
+        return $this->client;
     }
 
 }

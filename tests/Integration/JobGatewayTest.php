@@ -28,13 +28,22 @@ class JobGatewayTest extends TestCase
     /** @test */
     public function it_can_filter_jobs()
     {
-        
+        $keyword = 'test keyword';
+
+        $this->assertNull($this->getProtectedProperty($this->gateway->client(), 'keyword'));
+
+        $this->gateway->filter($keyword);
+
+        $this->assertEquals($this->getProtectedProperty($this->gateway->client(), 'keyword'), $keyword);
     }
 
-    /** @test */
-    public function it_can_add_jobs_to_the_db()
+    private function getProtectedProperty($object, $property = null)
     {
-        
+        $class = new \ReflectionClass(get_class($object));
+        $property = $class->getProperty($property);
+        $property->setAccessible(true);
+
+        return $property->getValue($object);
     }
 
 }
