@@ -48,11 +48,14 @@ class JobGateway
     public function filterByKeywords($keywords = []) 
     {
         $this->keywords = $keywords;
+
+        return $this;
     }
 
     public function filterByKeyword($keyword = '') 
     {
         $this->client->setKeyword($keyword);
+        
         return $this;
     }
 }
