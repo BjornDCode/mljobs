@@ -3,10 +3,12 @@
 namespace App;
 
 use JobApis\Jobs\Client\JobsMulti;
+use JobApis\Jobs\Client\Collection as JobCollection;
 
 class JobGateway 
 {
     protected $client;
+    protected $keywords = [];
 
     public function __construct() 
     {
@@ -15,15 +17,25 @@ class JobGateway
         $this->client = new JobsMulti($providers);
     }
 
-    public function fetch() 
+    public function client() 
     {
-        return $this->client->getAllJobs();
+        return $this->client;
     }
 
-    public function filterByKeyword($keyword = '') 
+    public function fetch() 
     {
-        $this->client->setKeyword($keyword);
-        return $this;
+        if (empty($this->keywords)) {
+            return $this->client->getAllJobs();
+        }
+
+        $jobs = new JobCollection;
+
+        foreach ($this->keywords as $keyword) {
+            $this->filterByKeyword($keyword);
+            $jobs->addCollection($this->client->getAllJobs());
+        }
+
+        return $jobs;
     }
 
     public function filterByAgeInDays($days = 90) 
@@ -33,9 +45,14 @@ class JobGateway
         return $this;
     }
 
-    public function client() 
+    public function filterByKeywords($keywords = []) 
     {
-        return $this->client;
+        $this->keywords = $keywords;
     }
 
+    public function filterByKeyword($keyword = '') 
+    {
+        $this->client->setKeyword($keyword);
+        return $this;
+    }
 }

@@ -26,7 +26,7 @@ class JobGatewayTest extends TestCase
     }
 
     /** @test */
-    public function it_can_filter_jobs_by_keyword()
+    public function it_can_filter_jobs_by_a_keyword()
     {
         $keyword = 'test keyword';
 
@@ -35,6 +35,18 @@ class JobGatewayTest extends TestCase
         $this->gateway->filterByKeyword($keyword);
 
         $this->assertEquals($this->getProtectedProperty($this->gateway->client(), 'keyword'), $keyword);
+    }
+
+        /** @test */
+    public function it_can_filter_by_an_array_of_keywords()
+    {
+        $keywords = ['keyword1', 'keyword2', 'anotherkeyword'];
+
+        $this->assertEquals([], $this->getProtectedProperty($this->gateway, 'keywords'));
+
+        $this->gateway->filterByKeywords($keywords);
+
+        $this->assertEquals($keywords, $this->getProtectedProperty($this->gateway, 'keywords'));
     }
 
     /** @test */
