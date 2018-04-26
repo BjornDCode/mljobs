@@ -6,11 +6,9 @@ use \Mockery;
 use Tests\TestCase;
 use App\MailchimpGateway;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
 class NewsletterTest extends TestCase
 {
-    use MockeryPHPUnitIntegration;
 
     public function tearDown() 
     {
