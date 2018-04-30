@@ -27,5 +27,7 @@ class FetchJobs extends Command
         $this->gateway->filterByKeywords($this->option('keywords'));
         $this->gateway->filterByAgeInDays($this->option('days'));
         $jobs = $this->gateway->fetch();
+
+        $this->gateway->save($jobs);
     }
 }

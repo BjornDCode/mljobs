@@ -8,6 +8,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class JobGatewayTest extends TestCase
 {
+    use RefreshDatabase;
+
     protected $gateway;
 
     public function setUp() 
@@ -59,6 +61,40 @@ class JobGatewayTest extends TestCase
         $this->gateway->filterByAgeInDays($ageInDays);
 
         $this->assertEquals($this->getProtectedProperty($this->gateway->client(), 'maxAge'), $ageInDays);
+    }
+
+    /** @test */
+    public function it_can_save_jobs_to_the_database()
+    {
+        // Modelled after: https://github.com/jobapis/jobs-common/blob/master/src/Job.php
+        $firstJob = [
+            'title' => 'First Job',
+            'description' => 'This is a machine learning job',
+            'company' => 'Hiring Company',
+            'hiringOrganization' => [ 'logo' => 'http://example.com/company/logo.jpg' ],
+            'location' => 'Toledo, Mexicon',
+            'url' => 'http://example.com/apply'
+        ];
+        $secondJob = [
+            'title' => 'Second Job',
+            'description' => 'This is a machine learning job',
+            'baseSalary' => '100',
+            'salaryCurrency' => 'USD',
+            'workHours' => 'Full Time',
+            'url' => 'http://example.com/apply'
+        ];
+
+        $this->gateway->save([
+            $firstJob, 
+            $secondJob
+        ]);
+
+        $this->assertDatabaseHas('jobs', [
+            'title' => 'First Job'
+        ]);
+        $this->assertDatabaseHas('jobs', [
+            'title' => 'Second Job'
+        ]);
     }
 
     private function getProtectedProperty($object, $property = null)

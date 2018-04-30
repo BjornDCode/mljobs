@@ -32,13 +32,8 @@ class FetchJobsTest extends TestCase
         ]);
     
         $jobGateway->shouldHaveReceived('filterByAgeInDays')->with($ageInDays)->once();    
-        $jobGateway->shouldHaveReceived('fetch')->once();    
-    }
-
-    /** @test */
-    public function it_can_add_jobs_to_the_db()
-    {
-        
+        $jobGateway->shouldHaveReceived('fetch')->once();
+        $jobGateway->shouldHaveReceived('save')->once();
     }
 
 }
