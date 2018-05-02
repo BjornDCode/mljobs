@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\StripeGateway;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Exceptions\PaymentFailedException;
 
 class FeaturedJobController extends Controller
 {
@@ -24,7 +25,11 @@ class FeaturedJobController extends Controller
             'job.featured' => 'required|boolean',
         ]);
 
-        $gateway->charge($data['token']);
+        try {
+            $gateway->charge($data['token']);
+        } catch (PaymentFailedException $e) {
+            return response('The payment could not be processed', 422);
+        }
 
         DB::table('jobs')->insert($data['job']);
     }

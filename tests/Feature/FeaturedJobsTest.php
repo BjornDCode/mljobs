@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use \Mockery;
 use Tests\TestCase;
 use App\StripeGateway;
+use App\Exceptions\PaymentFailedException;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -52,11 +53,26 @@ class FeaturedJobTest extends TestCase
     /** @test */
     public function the_user_cannot_purchase_a_featured_job_if_the_charge_fails()
     {
-        // try {
-        //     $gateway->charge($request->token);
-        // } catch (Exception $e) {
-        //     return response(404)->message('Something went wrong with the payment')
-        // }
+        $gateway = Mockery::mock(StripeGateway::class);
+        $this->app->instance(StripeGateway::class, $gateway);
+        $gateway->shouldReceive('charge')->andThrow(new PaymentFailedException);
+
+        $data = [
+            'token' => 'an-invalid-stripe-token',
+            'job' => [
+                'title' => 'A job title',
+                'description' => 'This is invalid job data',
+                'apply_url' => 'http://example.com',
+                'featured' => 1
+            ]
+        ];
+
+        $response = $this->postJson('/featured-job/store', $data);
+
+        $response->assertStatus(422);
+        $this->assertDatabaseMissing('jobs', [
+            'title' => $data['job']['title'],
+        ]);
     }
 
     /** @test */
