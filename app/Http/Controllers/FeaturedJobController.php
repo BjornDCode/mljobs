@@ -26,8 +26,6 @@ class FeaturedJobController extends Controller
 
         $gateway->charge($data['token']);
 
-        // dd($data['job']);
-
         DB::table('jobs')->insert($data['job']);
     }
 

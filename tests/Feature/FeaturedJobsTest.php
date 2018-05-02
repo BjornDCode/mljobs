@@ -62,7 +62,20 @@ class FeaturedJobTest extends TestCase
     /** @test */
     public function the_user_cannot_purchase_a_featured_job_if_they_provide_invalid_job_data()
     {
-        
+        $data = [
+            'token' => 'a-valid-stripe-token',
+            'job' => [
+                'title' => 'A job title',
+                'description' => 'This is invalid job data',
+            ]
+        ];
+
+        $response = $this->postJson('/featured-job/store', $data);
+
+        $response->assertStatus(422);
+        $this->assertDatabaseMissing('jobs', [
+            'title' => $data['job']['title'],
+        ]);
     }
 
 }
