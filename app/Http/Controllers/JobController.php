@@ -10,7 +10,7 @@ class JobController extends Controller
     
     public function index(Request $request) 
     {
-        $jobs = Job::latest();
+        $jobs = Job::orderBy('featured', 'desc')->latest();
 
         if ($filter = $request->query('filter')) {
             $filter = title_case(str_replace('-', ' ', $filter));
