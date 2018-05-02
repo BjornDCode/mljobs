@@ -2,6 +2,10 @@
 .job-card {
     margin-bottom: 3rem;
 
+    &.featured {
+        background-color: $color-featured;
+    }
+
     > a {    
         display: flex;
         justify-content: space-between;

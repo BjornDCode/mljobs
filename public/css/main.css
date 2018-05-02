@@ -176,6 +176,10 @@ p {
   margin-bottom: 3rem;
 }
 
+.job-card.featured {
+  background-color: #FCEF8B;
+}
+
 .job-card > a {
   display: -webkit-box;
   display: -ms-flexbox;

@@ -23,6 +23,7 @@ class CreateJobsTable extends Migration
             $table->string('salary')->nullable();
             $table->string('type')->nullable();
             $table->string('apply_url');
+            $table->boolean('featured')->default(0);
             $table->timestamps();
         });
     }

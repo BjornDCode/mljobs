@@ -1,4 +1,4 @@
-<li class="job-card">
+<li class="job-card {{ $job->featured ? 'featured' : '' }}">
     <a href="/job/{{ $job->id }}">
         @if ($job->company_logo)
             <img class="job-card--image" src="{{ $job->company_logo }}" alt="{{ $job->company }}">

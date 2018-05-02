@@ -25,7 +25,6 @@ class ViewJobsTest extends TestCase
         $this->assertTrue($response->data('jobs')->contains($jobA));
         $this->assertTrue($response->data('jobs')->contains($jobB));
         $this->assertTrue($response->data('jobs')->contains($jobC));
-
     }
 
     /** @test */
@@ -41,6 +40,38 @@ class ViewJobsTest extends TestCase
             $jobC->id,
             $jobA->id,
             $jobB->id,
+        ], $response->data('jobs')->pluck('id')->values()->all());
+    }
+
+    /** @test */
+    public function featured_jobs_appear_before_regular_jobs()
+    {
+        $notFeaturedJob = factory(Job::class)
+                          ->states('full')
+                          ->create(['created_at' => Carbon::parse('-1 week')]);
+        $featuredJob = factory(Job::class)
+                       ->states('full')
+                       ->create([
+                            'created_at' => Carbon::parse('-4 weeks'),
+                            'featured' => 1
+                        ]);
+        $anotherNotFeaturedJob = factory(Job::class)
+                                 ->states('full')
+                                 ->create(['created_at' => Carbon::parse('-3 weeks')]);
+        $anotherFeaturedJob = factory(Job::class)
+                              ->states('full')
+                              ->create([
+                                'created_at' => Carbon::parse('-2 weeks'),
+                                'featured' => 1
+                              ]);
+        
+        $response = $this->get('/');
+
+        $this->assertEquals([
+            $anotherFeaturedJob->id,
+            $featuredJob->id,
+            $notFeaturedJob->id,
+            $anotherNotFeaturedJob->id,
         ], $response->data('jobs')->pluck('id')->values()->all());
     }
 
