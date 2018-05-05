@@ -1,3 +1,5 @@
+
+
 // Breakpoints
 $breakpoints: (
     'mobile': (min-width: 375px),
@@ -5,14 +7,70 @@ $breakpoints: (
     'desktop': (min-width: 1024px),
 ) !global;
 
-$color-dark: #181818;
-$color-dark__lighter: #848484;
-$color-dark__lightest: #D0D0D0;
-$color-light: #fff;
 
-$color-brand: #F4DD4D;
-$color-twitter: #1DA1F2;
-$color-facebook: #3B5998;
+// Spacing
+$space-0: 0;
+$space-1: 0.25rem;
+$space-2: 0.5rem;
+$space-3: 0.75rem;
+$space-4: 1rem;
+$space-6: 1.5rem;
+$space-8: 2rem;
+$space-px: 1px;
+$space-auto: auto;
 
-$color-error: #eb4d4b;
-$color-featured: #FCEF8B;
+
+// Colors
+$color__primary: #465064;
+$color__primary--light: lighten(#465064, 10%);
+$color__primary--dark: darken(#465064, 10%);
+
+$color__accent: #FFFCD0;
+$color__accent--light: lighten(#FFFCD0, 10%);
+$color__accent--dark: darken(#FFFCD0, 10%);
+
+$color__dark: #1B1B1B;
+$color__dark--light: #757575;
+
+$color__light: #ffffff;
+$color__light--dark: #F7F7F7;
+$color__light--darker: #D2D2D2;
+
+$color__error: #ff0000;
+$color__success: #20bf6b;
+
+
+// Fonts
+$font-primary: 'Fira Sans';
+$font-secondary: 'Ubuntu';
+
+
+// Font Sizes
+$text-xs: 0.75rem;
+$text-sm: 0.875rem;
+$text-base: 1rem;
+$text-lg: 1.125rem;
+$text-xl: 1.25rem;
+$text-2xl: 1.5rem;
+$text-3xl: 1.875rem;
+$text-4xl: 2.25rem;
+$text-5xl: 3rem;
+
+
+// Font Weights
+$weight-hairline: 100;
+$weight-thin: 200;
+$weight-light: 300;
+$weight-normal: 400;
+$weight-medium: 500;
+$weight-semibold: 600;
+$weight-bold: 700;
+$weight-extrabold: 800;
+$weight-black: 900;
+
+
+// Line Height
+$leading-none: 1;
+$leading-tight: 1.25;
+$leading-normal: 1.5;
+$leading-loose: 2;

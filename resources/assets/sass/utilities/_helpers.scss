@@ -1,0 +1,12 @@
+.hide-tablet {
+    @include breakpoint('tablet') {
+        display: none;
+    }
+}
+
+.hide-desktop {
+    @include breakpoint('desktop') {
+        display: none;
+    }
+}
+
