@@ -7,18 +7,47 @@ body {
     background-size: 15rem;
     background-image: url('../../images/background.svg');
     position: relative;
-    padding: 1rem;
 
     &:before {
         content: '';
         z-index: -1;
         position: absolute;
         display: block;
-        top: 1.5rem;
-        bottom: 1.5rem;
-        left: 1.5rem;
-        right: 1.5rem;
+        top: 1rem;
+        bottom: 1rem;
+        left: 1rem;
+        right: 1rem;
         background: $color__light;
         filter: blur(30px);
+    }
+
+    @include breakpoint('tablet') {
+        &:before {
+            top: 2rem;
+            bottom: 2rem;
+            left: 2rem;
+            right: 2rem;
+        }
+    }
+
+    @include breakpoint('desktop') {
+        &:before {
+            top: 3rem;
+            bottom: 3rem;
+            left: 3rem;
+            right: 3rem;
+        }
+    }
+}
+
+.container {
+    padding: 1rem;
+
+    @include breakpoint('tablet') {
+        padding: 2rem;
+    }
+
+    @include breakpoint('desktop') {
+        padding: 4.5rem;
     }
 }

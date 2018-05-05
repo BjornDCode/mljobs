@@ -12,12 +12,14 @@
 <body>
     
     <div id="app">
-        <header>
-            <a href="/">
-                @svg('logo')
-            </a>
-        </header>
-        @yield('content')
+        <div class="container">
+            <header class="page-header">
+                <a href="/" class="page-header__logo">
+                    @svg('logo')
+                </a>
+            </header>
+            @yield('content')
+        </div>
     </div>
 
     <script src="/js/app.js"></script>
