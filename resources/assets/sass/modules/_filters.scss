@@ -1,0 +1,37 @@
+
+.filters {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: $space-6;
+
+    ::-webkit-scrollbar {
+      display: none;
+    }
+
+    a {
+        display: flex;
+        justify-content: center;
+        padding: $space-3;
+        min-width: 5rem;
+        font-weight: $weight-bold;
+        color: $color__dark--light;
+        border-bottom: 1px solid $color__dark--lighter;
+
+        &.active {
+            color: $color__dark;
+            border: 1px solid $color__dark--lighter;
+            border-bottom: none;
+        }
+    }
+
+    @include breakpoint('tablet') {
+        overflow: hidden;
+        a {
+            flex: 1;
+            min-width: none;
+        }
+    }
+
+}

@@ -295,6 +295,55 @@ a {
   }
 }
 
+.filters {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.filters ::-webkit-scrollbar {
+  display: none;
+}
+
+.filters a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 0.75rem;
+  min-width: 5rem;
+  font-weight: 700;
+  color: #575757;
+  border-bottom: 1px solid #757575;
+}
+
+.filters a.active {
+  color: #1B1B1B;
+  border: 1px solid #757575;
+  border-bottom: none;
+}
+
+@media (min-width: 768px) {
+  .filters {
+    overflow: hidden;
+  }
+
+  .filters a {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    min-width: none;
+  }
+}
+
 .button {
   height: 2.5rem;
   padding: 0 2rem;
