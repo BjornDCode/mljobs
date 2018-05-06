@@ -1,0 +1,23 @@
+
+.newsletter {
+    margin: 5rem 0;
+
+    .error {
+        font-size: $text-sm;
+        color: $color__error;
+    }
+
+    @include breakpoint('tablet') {
+        width: 66.66%;
+
+        form {
+            display: flex;
+
+            input {
+                margin-right: $space-2;
+            }
+        }
+
+    }
+
+}

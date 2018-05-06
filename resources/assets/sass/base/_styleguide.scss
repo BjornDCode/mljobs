@@ -1,0 +1,27 @@
+* {
+    font-family: $font-secondary;
+    font-weight: $weight-normal;
+    color: $color__dark;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: $font-primary;
+    font-weight: $weight-bold;
+}
+
+h2 {
+    font-size: $text-4xl;
+    line-height: $leading-tight;
+    margin-bottom: $space-4;
+}
+
+p {
+    color: $color__dark--light;
+    line-height: $leading-normal;
+    margin-bottom: $space-4;
+}
+
+a {
+    text-decoration: none;
+}

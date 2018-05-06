@@ -1,0 +1,23 @@
+@font-face {
+  font-family: $font-primary;
+  font-weight: $weight-normal;
+  src: url("/fonts/FiraSans-Regular.ttf") format("ttf");
+}
+
+@font-face {
+  font-family: $font-primary;
+  font-weight: $weight-bold;
+  src: url("/fonts/FiraSans-Bold.ttf") format("ttf");
+}
+
+@font-face {
+  font-family: $font-secondary;
+  font-weight: $weight-normal;
+  src: url("/fonts/Ubuntu-Regular.ttf") format("ttf");
+}
+
+@font-face {
+  font-family: $font-secondary;
+  font-weight: $weight-medium;
+  src: url("/fonts/Ubuntu-Medium.ttf") format("ttf");
+}

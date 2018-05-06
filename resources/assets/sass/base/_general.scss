@@ -48,6 +48,8 @@ body {
     }
 
     @include breakpoint('desktop') {
-        padding: 4.5rem;
+        padding: 4.5rem 0;
+        max-width: 800px;
+        margin: 0 auto;
     }
 }
