@@ -1,7 +1,7 @@
 <li class="job-card {{ $job->featured ? 'featured' : '' }}">
     <a href="/job/{{ $job->id }}">
         @if ($job->company_logo)
-            <img class="job-card--image" src="{{ $job->company_logo }}" alt="{{ $job->company }}">
+            <img class="job-card__image" src="{{ $job->company_logo }}" alt="{{ $job->company }}">
         @else
             <div class="placeholder-image">
                 <span>
@@ -9,9 +9,10 @@
                 </span>
             </div>
         @endif
-        <div class="job-card--content">
-            <h2>{{ $job->title }}</h2>
-            <div class="job-card--meta">
+
+        <div class="job-card__content">
+            <h3>{{ $job->title }}</h3>
+            <div class="job-card__meta">
                 @if ($job->company)
                     <p>@svg('home') {{ $job->company }}</p>
                 @endif
@@ -26,8 +27,10 @@
                 @endif
             </div>
         </div>
-        <span class="job-card--timeago">
+
+        <span class="job-card__timeago hide-mobile">
             {{ $job->created_at->diffForHumans(null, true, true) }}
         </span>
+
     </a>
 </li>

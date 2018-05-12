@@ -1,3 +1,11 @@
+.hide-mobile {
+    display: none;
+    
+    @include breakpoint('tablet') {
+        display: initial;
+    }
+}
+
 .hide-tablet {
     @include breakpoint('tablet') {
         display: none;

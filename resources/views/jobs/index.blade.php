@@ -6,9 +6,16 @@
         @include('jobs._filters')
 
         <div class="jobs">
-            <div class="job-group">
-                <h2></h2>
-            </div>
+            @foreach ($groups as $title => $jobs)
+                <div class="jobs-group">
+                    <h2>{{ $title }}</h2>
+                    <ul>
+                        @foreach ($jobs as $job)
+                            @include('jobs._card')
+                        @endforeach
+                    </ul>
+                </div>
+            @endforeach
         </div>
     </main>
 @endsection

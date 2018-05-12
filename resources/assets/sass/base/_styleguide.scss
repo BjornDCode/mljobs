@@ -1,19 +1,30 @@
 * {
     font-family: $font-secondary;
     font-weight: $weight-normal;
-    color: $color__dark;
 }
 
 
 h1, h2, h3, h4, h5, h6 {
     font-family: $font-primary;
     font-weight: $weight-bold;
+    color: $color__dark;
 }
 
 h2 {
     font-size: $text-4xl;
     line-height: $leading-tight;
     margin-bottom: $space-4;
+}
+
+h3 {
+    font-size: $text-xl;
+    line-height: $leading-tight;
+    margin-bottom: $space-2;
+
+    @include breakpoint('tablet') {
+        font-size: $text-2xl;
+        margin-bottom: $space-3;
+    }
 }
 
 p {

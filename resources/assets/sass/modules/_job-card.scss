@@ -1,0 +1,94 @@
+.job-card {
+    margin-bottom: $space-4;
+
+    &.featured {
+        > a {
+            background-color: $color__accent;
+        }
+    }
+
+    > a {
+        width: 100%;
+        padding: 0 $space-3;
+        padding-top: $space-3;
+        box-sizing: border-box; 
+        background-color: $color__light--dark;
+        display: flex;
+        align-items: center;
+    }
+
+    &__image, .placeholder-image {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+    }
+
+    .placeholder-image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $color__light--darker;
+        font-size: $text-3xl;
+        font-weight: $weight-bold;
+        color: $color__dark--lighter;
+    }
+
+    &__content {
+        flex: 1;
+        margin-left: $space-2;
+    }
+
+    &__meta {
+        display: flex;
+        flex-wrap: wrap;
+        color: $color__light--darker;
+        font-size: $text-xs;
+
+        p {
+            margin-right: $space-4;
+            margin-bottom: $space-2;
+        }
+
+        .icon {
+            height: 1rem;
+            fill: $color__light--darker;
+            margin-right: $space-1;
+        }
+
+    }
+
+    @include breakpoint('tablet') {
+
+        > a {
+            padding: $space-4;
+            transition: transform 150ms;
+            &:hover {
+                transform: translateY(-0.25rem);
+            }
+        }
+
+        &__image, .placeholder-image {
+            width: 4rem;
+            height: 4rem;
+        }
+
+        &__content {
+            margin-left: $space-4;
+        }
+
+        &__meta {
+            font-size: $text-sm;
+
+            p {
+                margin-bottom: 0;
+            }
+        }
+
+        &__timeago {
+            font-size: $text-sm;
+            color: $color__light--darker;
+        }
+
+    }
+
+}
