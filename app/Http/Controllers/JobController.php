@@ -18,9 +18,25 @@ class JobController extends Controller
             $jobs->where('type', $filter);
         }
 
-        $jobs = $jobs->get();
+        $groups = $this->mapJobsToGroups($jobs->get());
 
-        $groups = $jobs->mapToGroups(function($item, $key) {
+        return view('jobs.index', [
+            'groups' => $groups
+        ]);
+    }
+
+    public function show($id) 
+    {
+        $job = Job::findOrFail($id);
+
+        return view('jobs.show', [
+            'job' => $job
+        ]);
+    }
+
+    private function mapJobsToGroups($jobs) 
+    {
+        return $jobs->mapToGroups(function($item, $key) {
             if ($item->featured) {
                 return ['Featured' => $item];
             }
@@ -40,19 +56,6 @@ class JobController extends Controller
 
             return ['Misc' => $item];
         });
-
-        return view('jobs.index', [
-            'groups' => $groups
-        ]);
-    }
-
-    public function show($id) 
-    {
-        $job = Job::findOrFail($id);
-
-        return view('jobs.show', [
-            'job' => $job
-        ]);
     }
 
 }
