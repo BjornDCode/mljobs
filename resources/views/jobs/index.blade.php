@@ -11,5 +11,11 @@
             <a href="/?filter=freelance" class="{{ (request()->input('filter') === 'freelance') ? 'active' : '' }}">Freelance</a>
             <a href="/?filter=temporary" class="{{ (request()->input('filter') === 'temporary') ? 'active' : '' }}">Temporary</a>
         </nav>
+
+        <div class="jobs">
+            <div class="job-group">
+                <h2></h2>
+            </div>
+        </div>
     </main>
 @endsection

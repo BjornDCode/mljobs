@@ -22,17 +22,31 @@ class ViewJobsTest extends TestCase
         $response = $this->get('/');
         $response->assertStatus(200);
 
-        $this->assertTrue($response->data('jobs')->contains($jobA));
-        $this->assertTrue($response->data('jobs')->contains($jobB));
-        $this->assertTrue($response->data('jobs')->contains($jobC));
+        $this->assertTrue($response->data('groups')['Today']->contains($jobA));
+        $this->assertTrue($response->data('groups')['Today']->contains($jobB));
+        $this->assertTrue($response->data('groups')['Today']->contains($jobC));
+    }
+
+    /** @test */
+    public function jobs_are_grouped_by_age()
+    {
+        $jobFromToday = factory(Job::class)->states('full')->create();
+        $jobFromThisWeek = factory(Job::class)->states('full')->create(['created_at' => Carbon::parse('-3 days')]);
+        $jobFromThisMonth = factory(Job::class)->states('full')->create(['created_at' => Carbon::parse('-14 days')]);
+
+        $response = $this->get('/');
+
+        $this->assertTrue($response->data('groups')['Today']->contains($jobFromToday));
+        $this->assertTrue($response->data('groups')['This Week']->contains($jobFromThisWeek));
+        $this->assertTrue($response->data('groups')['This Month']->contains($jobFromThisMonth));
     }
 
     /** @test */
     public function jobs_are_displayed_in_descending_order() 
     {
-        $jobA = factory(Job::class)->states('full')->create(['created_at' => Carbon::parse('-2 weeks')]);
-        $jobB = factory(Job::class)->states('full')->create(['created_at' => Carbon::parse('-3 weeks')]);
-        $jobC = factory(Job::class)->states('full')->create(['created_at' => Carbon::parse('-1 week')]);
+        $jobA = factory(Job::class)->states('full')->create(['created_at' => Carbon::parse('-2 minutes')]);
+        $jobB = factory(Job::class)->states('full')->create(['created_at' => Carbon::parse('-3 minutes')]);
+        $jobC = factory(Job::class)->states('full')->create(['created_at' => Carbon::parse('-1 minute')]);
         
         $response = $this->get('/');
 
@@ -40,39 +54,24 @@ class ViewJobsTest extends TestCase
             $jobC->id,
             $jobA->id,
             $jobB->id,
-        ], $response->data('jobs')->pluck('id')->values()->all());
+        ], $response->data('groups')['Today']->pluck('id')->values()->all());
     }
 
     /** @test */
     public function featured_jobs_appear_before_regular_jobs()
     {
-        $notFeaturedJob = factory(Job::class)
-                          ->states('full')
-                          ->create(['created_at' => Carbon::parse('-1 week')]);
-        $featuredJob = factory(Job::class)
-                       ->states('full')
-                       ->create([
-                            'created_at' => Carbon::parse('-4 weeks'),
-                            'featured' => 1
-                        ]);
-        $anotherNotFeaturedJob = factory(Job::class)
-                                 ->states('full')
-                                 ->create(['created_at' => Carbon::parse('-3 weeks')]);
-        $anotherFeaturedJob = factory(Job::class)
-                              ->states('full')
-                              ->create([
-                                'created_at' => Carbon::parse('-2 weeks'),
-                                'featured' => 1
-                              ]);
+        $notFeaturedJob = factory(Job::class)->states('full')->create();
+        $featuredJob = factory(Job::class)->states('full')->create([ 'featured' => 1 ]);
+        $anotherNotFeaturedJob = factory(Job::class)->states('full')->create();
+        $anotherFeaturedJob = factory(Job::class)->states('full')->create([ 'featured' => 1 ]);
         
         $response = $this->get('/');
 
-        $this->assertEquals([
-            $anotherFeaturedJob->id,
-            $featuredJob->id,
-            $notFeaturedJob->id,
-            $anotherNotFeaturedJob->id,
-        ], $response->data('jobs')->pluck('id')->values()->all());
+        $this->assertTrue($response->data('groups')['Featured']->contains($featuredJob));
+        $this->assertTrue($response->data('groups')['Featured']->contains($anotherFeaturedJob));
+
+        $this->assertFalse($response->data('groups')['Featured']->contains($notFeaturedJob));
+        $this->assertFalse($response->data('groups')['Featured']->contains($anotherNotFeaturedJob));
     }
 
     /** @test */
@@ -103,16 +102,16 @@ class ViewJobsTest extends TestCase
 
         $response = $this->get('/?filter=full-time');
 
-        $this->assertTrue($response->data('jobs')->contains($fulltimeJob));
-        $this->assertTrue($response->data('jobs')->contains($anotherFulltimeJob));
-        $this->assertFalse($response->data('jobs')->contains($parttimeJob));
+        $this->assertTrue($response->data('groups')['Today']->contains($fulltimeJob));
+        $this->assertTrue($response->data('groups')['Today']->contains($anotherFulltimeJob));
+        $this->assertFalse($response->data('groups')['Today']->contains($parttimeJob));
 
 
         $response = $this->get('/?filter=part-time');
         
-        $this->assertTrue($response->data('jobs')->contains($parttimeJob));
-        $this->assertFalse($response->data('jobs')->contains($fulltimeJob));
-        $this->assertFalse($response->data('jobs')->contains($anotherFulltimeJob));
+        $this->assertTrue($response->data('groups')['Today']->contains($parttimeJob));
+        $this->assertFalse($response->data('groups')['Today']->contains($fulltimeJob));
+        $this->assertFalse($response->data('groups')['Today']->contains($anotherFulltimeJob));
 
     }
 
