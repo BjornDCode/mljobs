@@ -1,0 +1,22 @@
+.job__image, .placeholder-image {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    margin-right: $space-2;
+
+    @include breakpoint('tablet') {
+        width: 4rem;
+        height: 4rem;
+        margin-right: $space-4;
+    }
+}
+
+.placeholder-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $color__light--darker;
+    font-size: $text-3xl;
+    font-weight: $weight-bold;
+    color: $color__dark--lighter;
+}

@@ -1,0 +1,6 @@
+@include breakpoint('tablet') {
+    .job__timeago {
+        font-size: $text-sm;
+        color: $color__light--darker;
+    }
+}

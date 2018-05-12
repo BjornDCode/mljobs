@@ -10,6 +10,12 @@ h1, h2, h3, h4, h5, h6 {
     color: $color__dark;
 }
 
+h1 {
+    font-size: $text-5xl;
+    line-height: $leading-tight;
+    margin-bottom: $space-2;
+}
+
 h2 {
     font-size: $text-4xl;
     line-height: $leading-tight;

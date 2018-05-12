@@ -1,0 +1,26 @@
+.job__meta {
+    display: flex;
+    flex-wrap: wrap;
+    color: $color__light--darker;
+    font-size: $text-xs;
+
+    p {
+        margin-right: $space-4;
+        margin-bottom: $space-2;
+    }
+
+    .icon {
+        height: 1rem;
+        fill: $color__light--darker;
+        margin-right: $space-1;
+    }
+
+    @include breakpoint('tablet') {
+        font-size: $text-sm;
+
+        p {
+            margin-bottom: 0;
+        }
+    }
+
+}

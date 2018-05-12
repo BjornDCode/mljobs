@@ -1,22 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-    <main class="job">
-        @if ($job->company_logo)
-            <img class="job--image" src="{{ $job->company_logo }}" alt="{{ $job->company }}">
-        @else
-            <div class="placeholder-image">
-                <span>
-                    {{ substr($job->company, 0, 1) }}
-                </span>
-            </div>
-        @endif
-        <div class="job--content">
+    <main class="single-job">
+        <div class="job__content">
             <h1>{{ $job->title }}</h1>
-            <div class="job--description">
+            <div class="job__description">
                 {{ $job->description }}
             </div>
-            <div class="job--meta">
+            <div class="job__meta">
                 @if ($job->company)
                     <p>@svg('home') {{ $job->company }}</p>
                 @endif
@@ -30,7 +21,7 @@
                     <p>@svg('hourglass') {{ $job->type }}</p>
                 @endif
             </div>
-            <div class="job--actions">
+            <div class="job__actions">
                 <a class="button" target="_blank" href="{{ $job->apply_url }}">Apply</a>
                 <div class="social">
                     <a class="twitter" target="_blank" href="https://twitter.com/home?status=Check out this awesome AI job!+{{ url()->current() }}">
@@ -42,8 +33,5 @@
                 </div>
             </div>
         </div>
-        <span class="job--timeago">
-            {{ $job->created_at->diffForHumans(null, true, true) }}
-        </span>
     </main>
 @endsection

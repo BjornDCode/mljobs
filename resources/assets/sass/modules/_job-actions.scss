@@ -1,0 +1,32 @@
+.job__actions {
+    margin-top: $space-4;
+    display: flex;
+    justify-content: space-between;
+
+    .social {
+        display: flex;
+    }
+
+    .facebook, .twitter {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 2.5rem;
+        height: 2.5rem;
+
+        .icon {
+            height: 40%;
+            fill: $color__light;
+        }
+    }
+
+    .facebook {
+        background-color: #3B5998;
+    }
+
+    .twitter {
+        background-color: #1da1f2;
+        margin-right: $space-2;
+    }
+
+}
