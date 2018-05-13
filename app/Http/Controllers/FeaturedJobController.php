@@ -9,6 +9,11 @@ use App\Exceptions\PaymentFailedException;
 
 class FeaturedJobController extends Controller
 {
+
+    public function create() 
+    {
+        return view('jobs.create');
+    }
     
     public function store(Request $request, StripeGateway $gateway) 
     {

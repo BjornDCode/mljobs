@@ -13,6 +13,7 @@ if (token) {
 window.Vue = require('vue');
 
 Vue.component('newsletter-form', require('./components/NewsletterForm.vue'));
+Vue.component('purchase-job-form', require('./components/PurchaseJobForm.vue'));
 
 const app = new Vue({
     el: '#app'

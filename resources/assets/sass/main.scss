@@ -17,6 +17,7 @@
 @import "modules/filters";
 @import "modules/jobs-group";
 @import "modules/single-job";
+@import "modules/purchase-job";
 @import "modules/job-card";
 @import "modules/job-image";
 @import "modules/job-meta";
@@ -27,4 +28,5 @@
 
 // Components
 @import "components/button";
-@import "components/text-input";
+@import "components/input";
+@import "components/file-input";

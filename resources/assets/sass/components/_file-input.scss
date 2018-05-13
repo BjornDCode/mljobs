@@ -1,0 +1,21 @@
+
+.file-input {
+    display: block;
+    width: 7rem;
+    height: 7rem;
+    padding: $space-2;
+    margin-left: auto;
+    background-color: $color__light--darker;
+    background-image: url('../../icons/upload.svg');
+    background-size: 30%;
+    background-repeat: no-repeat;
+    background-position: center;
+    font-size: $text-base;
+    font-weight: $weight-bold;
+    color: $color__dark--lighter;
+    cursor: pointer;
+
+    input {
+        display: none;
+    }
+}

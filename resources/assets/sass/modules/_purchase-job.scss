@@ -1,0 +1,72 @@
+.purchase-job {
+    margin-top: 4rem;
+
+    .benefits {
+        margin-bottom: 4rem;
+    }
+
+    .benefit {
+        display: flex;
+        align-items: center;
+        color: $color__dark;
+        margin-bottom: $space-4;
+
+        .icon {
+            width: 2rem;
+            stroke: $color__success;
+            stroke-width: 1px;
+            margin-right: $space-4;
+        }
+    }
+
+    .form-group {
+        width: 90%;
+        margin-bottom: $space-6;
+        position: relative;
+
+        &:before, &:after {
+            content: '';
+            display: block;
+            width: 0.5rem;
+            position: absolute;
+            top: 0;
+            bottom: 10px;
+            left: calc(100% + 0.5rem);
+        }
+
+        &:before {
+            border-top: 5px solid $color__light--darker;
+            border-bottom: 5px solid $color__light--darker;
+        }
+
+        &:after {
+            border-right: 5px solid $color__light--darker;
+        }
+    }
+
+    @include breakpoint('tablet') {
+        .form-group {
+            width: 80%;
+
+            &.inline-group {
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                input, select {
+                    width: calc(50% - #{$space-1});
+                }
+            }
+
+            &__label {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                left: calc(100% + 2rem);
+                font-weight: $weight-bold;
+                color: $color__light--darker;
+            }
+
+        }
+    }
+
+}

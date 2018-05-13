@@ -381,6 +381,90 @@ a {
   margin-top: 4rem;
 }
 
+.purchase-job {
+  margin-top: 4rem;
+}
+
+.purchase-job .benefits {
+  margin-bottom: 4rem;
+}
+
+.purchase-job .benefit {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #1B1B1B;
+  margin-bottom: 1rem;
+}
+
+.purchase-job .benefit .icon {
+  width: 2rem;
+  stroke: #20bf6b;
+  stroke-width: 1px;
+  margin-right: 1rem;
+}
+
+.purchase-job .form-group {
+  width: 90%;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.purchase-job .form-group:before,
+.purchase-job .form-group:after {
+  content: '';
+  display: block;
+  width: 0.5rem;
+  position: absolute;
+  top: 0;
+  bottom: 10px;
+  left: calc(100% + 0.5rem);
+}
+
+.purchase-job .form-group:before {
+  border-top: 5px solid #D2D2D2;
+  border-bottom: 5px solid #D2D2D2;
+}
+
+.purchase-job .form-group:after {
+  border-right: 5px solid #D2D2D2;
+}
+
+@media (min-width: 768px) {
+  .purchase-job .form-group {
+    width: 80%;
+  }
+
+  .purchase-job .form-group.inline-group {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
+
+  .purchase-job .form-group.inline-group input,
+  .purchase-job .form-group.inline-group select {
+    width: calc(50% - 0.25rem);
+  }
+
+  .purchase-job .form-group__label {
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+    left: calc(100% + 2rem);
+    font-weight: 700;
+    color: #D2D2D2;
+  }
+}
+
 .job-card {
   margin-bottom: 1rem;
 }
@@ -588,7 +672,10 @@ button.button {
 
 input[type="text"],
 input[type="search"],
-input[type="email"] {
+input[type="email"],
+input[type="url"],
+select,
+textarea {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   width: 100%;
@@ -599,5 +686,47 @@ input[type="email"] {
   font-size: 1rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
+}
+
+textarea {
+  padding: 0.5rem;
+  height: 8rem;
+  resize: vertical;
+}
+
+select {
+  border-radius: 0;
+  color: #757575;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url(/images/arrow_down.svg?62a4c8c474a76b589044944d7465aa7a);
+  background-repeat: no-repeat;
+  background-position: 95% center;
+}
+
+select.selected {
+  color: #1B1B1B;
+}
+
+.file-input {
+  display: block;
+  width: 7rem;
+  height: 7rem;
+  padding: 0.5rem;
+  margin-left: auto;
+  background-color: #D2D2D2;
+  background-image: url(/images/upload.svg?e062abb0b8405f291864b81f45d4ed0b);
+  background-size: 30%;
+  background-repeat: no-repeat;
+  background-position: center;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #757575;
+  cursor: pointer;
+}
+
+.file-input input {
+  display: none;
 }
 
