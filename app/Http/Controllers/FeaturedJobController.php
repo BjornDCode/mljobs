@@ -19,15 +19,14 @@ class FeaturedJobController extends Controller
     {
         $data = $request->validate([
             'token' => 'required',
+            'logo' => 'nullable|image|dimensions:min_width=64,min_height=64',
             'job.title' => 'required',
             'job.description' => 'required',
             'job.company' => 'nullable',
-            'job.company_logo' => 'nullable|url',
             'job.location' => 'nullable',
             'job.salary' => 'nullable',
             'job.type' => 'nullable',
             'job.apply_url' => 'required|url',
-            'job.featured' => 'required|boolean',
         ]);
 
         try {
@@ -36,7 +35,21 @@ class FeaturedJobController extends Controller
             return response('The payment could not be processed', 422);
         }
 
-        DB::table('jobs')->insert($data['job']);
+        DB::table('jobs')->insert(array_merge($data['job'], [
+            'featured' => 1,
+            'company_logo' => $this->getImagePath($request)
+        ]));
+
+        return response(200);
+    }
+
+    private function getImagePath($request) 
+    {
+        if (! $request->logo || ! $request->file('logo')->isValid()) {
+            return null;
+        }
+
+        return $request->file('logo')->store('images', 'public');
     }
 
 }
