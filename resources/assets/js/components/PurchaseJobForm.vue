@@ -8,9 +8,12 @@
         <div class="form-group">
             <span class="form-group__label hide-mobile">Company</span>
             <input type="text" placeholder="Company Name" v-model="form.company">
-            <label class="file-input">
+            <label class="file-input" 
+                :class="{'has-preview': this.logoPreview}"
+                :style="this.logoPreview ? `background-image: url('${this.logoPreview}');` : ''"
+            >
                 <span>Company Logo</span>
-                <input type="file">
+                <input type="file" @change="updateLogoPreview">
             </label>
         </div>
         <div class="form-group inline-group">
@@ -38,6 +41,7 @@
     export default {
         data() {
             return {
+                logoPreview: null,
                 form: {
                     token: '',
                     title: '',
@@ -56,6 +60,25 @@
         methods: {
             styleSelect(e) {
                 e.target.classList.add('selected');
+            },
+
+            updateLogoPreview(e) {
+                const files = e.target.files;
+                const reader = new FileReader();
+
+                // Image selected and then removed
+                if (files.length === 0) {
+                    console.log('cancelled')
+                }
+
+                reader.onload = (e) => {
+                    this.logoPreview = e.target.result
+                    console.log('preview', this.logoPreview)
+                    console.log('target', e.target.result)
+                }
+                
+                reader.readAsDataURL(files[0]);
+                // console.log(files)
             }
         }
     }

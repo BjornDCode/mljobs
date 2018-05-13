@@ -1,19 +1,38 @@
 
 .file-input {
     display: block;
+    position: relative;
     width: 7rem;
     height: 7rem;
     padding: $space-2;
     margin-left: auto;
     background-color: $color__light--darker;
-    background-image: url('../../icons/upload.svg');
-    background-size: 30%;
-    background-repeat: no-repeat;
+    background-size: cover;
     background-position: center;
     font-size: $text-base;
     font-weight: $weight-bold;
     color: $color__dark--lighter;
     cursor: pointer;
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-image: url('../../icons/upload.svg');
+        background-size: 30%;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    &.has-preview {
+        color: transparent;
+        &:before {
+            opacity: 0;
+        }
+    }
 
     input {
         display: none;

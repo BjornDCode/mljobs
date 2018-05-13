@@ -13549,7 +13549,24 @@ var render = function() {
         }
       }),
       _vm._v(" "),
-      _vm._m(0)
+      _c(
+        "label",
+        {
+          staticClass: "file-input",
+          class: { "has-preview": this.logoPreview },
+          style: this.logoPreview
+            ? "background-image: url('" + this.logoPreview + "');"
+            : ""
+        },
+        [
+          _c("span", [_vm._v("Company Logo")]),
+          _vm._v(" "),
+          _c("input", {
+            attrs: { type: "file" },
+            on: { change: _vm.updateLogoPreview }
+          })
+        ]
+      )
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "form-group inline-group" }, [
@@ -13690,18 +13707,7 @@ var render = function() {
     _c("button", { staticClass: "button" }, [_vm._v("Purchase Job Listing")])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { staticClass: "file-input" }, [
-      _c("span", [_vm._v("Company Logo")]),
-      _vm._v(" "),
-      _c("input", { attrs: { type: "file" } })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -13753,10 +13759,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
+            logoPreview: null,
             form: {
                 token: '',
                 title: '',
@@ -13776,6 +13786,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         styleSelect: function styleSelect(e) {
             e.target.classList.add('selected');
+        },
+        updateLogoPreview: function updateLogoPreview(e) {
+            var _this = this;
+
+            var files = e.target.files;
+            var reader = new FileReader();
+
+            // Image selected and then removed
+            if (files.length === 0) {
+                console.log('cancelled');
+            }
+
+            reader.onload = function (e) {
+                _this.logoPreview = e.target.result;
+                console.log('preview', _this.logoPreview);
+                console.log('target', e.target.result);
+            };
+
+            reader.readAsDataURL(files[0]);
+            // console.log(files)
         }
     }
 });
