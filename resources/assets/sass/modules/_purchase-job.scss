@@ -62,6 +62,10 @@
                 flex-wrap: wrap;
                 input, select {
                     width: calc(50% - #{$space-1});
+
+                    &:nth-last-child(1), &:nth-last-child(2) {
+                        margin-bottom: 0;
+                    }
                 }
             }
 

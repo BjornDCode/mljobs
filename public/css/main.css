@@ -462,6 +462,13 @@ a {
     width: calc(50% - 0.25rem);
   }
 
+  .purchase-job .form-group.inline-group input:nth-last-child(1),
+  .purchase-job .form-group.inline-group input:nth-last-child(2),
+  .purchase-job .form-group.inline-group select:nth-last-child(1),
+  .purchase-job .form-group.inline-group select:nth-last-child(2) {
+    margin-bottom: 0;
+  }
+
   .purchase-job .form-group__label {
     position: absolute;
     top: 50%;
@@ -709,6 +716,7 @@ textarea {
   padding: 0.5rem;
   height: 8rem;
   resize: vertical;
+  margin-bottom: 0;
 }
 
 select {
