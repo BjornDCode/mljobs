@@ -1,13 +1,17 @@
 <?php
 
 use App\Job;
+use App\Customer;
 use Faker\Generator as Faker;
 
 $factory->define(Job::class, function (Faker $faker) {
     return [
         'title' => $faker->jobTitle,
         'description' => $faker->text(1000),
-        'apply_url' => 'http://example.com'
+        'apply_url' => 'http://example.com',
+        'customer_id' => function() {
+            return factory(Customer::class)->create()->id;
+        }
     ];
 });
 

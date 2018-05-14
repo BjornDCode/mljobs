@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Job;
+use App\Customer;
 use App\StripeGateway;
 use Illuminate\Http\Request;
+use App\Mail\FeaturedJobPurchased;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use App\Exceptions\PaymentFailedException;
 
 class FeaturedJobController extends Controller
@@ -36,12 +40,9 @@ class FeaturedJobController extends Controller
             return response('The payment could not be processed', 422);
         }
 
-        DB::table('jobs')->insert(array_merge($data['job'], [
-            'featured' => 1,
-            'company_logo' => $this->getImagePath($request)
-        ]));
+        $job = $this->createJob($data, $request);
 
-        return response(200);
+        return response()->json($job);
     }
 
     private function getImagePath($request) 
@@ -51,6 +52,23 @@ class FeaturedJobController extends Controller
         }
 
         return $request->file('logo')->store('images', 'public');
+    }
+
+    private function createJob($data, $request) 
+    {
+        $customer = Customer::firstOrCreate([
+            'email' => $data['email']
+        ]);
+
+        $job = Job::create(array_merge($data['job'], [
+            'featured' => 1,
+            'company_logo' => $this->getImagePath($request),
+            'customer_id' => $customer->id
+        ]));
+
+        Mail::to($customer)->send(new FeaturedJobPurchased($job));
+
+        return $job;
     }
 
 }

@@ -6,6 +6,8 @@ use \Mockery;
 use Tests\TestCase;
 use App\StripeGateway;
 use Illuminate\Http\UploadedFile;
+use App\Mail\FeaturedJobPurchased;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use App\Exceptions\PaymentFailedException;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -210,6 +212,34 @@ class FeaturedJobTest extends TestCase
         $response = $this->postJson('/featured-job/store', $data);
 
         $response->assertStatus(422);
+    }
+
+    /** @test */
+    public function a_user_is_emailed_a_receipt_when_they_purchase_a_job()
+    {
+        Mail::fake();
+        $gateway = Mockery::spy(StripeGateway::class);
+        $this->app->instance(StripeGateway::class, $gateway);
+
+        $data = [
+            'token' => 'a-valid-stripe-token',
+            'email' => 'test@example.com',
+            'job' => [
+                'title' => 'A job title',
+                'description' => 'This is the job description',
+                'apply_url' => 'http://example.com',
+            ]
+        ];
+
+        $job = $this->postJson('/featured-job/store', $data);
+
+        $this->assertDatabaseHas('customers', [
+            'email' => $data['email']
+        ]);
+        Mail::assertSent(FeaturedJobPurchased::class, function($mail) use($job, $data) {
+            return $mail->hasTo($data['email']) &&
+                   $mail->job->id === $job->original->id;
+        });
     }
 
 }
