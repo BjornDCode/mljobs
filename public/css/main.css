@@ -420,7 +420,7 @@ a {
   width: 0.5rem;
   position: absolute;
   top: 0;
-  bottom: 10px;
+  bottom: 0;
   left: calc(100% + 0.5rem);
 }
 
@@ -434,6 +434,14 @@ a {
 }
 
 @media (min-width: 768px) {
+  .purchase-job .benefit {
+    font-size: 1.5rem;
+  }
+
+  .purchase-job .benefit .icon {
+    width: 3rem;
+  }
+
   .purchase-job .form-group {
     width: 80%;
   }
@@ -688,6 +696,15 @@ textarea {
   margin-bottom: 0.5rem;
 }
 
+input[type="text"].has-error,
+input[type="search"].has-error,
+input[type="email"].has-error,
+input[type="url"].has-error,
+select.has-error,
+textarea.has-error {
+  border: 2px solid #ff0000;
+}
+
 textarea {
   padding: 0.5rem;
   height: 8rem;
@@ -712,8 +729,8 @@ select.selected {
 .file-input {
   display: block;
   position: relative;
-  width: 7rem;
-  height: 7rem;
+  width: 4rem;
+  height: 4rem;
   padding: 0.5rem;
   margin-left: auto;
   background-color: #D2D2D2;
@@ -722,7 +739,9 @@ select.selected {
   font-size: 1rem;
   font-weight: 700;
   color: #757575;
+  text-align: center;
   cursor: pointer;
+  margin-bottom: 0.5rem;
 }
 
 .file-input:before {
@@ -734,7 +753,7 @@ select.selected {
   right: 0;
   background-image: url(/images/upload.svg?e062abb0b8405f291864b81f45d4ed0b);
   background-size: 30%;
-  background-position: center;
+  background-position: center 65%;
   background-repeat: no-repeat;
 }
 
@@ -748,5 +767,11 @@ select.selected {
 
 .file-input input {
   display: none;
+}
+
+.credit-card-input {
+  background-color: #D2D2D2;
+  height: 2.5rem;
+  padding: 0 0.5rem;
 }
 

@@ -7,6 +7,14 @@
 
     <title>{{ config('app.name', 'Machine Learning Jobs') }}</title>
 
+    <script>
+        window.AIJobs = {
+            stripe: {
+                publicKey: '{{ config('services.stripe.key') }}'
+            }
+        }
+    </script>
+
     <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
@@ -22,6 +30,7 @@
         </div>
     </div>
 
+    <script src="https://js.stripe.com/v3/"></script>
     <script src="/js/app.js"></script>
 </body>
 </html>

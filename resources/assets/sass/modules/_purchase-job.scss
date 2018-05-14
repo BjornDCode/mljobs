@@ -30,7 +30,7 @@
             width: 0.5rem;
             position: absolute;
             top: 0;
-            bottom: 10px;
+            bottom: 0;
             left: calc(100% + 0.5rem);
         }
 
@@ -45,6 +45,14 @@
     }
 
     @include breakpoint('tablet') {
+
+        .benefit {
+            font-size: $text-2xl;
+            .icon {
+                width: 3rem;
+            }
+        }
+
         .form-group {
             width: 80%;
 

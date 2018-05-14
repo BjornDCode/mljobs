@@ -9,6 +9,11 @@ input[type="text"], input[type="search"], input[type="email"], input[type="url"]
     font-size: $text-base;
     font-weight: $weight-bold;
     margin-bottom: $space-2;
+
+    &.has-error {
+        border: 2px solid $color__error;
+    }
+
 } 
 
 textarea {
