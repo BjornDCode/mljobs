@@ -30,6 +30,7 @@ class FeaturedJobTest extends TestCase
 
         $data = [
             'token' => 'a-valid-stripe-token',
+            'email' => 'test@example.com',
             'logo' => null,
             'job' => [
                 'title' => 'A job title',
@@ -60,6 +61,28 @@ class FeaturedJobTest extends TestCase
 
         $data = [
             'token' => 'an-invalid-stripe-token',
+            'email' => 'test@example.com',
+            'job' => [
+                'title' => 'A job title',
+                'description' => 'This is invalid job data',
+                'apply_url' => 'http://example.com'
+            ]
+        ];
+
+        $response = $this->postJson('/featured-job/store', $data);
+
+        $response->assertStatus(422);
+        $this->assertDatabaseMissing('jobs', [
+            'title' => $data['job']['title'],
+        ]);
+    }
+
+    /** @test */
+    public function the_user_cannot_purchase_a_featured_job_if_they_provide_invalid_billing_data()
+    {
+        $data = [
+            'token' => 'a-valid-stripe-token',
+            'email' => 'not-an-email',
             'job' => [
                 'title' => 'A job title',
                 'description' => 'This is invalid job data',
@@ -80,6 +103,7 @@ class FeaturedJobTest extends TestCase
     {
         $data = [
             'token' => 'a-valid-stripe-token',
+            'email' => 'test@example.com',
             'job' => [
                 'title' => 'A job title',
                 'description' => 'This is invalid job data',
@@ -105,6 +129,7 @@ class FeaturedJobTest extends TestCase
         $image = UploadedFile::fake()->image('logo.jpg', 100, 100);
         $data = [
             'token' => 'a-valid-stripe-token',
+            'email' => 'test@example.com',
             'logo' => $image,
             'job' => [
                 'title' => 'A job title',
@@ -136,6 +161,7 @@ class FeaturedJobTest extends TestCase
         $image = UploadedFile::fake()->image('logo.jpg', 10, 10);
         $data = [
             'token' => 'a-valid-stripe-token',
+            'email' => 'test@example.com',
             'logo' => $image,
             'job' => [
                 'title' => 'A job title',
@@ -168,6 +194,7 @@ class FeaturedJobTest extends TestCase
         $pdf = UploadedFile::fake()->create('logo.pdf');
         $data = [
             'token' => 'a-valid-stripe-token',
+            'email' => 'test@example.com',
             'logo' => $pdf,
             'job' => [
                 'title' => 'A job title',

@@ -19,6 +19,7 @@ class FeaturedJobController extends Controller
     {
         $data = $request->validate([
             'token' => 'required',
+            'email' => 'required|email',
             'logo' => 'nullable|image|dimensions:min_width=64,min_height=64',
             'job.title' => 'required',
             'job.description' => 'required',
