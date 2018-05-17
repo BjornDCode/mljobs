@@ -6,6 +6,39 @@
     font-size: $text-base;
     font-weight: $weight-bold;
     color: $color__light;
+    position: relative;
+
+    &.loading {
+        color: transparent !important;
+
+        .loader  {
+            display: flex;
+            pointer-events: all;
+        }
+    }
+
+    .loader {
+        display: none;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        pointer-events: none;
+    }
+
+    .circle {
+        display: block;
+        box-sizing: border-box;
+        width: 1.5rem;
+        height: 1.5rem;
+        border-radius: 100%;
+        border: 3px solid rgba(255, 255, 255, 0.2);
+        border-top-color: $color__light;
+        animation: spin 1s infinite linear;
+    }
 
     @include breakpoint('tablet') {
         transition: background 150ms;
@@ -25,3 +58,9 @@ button.button {
     border: none;
     cursor: pointer;
 }
+
+@keyframes spin { 
+    100% { 
+        transform: rotate(360deg); 
+    } 
+} 

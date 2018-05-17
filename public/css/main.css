@@ -433,6 +433,15 @@ a {
   border-right: 5px solid #D2D2D2;
 }
 
+.purchase-job .form-success p,
+.purchase-job .form-success a {
+  color: #20bf6b;
+}
+
+.purchase-job .form-success a {
+  text-decoration: underline;
+}
+
 @media (min-width: 768px) {
   .purchase-job .benefit {
     font-size: 1.5rem;
@@ -655,6 +664,47 @@ a {
   font-size: 1rem;
   font-weight: 700;
   color: #ffffff;
+  position: relative;
+}
+
+.button.loading {
+  color: transparent !important;
+}
+
+.button.loading .loader {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  pointer-events: all;
+}
+
+.button .loader {
+  display: none;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+}
+
+.button .circle {
+  display: block;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 100%;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #ffffff;
+  -webkit-animation: spin 1s infinite linear;
+          animation: spin 1s infinite linear;
 }
 
 @media (min-width: 768px) {
@@ -683,6 +733,20 @@ a.button {
 button.button {
   border: none;
   cursor: pointer;
+}
+
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
 }
 
 input[type="text"],

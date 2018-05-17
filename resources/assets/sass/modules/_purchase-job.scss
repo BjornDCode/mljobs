@@ -44,6 +44,16 @@
         }
     }
 
+    .form-success {
+        p, a {
+            color: $color__success;
+        }
+
+        a {
+            text-decoration: underline;
+        }
+    }
+
     @include breakpoint('tablet') {
 
         .benefit {

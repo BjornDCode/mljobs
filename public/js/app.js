@@ -13516,6 +13516,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 var stripe = Stripe(window.AIJobs.stripe.publicKey);
@@ -13538,9 +13549,12 @@ var card = elements.create('card', cardOptions);
         return {
             logoPreview: null,
             errors: {},
+            job: undefined,
+            loading: false,
             form: {
                 token: '',
                 logo: null,
+                email: '',
                 job: {
                     title: '',
                     description: '',
@@ -13553,6 +13567,15 @@ var card = elements.create('card', cardOptions);
             }
         };
     },
+
+
+    computed: {
+        jobUrl: function jobUrl() {
+            if (!this.job) return;
+            return '/job/' + this.job.id;
+        }
+    },
+
     mounted: function mounted() {
         card.mount(this.$refs.card);
     },
@@ -13581,15 +13604,19 @@ var card = elements.create('card', cardOptions);
         submit: function submit() {
             var _this2 = this;
 
+            this.loading = true;
+
             stripe.createToken(card).then(function (result) {
                 if (result.error) return;
 
                 _this2.form.token = result.token.id;
 
-                axios.post('/featured-job/store', _this2.form).then(function (data) {
-                    console.log(data);
+                axios.post('/featured-job/store', _this2.form).then(function (response) {
+                    _this2.job = response.data;
+                    _this2.loading = false;
                 }).catch(function (error) {
                     _this2.errors = error.response.data.errors;
+                    _this2.loading = false;
                 });
             });
         }
@@ -13607,6 +13634,7 @@ var render = function() {
   return _c(
     "form",
     {
+      attrs: { method: "post" },
       on: {
         submit: function($event) {
           $event.preventDefault()
@@ -13630,7 +13658,7 @@ var render = function() {
             }
           ],
           class: { "has-error": _vm.hasError("job.title") },
-          attrs: { type: "text", placeholder: "Title" },
+          attrs: { type: "text", placeholder: "Title*" },
           domProps: { value: _vm.form.job.title },
           on: {
             input: function($event) {
@@ -13652,7 +13680,7 @@ var render = function() {
             }
           ],
           class: { "has-error": _vm.hasError("job.description") },
-          attrs: { placeholder: "Description" },
+          attrs: { placeholder: "Description*" },
           domProps: { value: _vm.form.job.description },
           on: {
             input: function($event) {
@@ -13705,7 +13733,7 @@ var render = function() {
             _vm._v(" "),
             _c("input", {
               attrs: { type: "file" },
-              on: { change: _vm.uploadLogo }
+              on: { change: [_vm.uploadLogo, _vm.form.logo] }
             })
           ]
         )
@@ -13725,7 +13753,7 @@ var render = function() {
               expression: "form.job.location"
             }
           ],
-          attrs: { type: "text", placeholder: "Location" },
+          attrs: { type: "text", placeholder: "Location (e.g. London, UK)" },
           domProps: { value: _vm.form.job.location },
           on: {
             input: function($event) {
@@ -13746,7 +13774,7 @@ var render = function() {
               expression: "form.job.salary"
             }
           ],
-          attrs: { type: "text", placeholder: "Salary" },
+          attrs: { type: "text", placeholder: "Salary (e.g. 100k)" },
           domProps: { value: _vm.form.job.salary },
           on: {
             input: function($event) {
@@ -13832,7 +13860,7 @@ var render = function() {
             }
           ],
           class: { "has-error": _vm.hasError("job.apply_url") },
-          attrs: { type: "url", placeholder: "URL" },
+          attrs: { type: "url", placeholder: "URL*" },
           domProps: { value: _vm.form.job.apply_url },
           on: {
             input: function($event) {
@@ -13851,20 +13879,72 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.form.email,
+              expression: "form.email"
+            }
+          ],
           class: { "has-error": _vm.hasError("email") },
-          attrs: { type: "email", placeholder: "Email" }
+          attrs: { type: "email", placeholder: "Email*" },
+          domProps: { value: _vm.form.email },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.form, "email", $event.target.value)
+            }
+          }
         }),
         _vm._v(" "),
         _c("div", { ref: "card", staticClass: "credit-card-input" })
       ]),
       _vm._v(" "),
-      _c("button", { staticClass: "button" }, [
-        _vm._v("Purchase Job Listing ($49)")
-      ])
+      _c("button", { staticClass: "button", class: { loading: _vm.loading } }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("span", [_vm._v("Purchase Job Listing ($49)")])
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.job,
+              expression: "job"
+            }
+          ],
+          staticClass: "form-success"
+        },
+        [
+          _c("p", [
+            _vm._v(
+              "\n            Thank you for purchasing a featured job. You can view it right "
+            ),
+            _c("a", { attrs: { href: _vm.jobUrl } }, [_vm._v("here")]),
+            _vm._v(".\n        ")
+          ])
+        ]
+      )
     ]
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "loader" }, [
+      _c("span", { staticClass: "circle" })
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

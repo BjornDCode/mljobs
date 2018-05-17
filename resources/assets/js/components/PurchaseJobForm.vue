@@ -1,13 +1,13 @@
 <template>
-    <form @submit.prevent="submit">
+    <form @submit.prevent="submit" method="post">
         <div class="form-group">
             <span class="form-group__label hide-mobile">Job</span>
             <input type="text" 
-                    placeholder="Title" 
+                    placeholder="Title*" 
                     v-model="form.job.title"
                     :class="{'has-error': hasError('job.title')}"
                 >
-            <textarea placeholder="Description" 
+            <textarea placeholder="Description*" 
                     v-model="form.job.description"
                     :class="{'has-error': hasError('job.description')}"
             ></textarea>
@@ -20,13 +20,13 @@
                 :style="this.logoPreview ? `background-image: url('${this.logoPreview}');` : ''"
             >
                 <span>Logo</span>
-                <input type="file" @change="uploadLogo">
+                <input type="file" @change="uploadLogo" v-on:change="form.logo">
             </label>
         </div>
         <div class="form-group inline-group">
             <span class="form-group__label hide-mobile">Details</span>
-            <input type="text" placeholder="Location" v-model="form.job.location">
-            <input type="text" placeholder="Salary" v-model="form.job.salary">
+            <input type="text" placeholder="Location (e.g. London, UK)" v-model="form.job.location">
+            <input type="text" placeholder="Salary (e.g. 100k)" v-model="form.job.salary">
             <select @change="styleSelect" v-model="form.job.type">
                 <option selected disabled value="" class="default">Hours</option>
                 <option value="Full Time">Full Time</option>
@@ -36,7 +36,7 @@
                 <option value="Temporary">Temporary</option>
             </select>
             <input type="url" 
-                placeholder="URL" 
+                placeholder="URL*" 
                 v-model="form.job.apply_url"
                 :class="{'has-error': hasError('job.apply_url')}"
             >
@@ -45,12 +45,23 @@
             <span class="form-group__label hide-mobile">Billing</span>
             <input 
                 type="email" 
-                placeholder="Email"
+                placeholder="Email*"
                 :class="{'has-error': hasError('email')}"
+                v-model="form.email"
                 >
             <div ref="card" class="credit-card-input"></div>
         </div>
-        <button class="button">Purchase Job Listing ($49)</button>
+        <button class="button" :class="{'loading': loading}">
+            <span class="loader">
+                <span class="circle"></span>
+            </span>
+            <span>Purchase Job Listing ($49)</span>
+        </button>
+        <div class="form-success" v-show="job">
+            <p>
+                Thank you for purchasing a featured job. You can view it right <a :href="jobUrl">here</a>.
+            </p>
+        </div>
     </form>
 </template>
 
@@ -76,9 +87,12 @@
             return {
                 logoPreview: null,
                 errors: {},
+                job: undefined,
+                loading: false,
                 form: {
                     token: '',
                     logo: null,
+                    email: '',
                     job: {
                         title: '',
                         description: '',
@@ -89,6 +103,13 @@
                         apply_url: ''
                     }
                 }
+            }
+        },
+
+        computed: {
+            jobUrl() {
+                if (!this.job) return;
+                return `/job/${this.job.id}`;
             }
         },
 
@@ -112,23 +133,28 @@
                 reader.onload = (e) => {
                     this.logoPreview = e.target.result
                 }
+
                 
                 reader.readAsDataURL(files[0])
                 this.form.logo = files[0]
             },
 
             submit() {
+                this.loading = true;
+
                 stripe.createToken(card).then(result => {
                     if (result.error) return
 
                     this.form.token = result.token.id
 
                     axios.post('/featured-job/store', this.form)
-                        .then(data => {
-                            console.log(data)
+                        .then(response => {
+                            this.job = response.data
+                            this.loading = false;
                         })
                         .catch(error => {
                             this.errors = error.response.data.errors
+                            this.loading = false;
                         })
                 })
             }
