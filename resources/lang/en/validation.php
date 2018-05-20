@@ -117,6 +117,10 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'job.title' => 'job title',
+        'job.description' => 'job description',
+        'job.apply_url' => 'job url'
+    ],
 
 ];
