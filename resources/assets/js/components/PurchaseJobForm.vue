@@ -6,10 +6,12 @@
                     placeholder="Title*" 
                     v-model="form.job.title"
                     :class="{'has-error': hasError('job.title')}"
+                    required
                 >
             <textarea placeholder="Description*" 
                     v-model="form.job.description"
                     :class="{'has-error': hasError('job.description')}"
+                    required
             ></textarea>
         </div>
         <div class="form-group">
@@ -26,6 +28,7 @@
                 placeholder="URL*" 
                 v-model="form.job.apply_url"
                 :class="{'has-error': hasError('job.apply_url')}"
+                required
             >
         </div>
         <div class="form-group">
@@ -35,6 +38,7 @@
                 placeholder="Email*"
                 :class="{'has-error': hasError('email')}"
                 v-model="form.email"
+                required
                 >
             <div ref="card" class="credit-card-input"></div>
         </div>
@@ -49,10 +53,16 @@
                 Thank you for purchasing a featured job. You can view it right <a :href="jobUrl">here</a>.
             </p>
         </div>
+        <div class="form-errors" v-if="formHasErrors">
+            <ul>
+                <li v-for="error in errors">{{ error[0] }}</li>
+            </ul>
+        </div>
     </form>
 </template>
 
 <script>
+    import { isEmpty } from 'lodash'
 
     const stripe = Stripe(window.AIJobs.stripe.publicKey)
     const elements = stripe.elements()
@@ -97,6 +107,10 @@
             jobUrl() {
                 if (!this.job) return;
                 return `/job/${this.job.id}`;
+            },
+
+            formHasErrors() {
+                return !isEmpty(this.errors)
             }
         },
 
@@ -146,6 +160,7 @@
                 axios.post('/featured-job/store', this.form)
                     .then(response => {
                         this.job = response.data
+                        this.errors = {}
                         this.loading = false
                     })
                     .catch(error => {
