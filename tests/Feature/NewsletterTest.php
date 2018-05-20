@@ -35,6 +35,8 @@ class NewsletterTest extends TestCase
     /** @test */
     public function a_user_cannot_subscribe_with_an_invalid_email()
     {
+        $this->withExceptionHandling();
+        
         $mailchimp = Mockery::mock(MailchimpGateway::class);
 
         $response = $this->json('POST', '/newsletter', [

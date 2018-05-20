@@ -24,7 +24,7 @@ class FeaturedJobController extends Controller
         $data = $request->validate([
             'token' => 'required',
             'email' => 'required|email',
-            'logo' => 'nullable|image|dimensions:min_width=64,min_height=64',
+            'logo' => 'nullable|string',
             'job.title' => 'required',
             'job.description' => 'required',
             'job.company' => 'nullable',
@@ -40,29 +40,18 @@ class FeaturedJobController extends Controller
             return response('The payment could not be processed', 422);
         }
 
-        $job = $this->createJob($data, $request);
-
-        return response()->json($job);
+        return $this->createJob($data);
     }
 
-    private function getImagePath($request) 
+    private function createJob($data) 
     {
-        if (! $request->logo || ! $request->file('logo')->isValid()) {
-            return null;
-        }
-
-        return $request->file('logo')->store('images', 'public');
-    }
-
-    private function createJob($data, $request) 
-    {
-        $customer = Customer::firstOrCreate([
+         $customer = Customer::firstOrCreate([
             'email' => $data['email']
         ]);
 
         $job = Job::create(array_merge($data['job'], [
             'featured' => 1,
-            'company_logo' => $this->getImagePath($request),
+            'company_logo' => array_key_exists('logo', $data) ? $data['logo'] : null,
             'customer_id' => $customer->id
         ]));
 
