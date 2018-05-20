@@ -25,6 +25,9 @@
                 <a href="/" class="page-header__logo">
                     @svg('logo')
                 </a>
+                @if (!request()->is('featured-job/create'))
+                    <a class="button" href="/featured-job/create">Post a job</a>
+                @endif
             </header>
             @yield('content')
         </div>
