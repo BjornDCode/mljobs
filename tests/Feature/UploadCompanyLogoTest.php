@@ -14,7 +14,7 @@ class UploadCompanyLogoTest extends TestCase
 
     
     /** @test */
-    public function a_user_can_upload_a_company_logo()
+    public function it_can_upload_an_image()
     {
         Storage::fake('public');
 
@@ -28,7 +28,7 @@ class UploadCompanyLogoTest extends TestCase
     } 
 
     /** @test */
-    public function a_user_cannot_upload_an_empty_logo()
+    public function the_image_is_required()
     {
         $this->withExceptionHandling();
 
@@ -38,7 +38,7 @@ class UploadCompanyLogoTest extends TestCase
     }
 
     /** @test */
-    public function a_user_cannot_upload_an_image_that_is_too_small()
+    public function the_image_must_be_bigger_than_the_minimum_requirements()
     {
         $this->withExceptionHandling();
 
@@ -54,11 +54,9 @@ class UploadCompanyLogoTest extends TestCase
     }
 
     /** @test */
-    public function a_user_cannot_upload_a_non_image_file()
+    public function the_file_must_be_an_image()
     {
         $this->withExceptionHandling();
-
-        Storage::fake('public');
 
         $response = $this->postJson('/images/upload', [
             'image' => UploadedFile::fake()->create('logo.pdf')
