@@ -1098,6 +1098,8 @@ window.Vue = __webpack_require__(31);
 
 Vue.component('newsletter-form', __webpack_require__(34));
 Vue.component('purchase-job-form', __webpack_require__(37));
+Vue.component('type-select-input', __webpack_require__(58));
+Vue.component('logo-file-input', __webpack_require__(55));
 
 var app = new Vue({
     el: '#app'
@@ -13514,19 +13516,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 var stripe = Stripe(window.AIJobs.stripe.publicKey);
@@ -13547,10 +13536,10 @@ var card = elements.create('card', cardOptions);
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            logoPreview: null,
             errors: {},
             job: undefined,
             loading: false,
+            imageFile: undefined,
             form: {
                 token: '',
                 logo: null,
@@ -13582,42 +13571,50 @@ var card = elements.create('card', cardOptions);
 
 
     methods: {
-        styleSelect: function styleSelect(e) {
-            e.target.classList.add('selected');
-        },
         hasError: function hasError(field) {
             return this.errors.hasOwnProperty(field);
         },
-        uploadLogo: function uploadLogo(e) {
+        handleFormSubmit: function handleFormSubmit() {
             var _this = this;
-
-            var files = e.target.files;
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                _this.logoPreview = e.target.result;
-            };
-
-            reader.readAsDataURL(files[0]);
-            this.form.logo = files[0];
-        },
-        submit: function submit() {
-            var _this2 = this;
 
             this.loading = true;
 
             stripe.createToken(card).then(function (result) {
-                if (result.error) return;
+                if (result.error) {
+                    _this.loading = false;
+                    return;
+                }
 
-                _this2.form.token = result.token.id;
+                _this.form.token = result.token.id;
 
-                axios.post('/featured-job/store', _this2.form).then(function (response) {
-                    _this2.job = response.data;
-                    _this2.loading = false;
-                }).catch(function (error) {
-                    _this2.errors = error.response.data.errors;
-                    _this2.loading = false;
-                });
+                if (_this.imageFile) {
+                    _this.uploadImage();
+                } else {
+                    _this.createJob();
+                }
+            });
+        },
+        uploadImage: function uploadImage(callback) {
+            var _this2 = this;
+
+            var formData = new FormData();
+            formData.append('image', this.imageFile);
+            axios.post('/images/upload', formData).then(function (response) {
+                _this2.form.logo = response.data.path;
+                _this2.createJob();
+            }).catch(function (errpr) {
+                _this2.loading = false;
+            });
+        },
+        createJob: function createJob() {
+            var _this3 = this;
+
+            axios.post('/featured-job/store', this.form).then(function (response) {
+                _this3.job = response.data;
+                _this3.loading = false;
+            }).catch(function (error) {
+                _this3.errors = error.response.data.errors;
+                _this3.loading = false;
             });
         }
     }
@@ -13634,11 +13631,11 @@ var render = function() {
   return _c(
     "form",
     {
-      attrs: { method: "post" },
+      attrs: { method: "post", enctype: "multipart/form-data" },
       on: {
         submit: function($event) {
           $event.preventDefault()
-          return _vm.submit($event)
+          return _vm.handleFormSubmit($event)
         }
       }
     },
@@ -13693,185 +13690,130 @@ var render = function() {
         })
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c("span", { staticClass: "form-group__label hide-mobile" }, [
-          _vm._v("Company")
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.form.job.company,
-              expression: "form.job.company"
-            }
-          ],
-          attrs: { type: "text", placeholder: "Company Name" },
-          domProps: { value: _vm.form.job.company },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.form.job, "company", $event.target.value)
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c(
-          "label",
-          {
-            staticClass: "file-input",
-            class: { "has-preview": this.logoPreview },
-            style: this.logoPreview
-              ? "background-image: url('" + this.logoPreview + "');"
-              : ""
-          },
-          [
-            _c("span", [_vm._v("Logo")]),
-            _vm._v(" "),
-            _c("input", {
-              attrs: { type: "file" },
-              on: { change: [_vm.uploadLogo, _vm.form.logo] }
-            })
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group inline-group" }, [
-        _c("span", { staticClass: "form-group__label hide-mobile" }, [
-          _vm._v("Details")
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.form.job.location,
-              expression: "form.job.location"
-            }
-          ],
-          attrs: { type: "text", placeholder: "Location (e.g. London, UK)" },
-          domProps: { value: _vm.form.job.location },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.form.job, "location", $event.target.value)
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.form.job.salary,
-              expression: "form.job.salary"
-            }
-          ],
-          attrs: { type: "text", placeholder: "Salary (e.g. 100k)" },
-          domProps: { value: _vm.form.job.salary },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.form.job, "salary", $event.target.value)
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c(
-          "select",
-          {
+      _c(
+        "div",
+        { staticClass: "form-group" },
+        [
+          _c("span", { staticClass: "form-group__label hide-mobile" }, [
+            _vm._v("Company")
+          ]),
+          _vm._v(" "),
+          _c("input", {
             directives: [
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.form.job.type,
-                expression: "form.job.type"
+                value: _vm.form.job.company,
+                expression: "form.job.company"
               }
             ],
+            attrs: { type: "text", placeholder: "Company Name" },
+            domProps: { value: _vm.form.job.company },
             on: {
-              change: [
-                function($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function(o) {
-                      return o.selected
-                    })
-                    .map(function(o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
-                  _vm.$set(
-                    _vm.form.job,
-                    "type",
-                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                  )
-                },
-                _vm.styleSelect
-              ]
-            }
-          },
-          [
-            _c(
-              "option",
-              {
-                staticClass: "default",
-                attrs: { selected: "", disabled: "", value: "" }
-              },
-              [_vm._v("Hours")]
-            ),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "Full Time" } }, [
-              _vm._v("Full Time")
-            ]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "Part Time" } }, [
-              _vm._v("Part Time")
-            ]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "Internship" } }, [
-              _vm._v("Internship")
-            ]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "Freelance" } }, [
-              _vm._v("Freelance")
-            ]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "Temporary" } }, [
-              _vm._v("Temporary")
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.form.job.apply_url,
-              expression: "form.job.apply_url"
-            }
-          ],
-          class: { "has-error": _vm.hasError("job.apply_url") },
-          attrs: { type: "url", placeholder: "URL*" },
-          domProps: { value: _vm.form.job.apply_url },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.form.job, "company", $event.target.value)
               }
-              _vm.$set(_vm.form.job, "apply_url", $event.target.value)
             }
-          }
-        })
-      ]),
+          }),
+          _vm._v(" "),
+          _c("logo-file-input", {
+            on: {
+              change: function($event) {
+                _vm.imageFile = $event
+              }
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "form-group inline-group" },
+        [
+          _c("span", { staticClass: "form-group__label hide-mobile" }, [
+            _vm._v("Details")
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.job.location,
+                expression: "form.job.location"
+              }
+            ],
+            attrs: { type: "text", placeholder: "Location (e.g. London, UK)" },
+            domProps: { value: _vm.form.job.location },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.form.job, "location", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.job.salary,
+                expression: "form.job.salary"
+              }
+            ],
+            attrs: { type: "text", placeholder: "Salary (e.g. 100k)" },
+            domProps: { value: _vm.form.job.salary },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.form.job, "salary", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("type-select-input", {
+            model: {
+              value: _vm.form.job.type,
+              callback: function($$v) {
+                _vm.$set(_vm.form.job, "type", $$v)
+              },
+              expression: "form.job.type"
+            }
+          }),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.job.apply_url,
+                expression: "form.job.apply_url"
+              }
+            ],
+            class: { "has-error": _vm.hasError("job.apply_url") },
+            attrs: { type: "url", placeholder: "URL*" },
+            domProps: { value: _vm.form.job.apply_url },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.form.job, "apply_url", $event.target.value)
+              }
+            }
+          })
+        ],
+        1
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "form-group" }, [
         _c("span", { staticClass: "form-group__label hide-mobile" }, [
@@ -13959,6 +13901,270 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 41 */,
+/* 42 */,
+/* 43 */,
+/* 44 */,
+/* 45 */,
+/* 46 */,
+/* 47 */,
+/* 48 */,
+/* 49 */,
+/* 50 */,
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(9)
+/* script */
+var __vue_script__ = __webpack_require__(56)
+/* template */
+var __vue_template__ = __webpack_require__(57)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/LogoFileInput.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1508681c", Component.options)
+  } else {
+    hotAPI.reload("data-v-1508681c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 56 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['value'],
+
+    data: function data() {
+        return {
+            logoPreview: null
+        };
+    },
+
+
+    methods: {
+        updateLogoPreview: function updateLogoPreview(e) {
+            var _this = this;
+
+            var files = e.target.files;
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                _this.logoPreview = e.target.result;
+            };
+
+            reader.readAsDataURL(files[0]);
+            this.$emit('change', files[0]);
+        }
+    }
+});
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "label",
+    {
+      staticClass: "file-input",
+      class: { "has-preview": this.logoPreview },
+      style: this.logoPreview
+        ? "background-image: url('" + this.logoPreview + "');"
+        : ""
+    },
+    [
+      _c("span", [_vm._v("Logo")]),
+      _vm._v(" "),
+      _c("input", {
+        attrs: { type: "file", accept: "image/*" },
+        domProps: { value: _vm.value },
+        on: { change: _vm.updateLogoPreview }
+      })
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-1508681c", module.exports)
+  }
+}
+
+/***/ }),
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(9)
+/* script */
+var __vue_script__ = __webpack_require__(59)
+/* template */
+var __vue_template__ = __webpack_require__(60)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/TypeSelectInput.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2f38c1ad", Component.options)
+  } else {
+    hotAPI.reload("data-v-2f38c1ad", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 59 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['value'],
+    methods: {
+        handleChangeEvent: function handleChangeEvent(e) {
+            this.styleSelect(e.target);
+            this.$emit('input', e.target.value);
+        },
+        styleSelect: function styleSelect(element) {
+            element.classList.add('selected');
+        }
+    }
+});
+
+/***/ }),
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "select",
+    { domProps: { value: _vm.value }, on: { change: _vm.handleChangeEvent } },
+    [
+      _c(
+        "option",
+        {
+          staticClass: "default",
+          attrs: { selected: "", disabled: "", value: "" }
+        },
+        [_vm._v("Hours")]
+      ),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "Full Time" } }, [_vm._v("Full Time")]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "Part Time" } }, [_vm._v("Part Time")]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "Internship" } }, [_vm._v("Internship")]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "Freelance" } }, [_vm._v("Freelance")]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "Temporary" } }, [_vm._v("Temporary")])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-2f38c1ad", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

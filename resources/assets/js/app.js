@@ -14,6 +14,8 @@ window.Vue = require('vue');
 
 Vue.component('newsletter-form', require('./components/NewsletterForm.vue'));
 Vue.component('purchase-job-form', require('./components/PurchaseJobForm.vue'));
+Vue.component('type-select-input', require('./components/TypeSelectInput.vue'));
+Vue.component('logo-file-input', require('./components/LogoFileInput.vue'));
 
 const app = new Vue({
     el: '#app'

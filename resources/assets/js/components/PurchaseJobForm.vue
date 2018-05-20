@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="submit" method="post">
+    <form @submit.prevent="handleFormSubmit" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <span class="form-group__label hide-mobile">Job</span>
             <input type="text" 
@@ -15,26 +15,13 @@
         <div class="form-group">
             <span class="form-group__label hide-mobile">Company</span>
             <input type="text" placeholder="Company Name" v-model="form.job.company">
-            <label class="file-input" 
-                :class="{'has-preview': this.logoPreview}"
-                :style="this.logoPreview ? `background-image: url('${this.logoPreview}');` : ''"
-            >
-                <span>Logo</span>
-                <input type="file" @change="uploadLogo" v-on:change="form.logo">
-            </label>
+            <logo-file-input @change="imageFile = $event"></logo-file-input>
         </div>
         <div class="form-group inline-group">
             <span class="form-group__label hide-mobile">Details</span>
             <input type="text" placeholder="Location (e.g. London, UK)" v-model="form.job.location">
             <input type="text" placeholder="Salary (e.g. 100k)" v-model="form.job.salary">
-            <select @change="styleSelect" v-model="form.job.type">
-                <option selected disabled value="" class="default">Hours</option>
-                <option value="Full Time">Full Time</option>
-                <option value="Part Time">Part Time</option>
-                <option value="Internship">Internship</option>
-                <option value="Freelance">Freelance</option>
-                <option value="Temporary">Temporary</option>
-            </select>
+            <type-select-input v-model="form.job.type"></type-select-input>
             <input type="url" 
                 placeholder="URL*" 
                 v-model="form.job.apply_url"
@@ -85,10 +72,10 @@
     export default {
         data() {
             return {
-                logoPreview: null,
                 errors: {},
                 job: undefined,
                 loading: false,
+                imageFile: undefined,
                 form: {
                     token: '',
                     logo: null,
@@ -118,45 +105,53 @@
         },
 
         methods: {
-            styleSelect(e) {
-                e.target.classList.add('selected')
-            },
-
             hasError(field) {
                 return this.errors.hasOwnProperty(field)
             },
 
-            uploadLogo(e) {
-                const files = e.target.files;
-                const reader = new FileReader();
-
-                reader.onload = (e) => {
-                    this.logoPreview = e.target.result
-                }
-
-                
-                reader.readAsDataURL(files[0])
-                this.form.logo = files[0]
-            },
-
-            submit() {
-                this.loading = true;
+            handleFormSubmit() {
+                this.loading = true
 
                 stripe.createToken(card).then(result => {
-                    if (result.error) return
+                    if (result.error) {
+                        this.loading = false
+                        return
+                    }
 
                     this.form.token = result.token.id
 
-                    axios.post('/featured-job/store', this.form)
-                        .then(response => {
-                            this.job = response.data
-                            this.loading = false;
-                        })
-                        .catch(error => {
-                            this.errors = error.response.data.errors
-                            this.loading = false;
-                        })
+                    if (this.imageFile) {
+                        this.uploadImage()
+                    } else {
+                        this.createJob();
+                    }
+
                 })
+            },
+
+            uploadImage(callback) {
+                let formData = new FormData();
+                formData.append('image', this.imageFile)
+                axios.post('/images/upload', formData)
+                    .then(response => {
+                        this.form.logo = response.data.path
+                        this.createJob()
+                    })
+                    .catch(errpr => {
+                        this.loading = false
+                    })
+            },
+
+            createJob() {
+                axios.post('/featured-job/store', this.form)
+                    .then(response => {
+                        this.job = response.data
+                        this.loading = false
+                    })
+                    .catch(error => {
+                        this.errors = error.response.data.errors
+                        this.loading = false
+                    })
             }
         }
     }
