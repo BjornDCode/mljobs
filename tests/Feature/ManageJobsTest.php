@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Job;
 use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -16,6 +17,7 @@ class ManageJobsTest extends TestCase
     {
         $admin = factory(User::class)->create();
         config([ 'app.administrators' => [ $admin->email ] ]);
+        $admin = $this->createAdmin();
 
         $this->actingAs($admin)
             ->get('/dashboard')
@@ -30,4 +32,31 @@ class ManageJobsTest extends TestCase
             ->assertRedirect('/');
     }
 
+    /** @test */
+    public function an_administrator_can_see_a_list_of_unpublished_jobs()
+    {
+        $admin = $this->createAdmin();
+
+        $publishedJob = factory(Job::class)->states('full')->create();
+        $unpublishedJob = factory(Job::class)->states('unpublished')->create();
+        $anotherUnpublishedJob = factory(Job::class)->states('unpublished')->create();
+
+        $response = $this->actingAs($admin)->get('/dashboard');
+
+        $this->assertFalse($response->data('jobs')->contains($publishedJob));
+        $this->assertTrue($response->data('jobs')->contains($unpublishedJob));
+        $this->assertTrue($response->data('jobs')->contains($anotherUnpublishedJob));
+    }
+
+    /** @test */
+    public function an_administrator_can_see_a_single_unpublished_job()
+    {
+        $admin = $this->createAdmin();
+        $job = factory(Job::class)->states('unpublished')->create();
+
+        $response = $this->actingAs($admin)->get("/unpublished/{$job->id}");
+        
+        $response->assertStatus(200);
+        $response->assertViewHas('job', $job->fresh());
+    }
 }
