@@ -28,6 +28,20 @@ class ViewJobsTest extends TestCase
     }
 
     /** @test */
+    public function a_user_can_only_see_published_jobs()
+    {
+        $publishedJob = factory(Job::class)->states('full')->create();
+        $anotherPublishedJob = factory(Job::class)->states('full')->create();
+        $unpublishedJob = factory(Job::class)->states('unpublished')->create();
+
+        $response = $this->get('/');
+
+        $this->assertTrue($response->data('groups')['Today']->contains($publishedJob));
+        $this->assertTrue($response->data('groups')['Today']->contains($anotherPublishedJob));
+        $this->assertFalse($response->data('groups')['Today']->contains($unpublishedJob));
+    }
+
+    /** @test */
     public function jobs_are_grouped_by_age()
     {
         $jobFromToday = factory(Job::class)->states('full')->create();
