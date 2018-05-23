@@ -4,7 +4,9 @@ namespace Tests\Integration;
 
 use App\JobGateway;
 use Tests\TestCase;
+use JobApis\Jobs\Client\Job as Job;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use JobApis\Jobs\Client\Collection as JobCollection;
 
 class JobGatewayTest extends TestCase
 {
@@ -66,28 +68,29 @@ class JobGatewayTest extends TestCase
     /** @test */
     public function it_can_save_jobs_to_the_database()
     {
-        // Modelled after: https://github.com/jobapis/jobs-common/blob/master/src/Job.php
-        $firstJob = [
+        $firstJob = new Job([
             'title' => 'First Job',
             'description' => 'This is a machine learning job',
             'company' => 'Hiring Company',
-            'hiringOrganization' => [ 'logo' => 'http://example.com/company/logo.jpg' ],
             'location' => 'Toledo, Mexicon',
             'url' => 'http://example.com/apply'
-        ];
-        $secondJob = [
+        ]);
+        $firstJob->setCompanyLogo('http://example.com/company/logo.jpg');
+
+        $secondJob = new Job([
             'title' => 'Second Job',
             'description' => 'This is a machine learning job',
             'baseSalary' => '100',
             'salaryCurrency' => 'USD',
             'workHours' => 'Full Time',
             'url' => 'http://example.com/apply'
-        ];
-
-        $this->gateway->save([
-            $firstJob, 
-            $secondJob
         ]);
+
+        tap(new JobCollection, function($jobCollection) use($firstJob, $secondJob) {        
+            $jobCollection->add($firstJob);
+            $jobCollection->add($secondJob);
+            $this->gateway->save($jobCollection);
+        });
 
         $this->assertDatabaseHas('jobs', [
             'title' => 'First Job'

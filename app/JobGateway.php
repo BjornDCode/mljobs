@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Job;
 use Illuminate\Support\Facades\DB;
 use JobApis\Jobs\Client\JobsMulti;
 use JobApis\Jobs\Client\Collection as JobCollection;
@@ -55,16 +56,16 @@ class JobGateway
 
     public function save($jobs) 
     {
-        foreach ($jobs as $job) {
-            DB::table('jobs')->insert([
-                'title' => $job['title'],
-                'description' => $job['description'],
-                'company' => array_key_exists('company', $job) ? $job['company'] : null,
-                'company_logo' => (array_key_exists('hiringOrganization', $job) && array_key_exists('logo', $job['hiringOrganization'])) ? $job['hiringOrganization']['logo'] : null,
-                'location' => array_key_exists('location', $job) ? $job['location'] : null,
-                'salary' => array_key_exists('baseSalary', $job) ? $job['baseSalary'] : null,
-                'type' => array_key_exists('workHours', $job) ? $job['workHours'] : null,
-                'apply_url' => $job['url'],
+        foreach ($jobs->all() as $job) {
+            Job::create([
+                'title' => $job->title,
+                'description' => $job->description,
+                'company' => $job->getCompanyName(),
+                'company_logo' => $job->getCompanyLogo(),
+                'location' => $job->getLocation(),
+                'salary' => $job->baseSalary,
+                'type' => $job->workHours,
+                'apply_url' => $job->url,
             ]);
         }
     }
