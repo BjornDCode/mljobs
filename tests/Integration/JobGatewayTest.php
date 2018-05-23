@@ -93,10 +93,12 @@ class JobGatewayTest extends TestCase
         });
 
         $this->assertDatabaseHas('jobs', [
-            'title' => 'First Job'
+            'title' => 'First Job',
+            'published' => 0,
         ]);
         $this->assertDatabaseHas('jobs', [
-            'title' => 'Second Job'
+            'title' => 'Second Job',
+            'published' => 0,
         ]);
     }
 

@@ -24,6 +24,7 @@ class CreateJobsTable extends Migration
             $table->string('type')->nullable();
             $table->string('apply_url');
             $table->boolean('featured')->default(0);
+            $table->boolean('published')->default(0);
             $table->integer('customer_id')->nullable();
             $table->timestamps();
         });

@@ -50,6 +50,7 @@ class FeaturedJobTest extends TestCase
         $this->assertDatabaseHas('jobs', [
             'title' => $data['job']['title'],
             'description' => $data['job']['description'],
+            'published' => 1
         ]);
     }
 
@@ -82,7 +83,8 @@ class FeaturedJobTest extends TestCase
         $this->assertDatabaseHas('jobs', [
             'title' => $data['job']['title'],
             'description' => $data['job']['description'],
-            'company_logo' => $data['logo']
+            'company_logo' => $data['logo'],
+            'published' => 1
         ]);
     }
 
