@@ -38,7 +38,6 @@ return [
     'jobs' => [
         'Careercast' => [],
         'Github' => [],
-        'Govt' => [],
         'Ieee' => [],
         'Jobinventory' => [],
         'Monster' => [],
