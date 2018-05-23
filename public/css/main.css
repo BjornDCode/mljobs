@@ -686,6 +686,20 @@ a {
           align-items: center;
 }
 
+.publish-job-form .group {
+  margin-bottom: 1rem;
+}
+
+.publish-job-form label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-family: "Ubuntu";
+}
+
+.publish-job-form textarea {
+  min-height: 300px;
+}
+
 .button {
   height: 2.5rem;
   padding: 0 2rem;

@@ -1,0 +1,17 @@
+.publish-job-form {
+    
+    .group {
+        margin-bottom: $space-4;
+    }
+
+    label {
+        display: block;
+        margin-bottom: $space-1;
+        font-family: $font-secondary;
+    }
+
+    textarea {
+        min-height: 300px;
+    }
+
+}

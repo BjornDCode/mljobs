@@ -48,6 +48,7 @@ class JobController extends Controller
             'salary' => 'nullable',
             'type' => 'nullable',
             'apply_url' => 'nullable|url',
+            'logo' => 'nullable',
         ]);
 
         $job = Job::findOrFail($id);
