@@ -189,7 +189,7 @@ body {
 
 body {
   background-size: 15rem;
-  background-image: url(/images/background.svg?545348230884feea3a007b177b7091ee);
+  background-image: url("/images/background.svg");
   position: relative;
 }
 
