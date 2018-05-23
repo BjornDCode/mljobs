@@ -9,6 +9,7 @@
         <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
             {{ csrf_field() }}
         </form>
+                @include('jobs._card', [ 'url' => 'unpublished' ])
     </main>
 @endsection
 

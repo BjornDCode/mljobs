@@ -11,7 +11,7 @@
                     <h2>{{ $title }}</h2>
                     <ul>
                         @foreach ($jobs as $job)
-                            @include('jobs._card')
+                            @include('jobs._card', [ 'url' => 'job' ])
                         @endforeach
                     </ul>
                 </div>
