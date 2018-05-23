@@ -24,3 +24,6 @@ Route::group([ 'middleware' => 'admin' ], function() {
     Route::get('/dashboard', 'DashboardController@index');
 });
 
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('login', 'Auth\LoginController@login');
+Route::post('logout', 'Auth\LoginController@logout')->name('logout');

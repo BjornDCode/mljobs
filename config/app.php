@@ -211,4 +211,8 @@ return [
 
     ],
 
+    'administrators' => [
+        env('ADMIN_EMAIL_1'),
+    ],
+
 ];
