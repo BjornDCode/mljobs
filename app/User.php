@@ -26,4 +26,13 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function isAdmin() 
+    {
+        return in_array(
+            strtolower($this->email), 
+            array_map('strtolower', config('app.administrators'))
+        );
+    }
+
 }

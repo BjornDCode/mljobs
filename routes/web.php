@@ -19,3 +19,8 @@ Route::post('/featured-job/store', 'FeaturedJobController@store');
 Route::post('/newsletter', 'NewsletterController@store');
 
 Route::post('/images/upload', 'UploadImagesController@store');
+
+Route::group([ 'middleware' => 'admin' ], function() {
+    Route::get('/dashboard', 'DashboardController@index');
+});
+
