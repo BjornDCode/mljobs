@@ -89,7 +89,7 @@ class ViewJobsTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_view_a_single_job()
+    public function a_user_can_view_a_single_published_job()
     {
         $job = factory(Job::class)->states('full')->create();
 
@@ -97,6 +97,16 @@ class ViewJobsTest extends TestCase
         
         $response->assertStatus(200);
         $response->assertViewHas('job', $job->fresh());
+    }
+
+    /** @test */
+    public function a_user_cannot_view_a_single_unpublished_job()
+    {
+        $job = factory(Job::class)->states('unpublished')->create();
+        
+        $response = $this->get("/job/{$job->id}");
+
+        $response->assertRedirect('/');
     }
 
     /** @test */

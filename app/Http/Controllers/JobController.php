@@ -29,6 +29,10 @@ class JobController extends Controller
     {
         $job = Job::findOrFail($id);
 
+        if (! $job->published) {
+            return redirect('/');
+        }
+
         return view('jobs.show', [
             'job' => $job
         ]);
