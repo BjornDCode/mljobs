@@ -669,6 +669,11 @@ a {
   margin-right: 0.5rem;
 }
 
+.login {
+  max-width: 500px;
+  margin: 100px auto;
+}
+
 .button {
   height: 2.5rem;
   padding: 0 2rem;
@@ -766,6 +771,7 @@ input[type="text"],
 input[type="search"],
 input[type="email"],
 input[type="url"],
+input[type="password"],
 select,
 textarea {
   -webkit-box-sizing: border-box;
@@ -784,6 +790,7 @@ input[type="text"].has-error,
 input[type="search"].has-error,
 input[type="email"].has-error,
 input[type="url"].has-error,
+input[type="password"].has-error,
 select.has-error,
 textarea.has-error {
   border: 2px solid #ff0000;
