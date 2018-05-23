@@ -38,6 +38,27 @@ class JobController extends Controller
         ]);
     }
 
+    public function update($id, Request $request) 
+    {
+        $data = $request->validate([
+            'title' => 'nullable',
+            'description' => 'nullable',
+            'company' => 'nullable',
+            'location' => 'nullable',
+            'salary' => 'nullable',
+            'type' => 'nullable',
+            'apply_url' => 'nullable|url',
+        ]);
+
+        $job = Job::findOrFail($id);
+
+        $job->update(array_merge($data, [
+            'published' => 1,
+        ]));
+
+        return redirect('/dashboard');
+    }
+
     private function mapJobsToGroups($jobs) 
     {
         return $jobs->mapToGroups(function($item, $key) {

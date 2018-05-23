@@ -15,8 +15,6 @@ class ManageJobsTest extends TestCase
     /** @test */
     public function an_administrator_can_access_the_job_dashboard()
     {
-        $admin = factory(User::class)->create();
-        config([ 'app.administrators' => [ $admin->email ] ]);
         $admin = $this->createAdmin();
 
         $this->actingAs($admin)
@@ -88,6 +86,31 @@ class ManageJobsTest extends TestCase
         $this->assertEquals('updated description', $job->description);
 
         $response->assertRedirect('/dashboard');
+    }
+
+    /** @test */
+    public function a_visitor_cannot_update_unpublished_an_job()
+    {
+        $job = factory(Job::class)->states('unpublished')->create();
+
+        $response = $this->patch("/job/{$job->id}", [
+            'title' => 'new title',
+            'description' => 'updated description',
+        ]);
+
+        $this->assertDatabaseHas('jobs', [
+            'title' => $job->title, 
+            'description' => $job->description,
+            'published' => 0
+        ]);
+
+        $response->assertRedirect('/');
+    }
+
+    private function createAdmin() {
+        $admin = factory(User::class)->create();
+        config([ 'app.administrators' => [ $admin->email ] ]);
+        return $admin;
     }
 
 }
