@@ -59,4 +59,35 @@ class ManageJobsTest extends TestCase
         $response->assertStatus(200);
         $response->assertViewHas('job', $job->fresh());
     }
+
+    /** @test */
+    public function a_visitor_cannot_see_a_single_unpublished_job()
+    {
+        $job = factory(Job::class)->states('unpublished')->create();
+
+        $response = $this->get("/unpublished/{$job->id}");
+        
+        $response->assertRedirect('/');
+    }
+
+    /** @test */
+    public function an_administrator_can_update_unpublished_an_job()
+    {
+        $admin = $this->createAdmin();
+        $job = factory(Job::class)->states('unpublished')->create(); 
+
+        $response = $this->actingAs($admin)->patch("/job/{$job->id}", [
+            'title' => 'new title',
+            'description' => 'updated description',
+        ]);
+
+        $job = $job->fresh();
+
+        $this->assertEquals(1, $job->published);
+        $this->assertEquals('new title', $job->title);
+        $this->assertEquals('updated description', $job->description);
+
+        $response->assertRedirect('/dashboard');
+    }
+
 }
