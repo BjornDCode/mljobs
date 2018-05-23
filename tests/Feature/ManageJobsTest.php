@@ -107,6 +107,33 @@ class ManageJobsTest extends TestCase
         $response->assertRedirect('/');
     }
 
+    /** @test */
+    public function an_administrator_can_delete_an_unpublished_job()
+    {
+        $admin = $this->createAdmin();
+        $job = factory(Job::class)->states('unpublished')->create(); 
+
+        $response = $this->actingAs($admin)->delete("/job/{$job->id}");
+
+        $this->assertDatabaseMissing('jobs', [
+            'title' => $job->title
+        ]);
+        $response->assertRedirect('/dashboard');
+    }
+
+    /** @test */
+    public function a_visitor_cannot_delete_an_unpublished_job()
+    {
+        $job = factory(Job::class)->states('unpublished')->create(); 
+
+        $response = $this->delete("/job/{$job->id}");
+
+        $this->assertDatabasehas('jobs', [
+            'title' => $job->title
+        ]);
+        $response->assertRedirect('/');
+    }
+
     private function createAdmin() {
         $admin = factory(User::class)->create();
         config([ 'app.administrators' => [ $admin->email ] ]);

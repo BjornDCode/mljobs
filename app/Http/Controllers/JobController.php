@@ -59,6 +59,15 @@ class JobController extends Controller
         return redirect('/dashboard');
     }
 
+    public function delete($id) 
+    {
+        $job = Job::findOrFail($id);
+        
+        $job->delete();
+
+        return redirect('/dashboard');
+    }
+
     private function mapJobsToGroups($jobs) 
     {
         return $jobs->mapToGroups(function($item, $key) {

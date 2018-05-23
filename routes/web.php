@@ -24,6 +24,7 @@ Route::group([ 'middleware' => 'admin' ], function() {
     Route::get('/dashboard', 'DashboardController@index');
     Route::get('/unpublished/{id}', 'DashboardController@show');
     Route::patch('/job/{id}', 'JobController@update');
+    Route::delete('/job/{id}', 'JobController@delete');
 });
 
 
