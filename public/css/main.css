@@ -674,6 +674,18 @@ a {
   margin: 100px auto;
 }
 
+.dashboard header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
 .button {
   height: 2.5rem;
   padding: 0 2rem;
