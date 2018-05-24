@@ -24,8 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->command("jobs:fetch --days=1 --keywords='machine learning' --keywords=ai")->daily();
     }
 
     /**
