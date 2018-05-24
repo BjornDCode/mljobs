@@ -7,6 +7,11 @@
         color: $color__error;
     }
 
+    .success {
+        font-size: $text-sm;
+        color: $color__success;
+    }
+
     @include breakpoint('tablet') {
         width: 66.66%;
 

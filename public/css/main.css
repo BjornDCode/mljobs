@@ -321,6 +321,11 @@ a {
   color: #ff0000;
 }
 
+.newsletter .success {
+  font-size: 0.875rem;
+  color: #20bf6b;
+}
+
 @media (min-width: 768px) {
   .newsletter {
     width: 66.66%;
@@ -709,6 +714,41 @@ a {
   font-weight: 700;
   color: #ffffff;
   position: relative;
+}
+
+.button.successful {
+  color: transparent !important;
+}
+
+.button.successful .success {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  pointer-events: all;
+}
+
+.button .success {
+  display: none;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+}
+
+.button .success svg {
+  height: 70%;
+}
+
+.button .success svg path {
+  fill: #ffffff;
 }
 
 .button.loading {

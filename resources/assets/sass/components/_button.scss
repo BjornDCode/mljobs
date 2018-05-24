@@ -8,6 +8,35 @@
     color: $color__light;
     position: relative;
 
+    &.successful {
+        color: transparent !important;
+
+        .success {
+            display: flex;
+            pointer-events: all;
+        }
+    }
+
+    .success {
+        display: none;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        pointer-events: none;
+
+        svg {
+            height: 70%;
+            path {
+                fill: $color__light;
+
+            }
+        }
+    }
+
     &.loading {
         color: transparent !important;
 
