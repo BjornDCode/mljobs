@@ -5,7 +5,7 @@
         <div class="job__content">
             <h1>{{ $job->title }}</h1>
             <div class="job__description">
-                {{ $job->description }}
+                {!! $job->description !!}
             </div>
             <div class="job__meta">
                 @if ($job->company)
