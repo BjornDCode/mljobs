@@ -243,6 +243,29 @@ body:before {
   }
 }
 
+.twitter-link {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  background: #1da1f2;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.twitter-link .icon {
+  width: 50%;
+  fill: #ffffff;
+}
+
 * {
   font-family: "Ubuntu";
   font-weight: 400;
@@ -703,6 +726,28 @@ a {
 
 .publish-job-form textarea {
   min-height: 300px;
+}
+
+.page-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.page-footer p {
+  font-family: "Ubuntu";
+  text-align: center;
+}
+
+.page-footer p a {
+  color: #465064;
+}
+
+@media (min-width: 1024px) {
+  .page-footer {
+    bottom: 0.5rem;
+  }
 }
 
 .button {

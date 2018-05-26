@@ -54,6 +54,20 @@ body {
     }
 }
 
-.icon {
-    
+.twitter-link {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    background: #1da1f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .icon {
+        width: 50%;
+        fill: $color__light;
+    }
+
 }

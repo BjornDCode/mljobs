@@ -1,0 +1,20 @@
+.page-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    p {
+        font-family: $font-secondary;
+        text-align: center;
+
+        a {
+            color: $color__primary;
+        }
+
+    }
+
+    @include breakpoint('desktop') {
+        bottom: $space-2;
+    }
+}

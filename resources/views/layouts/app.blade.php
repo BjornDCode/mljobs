@@ -30,6 +30,12 @@
                 @endif
             </header>
             @yield('content')
+            <footer class="page-footer">
+                <p>Made by <a href="https://twitter.com/bjornlindholmdk" target="_blank">@bjornlindholmdk</a></p>
+            </footer>
+            <a class="twitter-link" href="https://twitter.com/aijobs_work" target="_black">
+                @svg('twitter')
+            </a>
         </div>
     </div>
 
