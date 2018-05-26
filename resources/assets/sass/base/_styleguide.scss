@@ -43,3 +43,89 @@ a {
     text-decoration: none;
     font-family: $font-secondary;
 }
+
+
+.rte {
+    h1, h2, h3, h4, h5, h6 {
+        font-family: $font-primary;
+        font-weight: $weight-bold;
+        line-height: $leading-tight;
+        margin-bottom: $space-2;
+        color: $color__dark;
+    }
+
+    h1 {
+        font-size: $text-5xl;
+    }
+
+    h2 {
+        font-size: $text-4xl;
+    }
+
+    h3 {
+        font-size: $text-3xl;
+    }
+
+    h4 {
+        font-size: $text-2xl;
+    }
+
+    h5 {
+        font-size: $text-xl;
+    }
+
+    h6 {
+        font-size: $text-lg;
+    }
+
+    p {
+        color: $color__dark--light;
+        line-height: $leading-normal;
+        margin-bottom: $space-4;
+    }
+
+    ul, ol {
+        margin-bottom: $space-4;
+    }
+
+    ul {
+        list-style-type: initial;
+    }
+
+    ol {
+        list-style-type: decimal;
+    }
+
+    li {
+        p {
+            margin: 0;
+        }
+    }
+
+    hr {
+        margin: $space-8 0;
+    }
+
+    img {
+        display: block;
+        max-width: 100%;
+    }
+
+    a {
+        text-decoration: none;
+        font-family: $font-secondary;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    strong {
+        font-weight: bold;
+    }
+
+    em {
+        font-style: italic;
+    }
+
+}

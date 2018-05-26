@@ -4,7 +4,7 @@
     <main class="single-job">
         <div class="job__content">
             <h1>{{ $job->title }}</h1>
-            <div class="job__description">
+            <div class="job__description rte">
                 {!! $job->description !!}
             </div>
             <div class="job__meta">
