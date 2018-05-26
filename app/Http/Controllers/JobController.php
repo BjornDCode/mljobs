@@ -9,7 +9,7 @@ use App\StripeGateway;
 use Illuminate\Http\Request;
 use App\Mail\FeaturedJobPurchased;
 use Illuminate\Support\Facades\Mail;
-use App\Exceptions\PaymentFailedException;
+
 
 
 class JobController extends Controller
@@ -51,40 +51,31 @@ class JobController extends Controller
 
     public function store(Request $request, StripeGateway $gateway) 
     {
-        $data = $request->validate([
-            'token' => 'required',
-            'email' => 'required|email',
-            'logo' => 'nullable|string',
-            'job.title' => 'required',
-            'job.description' => 'required',
-            'job.company' => 'nullable',
-            'job.location' => 'nullable',
-            'job.salary' => 'nullable',
-            'job.type' => 'nullable',
-            'job.apply_url' => 'required|url',
-        ]);
+        if (auth()->check() && auth()->user()->isAdmin()) {
+            $data = $this->validateAuthJobData($request);
 
-        try {
-            $gateway->charge($data['token']);
-        } catch (PaymentFailedException $e) {
-            return response('The payment could not be processed', 422);
+            Job::create(array_merge($data, [
+                'description' => markdown($data['description']),
+                'published' => 1,
+            ]));
+
+            return redirect('/');
         }
 
-        return $this->createJob($data);
+        $data = $this->validateUserJobData($request);
+
+        $customer = Customer::firstOrCreate([
+            'email' => $data['email']
+        ]);
+
+        $job = $customer->purchaseJobListing($data, $gateway);
+
+        return $job;
     }
 
     public function update($id, Request $request) 
     {
-        $data = $request->validate([
-            'title' => 'nullable',
-            'description' => 'nullable',
-            'company' => 'nullable',
-            'location' => 'nullable',
-            'salary' => 'nullable',
-            'type' => 'nullable',
-            'apply_url' => 'nullable|url',
-            'logo' => 'nullable',
-        ]);
+        $data = $this->validateAuthJobData($request);
 
         $job = Job::findOrFail($id);
 
@@ -128,23 +119,34 @@ class JobController extends Controller
         });
     }
 
-    private function createJob($data) 
+    private function validateAuthJobData($request) 
     {
-         $customer = Customer::firstOrCreate([
-            'email' => $data['email']
+        return $request->validate([
+            'title' => 'nullable',
+            'description' => 'nullable',
+            'company' => 'nullable',
+            'company_logo' => 'nullable|string',
+            'location' => 'nullable',
+            'salary' => 'nullable',
+            'type' => 'nullable',
+            'apply_url' => 'nullable|url',
         ]);
+    }
 
-        $job = Job::create(array_merge($data['job'], [
-            'description' => markdown($data['job']['description']),
-            'featured' => 1,
-            'published' => 1,
-            'company_logo' => array_key_exists('logo', $data) ? $data['logo'] : null,
-            'customer_id' => $customer->id
-        ]));
-
-        Mail::to($customer)->send(new FeaturedJobPurchased($job));
-
-        return $job;
+    private function validateUserJobData($request) 
+    {
+        return $request->validate([
+            'token' => 'required',
+            'email' => 'required|email',
+            'job.title' => 'required',
+            'job.description' => 'required',
+            'job.company' => 'nullable',
+            'job.company_logo' => 'nullable|string',
+            'job.location' => 'nullable',
+            'job.salary' => 'nullable',
+            'job.type' => 'nullable',
+            'job.apply_url' => 'required|url',
+        ]);
     }
 
 }

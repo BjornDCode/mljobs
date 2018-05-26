@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\User;
 use \Mockery;
 use Tests\TestCase;
 use App\StripeGateway;
@@ -29,6 +30,31 @@ class CreateJobTest extends TestCase
         $response = $this->get('/job/create');
         $response->assertStatus(200);
         $response->assertSee('Post a job');
+    }
+
+    /** @test */
+    public function an_admin_can_create_a_job()
+    {
+        $admin = factory(User::class)->create();
+        config([ 'app.administrators' => [ $admin->email ] ]);
+
+        $data = [
+            'title' => 'A job title',
+            'description' => 'This is the job description',
+            'apply_url' => 'http://example.com',
+            'company' => null,
+            'location' => null,
+            'salary' => null,
+            'type' => null,
+        ];
+
+        $response = $this->actingAs($admin)->post('/job/store', $data);
+
+        $response->assertRedirect('/');
+        $this->assertDatabaseHas('jobs', [
+            'title' => $data['title'],
+            'published' => 1
+        ]);
     }
 
     /** @test */
@@ -71,12 +97,12 @@ class CreateJobTest extends TestCase
         $data = [
             'token' => 'a-valid-stripe-token',
             'email' => 'test@example.com',
-            'logo' => '/images/logo.png',
             'job' => [
                 'title' => 'A job title',
                 'description' => 'This is the job description',
                 'apply_url' => 'http://example.com',
                 'company' => null,
+                'company_logo' => '/images/logo.png',
                 'location' => null,
                 'salary' => null,
                 'type' => null,
@@ -87,7 +113,7 @@ class CreateJobTest extends TestCase
 
         $this->assertDatabaseHas('jobs', [
             'title' => $data['job']['title'],
-            'company_logo' => $data['logo'],
+            'company_logo' => $data['job']['company_logo'],
         ]);
     }
 

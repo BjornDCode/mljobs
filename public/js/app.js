@@ -13613,12 +13613,12 @@ var card = elements.create('card', cardOptions);
             imageFile: undefined,
             form: {
                 token: '',
-                logo: null,
                 email: '',
                 job: {
                     title: '',
                     description: '',
                     company: '',
+                    company_logo: '',
                     location: '',
                     salary: '',
                     type: '',
@@ -13674,7 +13674,7 @@ var card = elements.create('card', cardOptions);
             var formData = new FormData();
             formData.append('image', this.imageFile);
             axios.post('/images/upload', formData).then(function (response) {
-                _this2.form.logo = response.data.path;
+                _this2.form.job.company_logo = response.data.path;
                 _this2.createJob();
             }).catch(function (errpr) {
                 _this2.loading = false;

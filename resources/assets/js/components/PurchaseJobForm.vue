@@ -97,12 +97,12 @@
                 imageFile: undefined,
                 form: {
                     token: '',
-                    logo: null,
                     email: '',
                     job: {
                         title: '',
                         description: '',
                         company: '',
+                        company_logo: '',
                         location: '',
                         salary: '',
                         type: '',
@@ -157,7 +157,7 @@
                 formData.append('image', this.imageFile)
                 axios.post('/images/upload', formData)
                     .then(response => {
-                        this.form.logo = response.data.path
+                        this.form.job.company_logo = response.data.path
                         this.createJob()
                     })
                     .catch(errpr => {
