@@ -3,8 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Job;
+use App\Customer;
 use Carbon\Carbon;
+use App\StripeGateway;
 use Illuminate\Http\Request;
+use App\Mail\FeaturedJobPurchased;
+use Illuminate\Support\Facades\Mail;
+use App\Exceptions\PaymentFailedException;
+
 
 class JobController extends Controller
 {
@@ -36,6 +42,35 @@ class JobController extends Controller
         return view('jobs.show', [
             'job' => $job
         ]);
+    }
+
+    public function create() 
+    {
+        return view('jobs.create');
+    }
+
+    public function store(Request $request, StripeGateway $gateway) 
+    {
+        $data = $request->validate([
+            'token' => 'required',
+            'email' => 'required|email',
+            'logo' => 'nullable|string',
+            'job.title' => 'required',
+            'job.description' => 'required',
+            'job.company' => 'nullable',
+            'job.location' => 'nullable',
+            'job.salary' => 'nullable',
+            'job.type' => 'nullable',
+            'job.apply_url' => 'required|url',
+        ]);
+
+        try {
+            $gateway->charge($data['token']);
+        } catch (PaymentFailedException $e) {
+            return response('The payment could not be processed', 422);
+        }
+
+        return $this->createJob($data);
     }
 
     public function update($id, Request $request) 
@@ -91,6 +126,25 @@ class JobController extends Controller
 
             return ['Misc' => $item];
         });
+    }
+
+    private function createJob($data) 
+    {
+         $customer = Customer::firstOrCreate([
+            'email' => $data['email']
+        ]);
+
+        $job = Job::create(array_merge($data['job'], [
+            'description' => markdown($data['job']['description']),
+            'featured' => 1,
+            'published' => 1,
+            'company_logo' => array_key_exists('logo', $data) ? $data['logo'] : null,
+            'customer_id' => $customer->id
+        ]));
+
+        Mail::to($customer)->send(new FeaturedJobPurchased($job));
+
+        return $job;
     }
 
 }

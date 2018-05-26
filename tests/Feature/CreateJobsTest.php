@@ -12,7 +12,7 @@ use App\Exceptions\PaymentFailedException;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class FeaturedJobTest extends TestCase
+class CreateJobTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -24,7 +24,15 @@ class FeaturedJobTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_purchase_a_featured_job_without_a_company_logo()
+    public function a_user_can_see_the_purchase_job_page()
+    {
+        $response = $this->get('/job/create');
+        $response->assertStatus(200);
+        $response->assertSee('Post a job');
+    }
+
+    /** @test */
+    public function a_user_can_purchase_a_job_listing()
     {
         $gateway = Mockery::spy(StripeGateway::class);
         $this->app->instance(StripeGateway::class, $gateway);
@@ -43,7 +51,7 @@ class FeaturedJobTest extends TestCase
             ]
         ];
 
-        $response = $this->postJson('/featured-job/store', $data);
+        $response = $this->postJson('/job/store', $data);
 
         $response->assertStatus(201);
         $gateway->shouldHaveReceived('charge')->once();
@@ -55,7 +63,7 @@ class FeaturedJobTest extends TestCase
 
     
     /** @test */
-    public function a_user_can_purchase_a_featured_job_with_a_company_logo()
+    public function a_user_can_purchase_a_job_listing_with_a_company_logo()
     {
         $gateway = Mockery::spy(StripeGateway::class);
         $this->app->instance(StripeGateway::class, $gateway);
@@ -75,19 +83,16 @@ class FeaturedJobTest extends TestCase
             ]
         ];
 
-        $response = $this->postJson('/featured-job/store', $data);
+        $response = $this->postJson('/job/store', $data);
 
-        $response->assertStatus(201);
-        $gateway->shouldHaveReceived('charge')->once();
         $this->assertDatabaseHas('jobs', [
             'title' => $data['job']['title'],
             'company_logo' => $data['logo'],
-            'published' => 1
         ]);
     }
 
     /** @test */
-    public function the_user_cannot_purchase_a_featured_job_if_the_charge_fails()
+    public function the_user_cannot_purchase_a_job_listing_if_the_charge_fails()
     {
         $gateway = Mockery::mock(StripeGateway::class);
         $this->app->instance(StripeGateway::class, $gateway);
@@ -103,7 +108,7 @@ class FeaturedJobTest extends TestCase
             ]
         ];
 
-        $response = $this->postJson('/featured-job/store', $data);
+        $response = $this->postJson('/job/store', $data);
 
         $response->assertStatus(422);
         $this->assertDatabaseMissing('jobs', [
@@ -112,7 +117,7 @@ class FeaturedJobTest extends TestCase
     }
 
     /** @test */
-    public function the_user_cannot_purchase_a_featured_job_if_they_provide_invalid_billing_data()
+    public function the_user_cannot_purchase_a_job_listing_if_they_provide_invalid_billing_data()
     {
         $this->withExceptionHandling();
 
@@ -126,7 +131,7 @@ class FeaturedJobTest extends TestCase
             ]
         ];
 
-        $response = $this->postJson('/featured-job/store', $data);
+        $response = $this->postJson('/job/store', $data);
 
         $response->assertStatus(422);
         $this->assertDatabaseMissing('jobs', [
@@ -135,7 +140,7 @@ class FeaturedJobTest extends TestCase
     }
 
     /** @test */
-    public function the_user_cannot_purchase_a_featured_job_if_they_provide_invalid_job_data()
+    public function the_user_cannot_purchase_a_job_listing_if_they_provide_invalid_job_data()
     {
         $this->withExceptionHandling();
 
@@ -148,7 +153,7 @@ class FeaturedJobTest extends TestCase
             ]
         ];
 
-        $response = $this->postJson('/featured-job/store', $data);
+        $response = $this->postJson('/job/store', $data);
 
         $response->assertStatus(422);
         $this->assertDatabaseMissing('jobs', [
@@ -173,7 +178,7 @@ class FeaturedJobTest extends TestCase
             ]
         ];
 
-        $job = $this->postJson('/featured-job/store', $data);
+        $job = $this->postJson('/job/store', $data);
 
         $this->assertDatabaseHas('customers', [
             'email' => $data['email']
@@ -200,7 +205,7 @@ class FeaturedJobTest extends TestCase
             ]
         ];
 
-        $response = $this->postJson('/featured-job/store', $data);
+        $response = $this->postJson('/job/store', $data);
 
         $this->assertDatabaseHas('jobs', [
             'title' => $data['job']['title'],

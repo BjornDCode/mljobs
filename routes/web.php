@@ -12,9 +12,9 @@
 */
 
 Route::get('/', 'JobController@index');
+Route::get('/job/create', 'JobController@create');
+Route::post('/job/store', 'JobController@store');
 Route::get('/job/{id}', 'JobController@show');
-Route::get('/featured-job/create', 'FeaturedJobController@create');
-Route::post('/featured-job/store', 'FeaturedJobController@store');
 
 Route::post('/newsletter', 'NewsletterController@store');
 
