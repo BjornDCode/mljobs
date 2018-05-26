@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\User;
 use \Mockery;
 use Tests\TestCase;
 use App\StripeGateway;
@@ -35,8 +34,7 @@ class CreateJobTest extends TestCase
     /** @test */
     public function an_admin_can_create_a_job()
     {
-        $admin = factory(User::class)->create();
-        config([ 'app.administrators' => [ $admin->email ] ]);
+        $admin = $this->createAdminUser();
 
         $data = [
             'title' => 'A job title',

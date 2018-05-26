@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use App\User;
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
@@ -18,6 +19,13 @@ abstract class TestCase extends BaseTestCase
         });
 
         $this->withoutExceptionHandling();
+    }
+
+    protected function createAdminUser()
+    {
+        $admin = factory(User::class)->create();
+        config([ 'app.administrators' => [ $admin->email ] ]);
+        return $admin;
     }
 
 }

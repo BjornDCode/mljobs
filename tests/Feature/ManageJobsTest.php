@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Job;
-use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -15,7 +14,7 @@ class ManageJobsTest extends TestCase
     /** @test */
     public function an_administrator_can_access_the_job_dashboard()
     {
-        $admin = $this->createAdmin();
+        $admin = $this->createAdminUser();
 
         $this->actingAs($admin)
             ->get('/dashboard')
@@ -71,7 +70,7 @@ class ManageJobsTest extends TestCase
     /** @test */
     public function an_administrator_can_update_unpublished_an_job()
     {
-        $admin = $this->createAdmin();
+        $admin = $this->createAdminUser();
         $job = factory(Job::class)->states('unpublished')->create(); 
 
         $response = $this->actingAs($admin)->patch("/job/{$job->id}", [
@@ -110,7 +109,7 @@ class ManageJobsTest extends TestCase
     /** @test */
     public function an_administrator_can_delete_an_unpublished_job()
     {
-        $admin = $this->createAdmin();
+        $admin = $this->createAdminUser();
         $job = factory(Job::class)->states('unpublished')->create(); 
 
         $response = $this->actingAs($admin)->delete("/job/{$job->id}");
@@ -132,12 +131,6 @@ class ManageJobsTest extends TestCase
             'title' => $job->title
         ]);
         $response->assertRedirect('/');
-    }
-
-    private function createAdmin() {
-        $admin = factory(User::class)->create();
-        config([ 'app.administrators' => [ $admin->email ] ]);
-        return $admin;
     }
 
 }
