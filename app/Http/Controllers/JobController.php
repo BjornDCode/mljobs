@@ -31,13 +31,12 @@ class JobController extends Controller
     {
         $job = Job::findOrFail($id);
 
-        if (! $job->published) {
-            return redirect('/');
-        }
 
-        return view('jobs.show', [
-            'job' => $job
-        ]);
+        if ( $job->published || (auth()->check() && auth()->user()->isAdmin()) ) {
+            return view('jobs.show', [
+                'job' => $job
+            ]);
+        }
     }
 
     public function create() 

@@ -32,7 +32,7 @@ class ManageJobsTest extends TestCase
     /** @test */
     public function an_administrator_can_see_a_list_of_unpublished_jobs()
     {
-        $admin = $this->createAdmin();
+        $admin = $this->createAdminUser();
 
         $publishedJob = factory(Job::class)->states('full')->create();
         $unpublishedJob = factory(Job::class)->states('unpublished')->create();
@@ -43,28 +43,6 @@ class ManageJobsTest extends TestCase
         $this->assertFalse($response->data('jobs')->contains($publishedJob));
         $this->assertTrue($response->data('jobs')->contains($unpublishedJob));
         $this->assertTrue($response->data('jobs')->contains($anotherUnpublishedJob));
-    }
-
-    /** @test */
-    public function an_administrator_can_see_a_single_unpublished_job()
-    {
-        $admin = $this->createAdmin();
-        $job = factory(Job::class)->states('unpublished')->create();
-
-        $response = $this->actingAs($admin)->get("/unpublished/{$job->id}");
-        
-        $response->assertStatus(200);
-        $response->assertViewHas('job', $job->fresh());
-    }
-
-    /** @test */
-    public function a_visitor_cannot_see_a_single_unpublished_job()
-    {
-        $job = factory(Job::class)->states('unpublished')->create();
-
-        $response = $this->get("/unpublished/{$job->id}");
-        
-        $response->assertRedirect('/');
     }
 
     /** @test */

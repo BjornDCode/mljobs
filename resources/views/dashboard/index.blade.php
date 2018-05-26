@@ -16,7 +16,7 @@
         
         <ul class="jobs">
             @foreach ($jobs as $job)
-                @include('jobs._card', [ 'url' => 'unpublished' ])
+                @include('jobs._card')
             @endforeach
         </ul>
 

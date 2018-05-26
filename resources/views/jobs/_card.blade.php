@@ -1,5 +1,5 @@
 <li class="job job-card {{ $job->featured ? 'featured' : '' }}">
-    <a href="/{{ $url }}/{{ $job->id }}">
+    <a href="/job/{{ $job->id }}">
         @if ($job->company_logo)
             <img class="job__image" src="{{ $job->company_logo }}" alt="{{ $job->company }}">
         @else

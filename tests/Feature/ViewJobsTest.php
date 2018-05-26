@@ -110,6 +110,18 @@ class ViewJobsTest extends TestCase
     }
 
     /** @test */
+    public function an_administrator_can_see_a_single_unpublished_job()
+    {
+        $admin = $this->createAdminUser();
+        $job = factory(Job::class)->states('unpublished')->create();
+
+        $response = $this->actingAs($admin)->get("/job/{$job->id}");
+        
+        $response->assertStatus(200);
+        $response->assertViewHas('job', $job->fresh());
+    }
+
+    /** @test */
     public function a_user_cant_view_a_job_that_does_not_exist()
     {
         $response = $this->withExceptionHandling()->get("/job/1");
