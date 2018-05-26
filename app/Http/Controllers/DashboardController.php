@@ -11,7 +11,7 @@ class DashboardController extends Controller
     public function index() 
     {
         return view('dashboard.index', [
-            'jobs' => Job::where('published', 0)->latest()->get()
+            'jobs' => Job::latest()->get()
         ]);   
     }
 

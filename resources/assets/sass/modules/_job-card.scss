@@ -1,5 +1,9 @@
 .job-card {
     margin-bottom: $space-4;
+
+    &.highlighted {
+        border: 1px solid $color__success;
+    }
     
     &.featured {
         > a {

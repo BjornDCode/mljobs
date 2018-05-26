@@ -30,22 +30,6 @@ class ManageJobsTest extends TestCase
     }
 
     /** @test */
-    public function an_administrator_can_see_a_list_of_unpublished_jobs()
-    {
-        $admin = $this->createAdminUser();
-
-        $publishedJob = factory(Job::class)->states('full')->create();
-        $unpublishedJob = factory(Job::class)->states('unpublished')->create();
-        $anotherUnpublishedJob = factory(Job::class)->states('unpublished')->create();
-
-        $response = $this->actingAs($admin)->get('/dashboard');
-
-        $this->assertFalse($response->data('jobs')->contains($publishedJob));
-        $this->assertTrue($response->data('jobs')->contains($unpublishedJob));
-        $this->assertTrue($response->data('jobs')->contains($anotherUnpublishedJob));
-    }
-
-    /** @test */
     public function an_administrator_can_update_unpublished_an_job()
     {
         $admin = $this->createAdminUser();

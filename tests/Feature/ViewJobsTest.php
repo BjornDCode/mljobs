@@ -41,6 +41,21 @@ class ViewJobsTest extends TestCase
         $this->assertFalse($response->data('groups')['Today']->contains($unpublishedJob));
     }
 
+
+    /** @test */
+    public function an_administrator_can_see_a_list_of_all_jobs()
+    {
+        $admin = $this->createAdminUser();
+
+        $publishedJob = factory(Job::class)->states('full')->create();
+        $unpublishedJob = factory(Job::class)->states('unpublished')->create();
+
+        $response = $this->actingAs($admin)->get('/dashboard');
+
+        $this->assertTrue($response->data('jobs')->contains($publishedJob));
+        $this->assertTrue($response->data('jobs')->contains($unpublishedJob));
+    }
+
     /** @test */
     public function jobs_are_grouped_by_age()
     {
