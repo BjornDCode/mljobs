@@ -37,6 +37,8 @@ class JobController extends Controller
                 'job' => $job
             ]);
         }
+
+        return redirect('/');
     }
 
     public function create() 
