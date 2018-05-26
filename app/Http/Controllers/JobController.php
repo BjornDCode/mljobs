@@ -27,6 +27,15 @@ class JobController extends Controller
         ]);
     }
 
+    public function edit($id) 
+    {
+        $job = Job::findOrFail($id);
+        
+        return view('dashboard.edit', [
+            'job' => $job
+        ]);
+    }
+
     public function show($id) 
     {
         $job = Job::findOrFail($id);

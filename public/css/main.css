@@ -618,6 +618,13 @@ a {
 
 .job-card {
   margin-bottom: 1rem;
+  position: relative;
+}
+
+.job-card__actions {
+  position: absolute;
+  top: 0;
+  left: calc(100% + 2rem);
 }
 
 .job-card.highlighted {

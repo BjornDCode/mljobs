@@ -1,5 +1,12 @@
 .job-card {
     margin-bottom: $space-4;
+    position: relative;
+
+    &__actions {
+        position: absolute;
+        top: 0;
+        left: calc(100% + 2rem);
+       }
 
     &.highlighted {
         border: 1px solid $color__success;

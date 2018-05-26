@@ -40,9 +40,4 @@
         <button type="submit" class="button">Publish</button>
     </form>
 
-    <form class="content single-job-form" method="post" action="/job/{{ $job->id }}">
-        @method('DELETE')
-        {{ csrf_field() }}
-        <button type="submit" class="button">Delete</button>
-    </form>
 @endsection

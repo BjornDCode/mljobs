@@ -33,4 +33,16 @@
         </span>
 
     </a>
+
+    @if( auth()->check() && auth()->user()->isAdmin() )
+    <div class="job-card__actions">
+        <a class="button" href="/job/{{$job->id}}/edit">Edit</a>
+        <form class="content single-job-form" method="post" action="/job/{{ $job->id }}">
+            @method('DELETE')
+            {{ csrf_field() }}
+            <button type="submit" class="button">Delete</button>
+        </form>
+    </div>
+    @endif
+
 </li>

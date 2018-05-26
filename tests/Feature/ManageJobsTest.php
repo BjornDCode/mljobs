@@ -30,6 +30,27 @@ class ManageJobsTest extends TestCase
     }
 
     /** @test */
+    public function an_administrator_can_view_the_job_edit_page()
+    {
+        $admin = $this->createAdminUser();
+        $job = factory(Job::class)->create();
+
+        $response = $this->actingAs($admin)->get("/job/{$job->id}/edit");
+
+        $response->assertStatus(200);
+    }
+    
+    /** @test */
+    public function a_visitor_cannot_view_the_job_edit_page()
+    {
+        $job = factory(Job::class)->create();
+
+        $response = $this->get("/job/{$job->id}/edit");
+
+        $response->assertRedirect('/');
+    }
+
+    /** @test */
     public function an_administrator_can_update_unpublished_an_job()
     {
         $admin = $this->createAdminUser();

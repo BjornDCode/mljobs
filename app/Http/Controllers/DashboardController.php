@@ -15,13 +15,4 @@ class DashboardController extends Controller
         ]);   
     }
 
-    public function show($id) 
-    {
-        $job = Job::findOrFail($id);
-        
-        return view('dashboard.show', [
-            'job' => $job
-        ]);
-    }
-
 }
