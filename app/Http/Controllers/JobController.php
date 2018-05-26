@@ -7,10 +7,6 @@ use App\Customer;
 use Carbon\Carbon;
 use App\StripeGateway;
 use Illuminate\Http\Request;
-use App\Mail\FeaturedJobPurchased;
-use Illuminate\Support\Facades\Mail;
-
-
 
 class JobController extends Controller
 {
