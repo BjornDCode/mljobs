@@ -50,6 +50,7 @@ class FeaturedJobController extends Controller
         ]);
 
         $job = Job::create(array_merge($data['job'], [
+            'description' => markdown($data['job']['description']),
             'featured' => 1,
             'published' => 1,
             'company_logo' => array_key_exists('logo', $data) ? $data['logo'] : null,

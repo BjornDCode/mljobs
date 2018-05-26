@@ -864,7 +864,7 @@ textarea.has-error {
 
 textarea {
   padding: 0.5rem;
-  height: 8rem;
+  height: 16rem;
   resize: vertical;
   margin-bottom: 0;
 }

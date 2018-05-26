@@ -30887,7 +30887,10 @@ var render = function() {
             }
           ],
           class: { "has-error": _vm.hasError("job.description") },
-          attrs: { placeholder: "Description*", required: "" },
+          attrs: {
+            placeholder: "Description* (Supports Markdown)",
+            required: ""
+          },
           domProps: { value: _vm.form.job.description },
           on: {
             input: function($event) {

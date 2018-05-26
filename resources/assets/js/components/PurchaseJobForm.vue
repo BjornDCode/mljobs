@@ -8,7 +8,7 @@
                     :class="{'has-error': hasError('job.title')}"
                     required
                 >
-            <textarea placeholder="Description*" 
+            <textarea placeholder="Description* (Supports Markdown)" 
                     v-model="form.job.description"
                     :class="{'has-error': hasError('job.description')}"
                     required

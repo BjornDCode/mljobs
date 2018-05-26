@@ -49,7 +49,6 @@ class FeaturedJobTest extends TestCase
         $gateway->shouldHaveReceived('charge')->once();
         $this->assertDatabaseHas('jobs', [
             'title' => $data['job']['title'],
-            'description' => $data['job']['description'],
             'published' => 1
         ]);
     }
@@ -82,7 +81,6 @@ class FeaturedJobTest extends TestCase
         $gateway->shouldHaveReceived('charge')->once();
         $this->assertDatabaseHas('jobs', [
             'title' => $data['job']['title'],
-            'description' => $data['job']['description'],
             'company_logo' => $data['logo'],
             'published' => 1
         ]);
@@ -184,6 +182,30 @@ class FeaturedJobTest extends TestCase
             return $mail->hasTo($data['email']) &&
                    $mail->job->id === $job->original->id;
         });
+    }
+
+    /** @test */
+    public function the_job_description_can_be_written_in_markdown_and_parsed_to_html()
+    {
+        $gateway = Mockery::spy(StripeGateway::class);
+        $this->app->instance(StripeGateway::class, $gateway);
+
+        $data = [
+            'token' => 'a-valid-stripe-token',
+            'email' => 'test@example.com',
+            'job' => [
+                'title' => 'A job title',
+                'description' => 'This is the job description',
+                'apply_url' => 'http://example.com',
+            ]
+        ];
+
+        $response = $this->postJson('/featured-job/store', $data);
+
+        $this->assertDatabaseHas('jobs', [
+            'title' => $data['job']['title'],
+            'description' => "<p>{$data['job']['description']}</p>",
+        ]);
     }
 
 }
