@@ -26,7 +26,7 @@
                     @svg('logo')
                 </a>
                 @if (!request()->is('featured-job/create'))
-                    <a class="button" href="/featured-job/create">Post a job</a>
+                    <a class="button" href="/job/create">Post a job</a>
                 @endif
             </header>
             @yield('content')
