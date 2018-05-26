@@ -3,7 +3,7 @@
 @section('content')
     <main class="content">
         <newsletter-form></newsletter-form>
-        @include('jobs._filters')
+        {{-- @include('jobs._filters') --}}
 
         <div class="jobs">
             @foreach ($groups as $title => $jobs)
