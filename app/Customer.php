@@ -27,7 +27,6 @@ class Customer extends Model
 
         $job = Job::create(array_merge($data['job'], [
             'description' => markdown($data['job']['description']),
-            'featured' => 1,
             'published' => 1,
             'customer_id' => $this->id
         ]));

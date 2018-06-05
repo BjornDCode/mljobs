@@ -130,7 +130,7 @@ class JobController extends Controller
         });
     }
 
-    private function validateAadminJobData($request) 
+    private function validateAdminJobData($request) 
     {
         return $request->validate([
             'title' => 'nullable',
