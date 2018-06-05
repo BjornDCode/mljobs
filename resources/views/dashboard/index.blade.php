@@ -13,6 +13,10 @@
                 </form>
             </div> 
         </header>
+
+        Create job form
+
+        <hr>
         
         <ul class="jobs">
             @foreach ($jobs as $job)

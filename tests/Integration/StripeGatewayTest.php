@@ -26,7 +26,7 @@ class StripeGatewayTest extends TestCase
 
         $charge = $stripeGateway->charge($validToken);
 
-        $this->assertEquals($charge->id, \Stripe\Charge::retrieve($charge->id)->id);
+        $this->assertEquals($charge->id(), \Stripe\Charge::retrieve($charge->id())->id);
     }
 
     /** @test */
@@ -45,8 +45,7 @@ class StripeGatewayTest extends TestCase
 
         $this->expectException(PaymentFailedException::class);
 
-        $charge = $stripeGateway->charge($invalidToken);
-
+        $stripeGateway->charge($invalidToken);
     }
 
 }

@@ -20,9 +20,9 @@ class Customer extends Model
     public function purchaseJobListing($data, $gateway) 
     {
         try {
-            $gateway->charge($data['token']);
+            $charge = $gateway->charge($data['token']);
         } catch (PaymentFailedException $e) {
-            return response('The payment could not be processed', 422);
+            return NULL;
         }
 
         $job = Job::create(array_merge($data['job'], [
@@ -31,6 +31,13 @@ class Customer extends Model
             'published' => 1,
             'customer_id' => $this->id
         ]));
+
+        Payment::create([
+            'job_id' => $job->id,
+            'customer_id' => $this->id,
+            'stripe_charge_id' => $charge->id(),
+            'amount' => $charge->amount()
+        ]);
 
         Mail::to($this)->send(new FeaturedJobPurchased($job));
 

@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use \Mockery;
+use App\Charge;
+use App\Payment;
 use Tests\TestCase;
 use App\StripeGateway;
 use App\Mail\FeaturedJobPurchased;
@@ -58,7 +60,8 @@ class CreateJobTest extends TestCase
     /** @test */
     public function a_user_can_purchase_a_job_listing()
     {
-        $gateway = Mockery::spy(StripeGateway::class);
+        $gateway = Mockery::mock(StripeGateway::class);
+        $gateway->shouldReceive('charge')->andReturn(new Charge('a_valid_charge_id', 'the_payment_amount'));
         $this->app->instance(StripeGateway::class, $gateway);
 
         $data = [
@@ -78,18 +81,49 @@ class CreateJobTest extends TestCase
         $response = $this->postJson('/job/store', $data);
 
         $response->assertStatus(201);
-        $gateway->shouldHaveReceived('charge')->once();
         $this->assertDatabaseHas('jobs', [
             'title' => $data['job']['title'],
             'published' => 1
         ]);
     }
 
+    /** @test */
+    public function a_payment_will_be_created_when_a_user_purchases_a_job()
+    {
+        $gateway = Mockery::mock(StripeGateway::class);
+        $gateway->shouldReceive('charge')->andReturn(new Charge('a_valid_charge_id', 'the_payment_amount'));
+        $this->app->instance(StripeGateway::class, $gateway);
+
+        $data = [
+            'token' => 'a-valid-stripe-token',
+            'email' => 'test@example.com',
+            'job' => [
+                'title' => 'A job title',
+                'description' => 'This is the job description',
+                'apply_url' => 'http://example.com',
+                'company' => null,
+                'location' => null,
+                'salary' => null,
+                'type' => null,
+            ]
+        ];
+
+        $response = $this->postJson('/job/store', $data);
+
+        $this->assertEquals(1, Payment::count());
+        $this->assertDatabaseHas('payments', [
+            'job_id' => $response->original['job']->id,
+            'customer_id' => $response->original['customer']->id,
+            'stripe_charge_id' => 'a_valid_charge_id',
+            'amount' => 'the_payment_amount',
+        ]);
+    }
     
     /** @test */
     public function a_user_can_purchase_a_job_listing_with_a_company_logo()
     {
-        $gateway = Mockery::spy(StripeGateway::class);
+        $gateway = Mockery::mock(StripeGateway::class);
+        $gateway->shouldReceive('charge')->andReturn(new Charge('a_valid_charge_id', 'the_payment_amount'));
         $this->app->instance(StripeGateway::class, $gateway);
 
         $data = [
@@ -121,7 +155,7 @@ class CreateJobTest extends TestCase
         $gateway = Mockery::mock(StripeGateway::class);
         $this->app->instance(StripeGateway::class, $gateway);
         $gateway->shouldReceive('charge')->andThrow(new PaymentFailedException);
-
+        
         $data = [
             'token' => 'an-invalid-stripe-token',
             'email' => 'test@example.com',
@@ -133,6 +167,8 @@ class CreateJobTest extends TestCase
         ];
 
         $response = $this->postJson('/job/store', $data);
+        // dd($gateway);
+        // dd($response->original);
 
         $response->assertStatus(422);
         $this->assertDatabaseMissing('jobs', [
@@ -189,7 +225,8 @@ class CreateJobTest extends TestCase
     public function a_user_is_emailed_a_receipt_when_they_purchase_a_job()
     {
         Mail::fake();
-        $gateway = Mockery::spy(StripeGateway::class);
+        $gateway = Mockery::mock(StripeGateway::class);
+        $gateway->shouldReceive('charge')->andReturn(new Charge('a_valid_charge_id', 'the_payment_amount'));
         $this->app->instance(StripeGateway::class, $gateway);
 
         $data = [
@@ -202,21 +239,22 @@ class CreateJobTest extends TestCase
             ]
         ];
 
-        $job = $this->postJson('/job/store', $data);
+        $response = $this->postJson('/job/store', $data);
 
         $this->assertDatabaseHas('customers', [
             'email' => $data['email']
         ]);
-        Mail::assertSent(FeaturedJobPurchased::class, function($mail) use($job, $data) {
+        Mail::assertSent(FeaturedJobPurchased::class, function($mail) use($response, $data) {
             return $mail->hasTo($data['email']) &&
-                   $mail->job->id === $job->original->id;
+                   $mail->job->id === $response->original['job']->id;
         });
     }
 
     /** @test */
     public function the_job_description_can_be_written_in_markdown_and_parsed_to_html()
     {
-        $gateway = Mockery::spy(StripeGateway::class);
+        $gateway = Mockery::mock(StripeGateway::class);
+        $gateway->shouldReceive('charge')->andReturn(new Charge('a_valid_charge_id', 'the_payment_amount'));
         $this->app->instance(StripeGateway::class, $gateway);
 
         $data = [

@@ -74,9 +74,14 @@ class JobController extends Controller
             'email' => $data['email']
         ]);
 
-        $job = $customer->purchaseJobListing($data, $gateway);
+        if (!$job = $customer->purchaseJobListing($data, $gateway)) {
+            return response('The payment could not be processed', 422);
+        }
 
-        return $job;
+        return response()->json([
+            'job' => $job,
+            'customer' => $customer
+        ], 201);
     }
 
     public function update($id, Request $request) 

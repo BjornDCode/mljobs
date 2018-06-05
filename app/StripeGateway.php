@@ -2,7 +2,7 @@
 
 namespace App;
 
-use Stripe\Charge;
+use Stripe\Charge as StripeCharge;
 use Stripe\Stripe;
 use App\Exceptions\PaymentFailedException;
 
@@ -17,7 +17,7 @@ class StripeGateway
     public function charge($token) 
     {
         try {
-            $charge = Charge::create([
+            $charge = StripeCharge::create([
                 'amount' => 4900,
                 'currency' => 'usd',
                 'source' => $token
@@ -26,7 +26,7 @@ class StripeGateway
             throw new PaymentFailedException;
         }
 
-        return $charge;
+        return new Charge($charge->id, $charge->amount);
     }
 
 }
