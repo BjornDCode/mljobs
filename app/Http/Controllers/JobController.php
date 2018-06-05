@@ -58,7 +58,7 @@ class JobController extends Controller
     public function store(Request $request, StripeGateway $gateway) 
     {
         if (auth()->check() && auth()->user()->isAdmin()) {
-            $data = $this->validateAuthJobData($request);
+            $data = $this->validateAdminJobData($request);
 
             Job::create(array_merge($data, [
                 'description' => markdown($data['description']),
@@ -86,7 +86,7 @@ class JobController extends Controller
 
     public function update($id, Request $request) 
     {
-        $data = $this->validateAuthJobData($request);
+        $data = $this->validateAdminJobData($request);
 
         $job = Job::findOrFail($id);
 
@@ -130,7 +130,7 @@ class JobController extends Controller
         });
     }
 
-    private function validateAuthJobData($request) 
+    private function validateAadminJobData($request) 
     {
         return $request->validate([
             'title' => 'nullable',
