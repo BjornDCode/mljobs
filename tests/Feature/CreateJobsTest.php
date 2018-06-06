@@ -58,10 +58,10 @@ class CreateJobTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_purchase_a_job_listing_basic()
+    public function a_user_can_purchase_a_basic_job_listing()
     {
         $gateway = Mockery::mock(StripeGateway::class);
-        $gateway->shouldReceive('charge')->andReturn(new Charge('a_valid_charge_id', 'the_payment_amount'));
+        $gateway->shouldReceive('charge')->andReturn(new Charge('a_valid_charge_id', '4900'));
         $this->app->instance(StripeGateway::class, $gateway);
 
         $data = [
@@ -87,13 +87,18 @@ class CreateJobTest extends TestCase
             'published' => 1,
             'featured' => 0
         ]);
+
+        $this->assertDatabaseHas('payments', [
+            'job_id' => $response->original['job']->id,
+            'amount' => '4900',
+        ]);
     }
 
         /** @test */
-    public function a_user_can_purchase_a_featured_job_listing_basic()
+    public function a_user_can_purchase_a_featured_job_listing_()
     {
         $gateway = Mockery::mock(StripeGateway::class);
-        $gateway->shouldReceive('charge')->andReturn(new Charge('a_valid_charge_id', 'the_payment_amount'));
+        $gateway->shouldReceive('charge')->andReturn(new Charge('a_valid_charge_id', '9900'));
         $this->app->instance(StripeGateway::class, $gateway);
 
         $data = [
@@ -118,6 +123,11 @@ class CreateJobTest extends TestCase
             'title' => $data['job']['title'],
             'published' => 1,
             'featured' => 1
+        ]);
+
+        $this->assertDatabaseHas('payments', [
+            'job_id' => $response->original['job']->id,
+            'amount' => '9900',
         ]);
     }
 
