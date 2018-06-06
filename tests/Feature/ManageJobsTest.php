@@ -59,6 +59,7 @@ class ManageJobsTest extends TestCase
         $response = $this->actingAs($admin)->patch("/job/{$job->id}", [
             'title' => 'new title',
             'description' => 'updated description',
+            'published' => 1
         ]);
 
         $job = $job->fresh();
@@ -114,6 +115,26 @@ class ManageJobsTest extends TestCase
             'title' => $job->title
         ]);
         $response->assertRedirect('/');
+    }
+
+    /** @test */
+    public function an_administrator_can_unpublish_a_job()
+    {
+        $admin = $this->createAdminUser();
+        $job = factory(Job::class)->states('full')->create(); 
+
+        $response = $this->actingAs($admin)->patch("/job/{$job->id}", [
+            'published' => 0
+        ]);
+
+        $job = $job->fresh();
+
+        $this->assertEquals(0, $job->published);
+        $this->assertDatabaseHas('jobs', [
+            'title' => $job->title,
+            'published' => 0
+        ]);
+        $response->assertRedirect('/dashboard');
     }
 
 }

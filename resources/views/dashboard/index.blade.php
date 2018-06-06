@@ -48,6 +48,11 @@
                 <label>Company Logo</label>
                 <image-upload></image-upload>
             </div>
+            <div class="group">
+                <label>Published</label>
+                <input type="hidden" name="published" value="0">
+                <input type="checkbox" name="published" value="1">
+            </div>
             <button type="submit" class="button">Publish</button>
         </form>
 

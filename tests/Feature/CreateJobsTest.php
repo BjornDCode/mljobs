@@ -34,7 +34,32 @@ class CreateJobTest extends TestCase
     }
 
     /** @test */
-    public function an_admin_can_create_a_job()
+    public function an_admin_can_create_a_published_job()
+    {
+        $admin = $this->createAdminUser();
+
+        $data = [
+            'title' => 'A job title',
+            'description' => 'This is the job description',
+            'apply_url' => 'http://example.com',
+            'company' => null,
+            'location' => null,
+            'salary' => null,
+            'type' => null,
+            'published' => 1,
+        ];
+
+        $response = $this->actingAs($admin)->post('/job/store', $data);
+
+        $response->assertRedirect('/dashboard');
+        $this->assertDatabaseHas('jobs', [
+            'title' => $data['title'],
+            'published' => 1
+        ]);
+    }
+
+    /** @test */
+    public function an_admin_can_create_an_unpublished_job()
     {
         $admin = $this->createAdminUser();
 
@@ -50,10 +75,10 @@ class CreateJobTest extends TestCase
 
         $response = $this->actingAs($admin)->post('/job/store', $data);
 
-        $response->assertRedirect('/');
+        $response->assertRedirect('/dashboard');
         $this->assertDatabaseHas('jobs', [
             'title' => $data['title'],
-            'published' => 1
+            'published' => 0
         ]);
     }
 

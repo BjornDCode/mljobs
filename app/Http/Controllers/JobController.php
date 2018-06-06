@@ -62,7 +62,6 @@ class JobController extends Controller
 
             Job::create(array_merge($data, [
                 'description' => markdown($data['description']),
-                'published' => 1,
             ]));
 
             return redirect('/dashboard');
@@ -90,9 +89,7 @@ class JobController extends Controller
 
         $job = Job::findOrFail($id);
 
-        $job->update(array_merge($data, [
-            'published' => 1,
-        ]));
+        $job->update($data);
 
         return redirect('/dashboard');
     }
@@ -141,6 +138,7 @@ class JobController extends Controller
             'salary' => 'nullable',
             'type' => 'nullable',
             'apply_url' => 'nullable|url',
+            'published' => 'boolean'
         ]);
     }
 

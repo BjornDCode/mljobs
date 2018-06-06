@@ -36,6 +36,11 @@
             <label>Company Logo</label>
             <image-upload logo="{{ $job->company_logo }}"></image-upload>
         </div>
+        <div class="group">
+            <label>Published</label>
+            <input type="hidden" name="published" value="0">
+            <input type="checkbox" name="published" @if($job->published) checked @endif value="1">
+        </div>
         <button type="submit" class="button">Publish</button>
     </form>
 @endsection
