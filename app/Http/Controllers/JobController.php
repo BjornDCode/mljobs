@@ -65,7 +65,7 @@ class JobController extends Controller
                 'published' => 1,
             ]));
 
-            return redirect('/');
+            return redirect('/dashboard');
         }
 
         $data = $this->validateUserJobData($request);

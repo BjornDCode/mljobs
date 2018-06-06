@@ -38,5 +38,4 @@
         </div>
         <button type="submit" class="button">Publish</button>
     </form>
-
 @endsection

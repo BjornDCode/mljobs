@@ -14,7 +14,42 @@
             </div> 
         </header>
 
-        Create job form
+        <form class="content publish-job-form" method="post" action="/job/store">
+            {{ csrf_field() }}
+            <div class="group">
+                <label>Title</label>
+                <input type="text" name="title">
+            </div>
+            <div class="group">
+                <label>Description</label>
+                <textarea name="description"></textarea>
+            </div>
+            <div class="group">
+                <label>Company</label>
+                <input type="text" name="company">
+            </div>
+            <div class="group">
+                <label>Location</label>
+                <input type="text" name="location">
+            </div>
+            <div class="group">
+                <label>Salary</label>
+                <input type="text" name="salary">
+            </div>
+            <div class="group">
+                <label>Type</label>
+                <input type="text" name="type">
+            </div>
+            <div class="group">
+                <label>URL</label>
+                <input type="text" name="apply_url">
+            </div>
+            <div class="group">
+                <label>Company Logo</label>
+                <image-upload></image-upload>
+            </div>
+            <button type="submit" class="button">Publish</button>
+        </form>
 
         <hr>
         
