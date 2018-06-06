@@ -6,7 +6,16 @@
 
     &__logo {
         display: block;
-        width: 4rem;
+        width: 10rem;
+        svg {
+            max-width: 100%;
+        }
+    }
+
+    @include breakpoint('tablet') {
+        &__logo {
+            width: 12rem;
+        }
     }
 
 }

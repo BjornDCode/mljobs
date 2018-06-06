@@ -429,7 +429,17 @@ a {
 
 .page-header__logo {
   display: block;
-  width: 4rem;
+  width: 10rem;
+}
+
+.page-header__logo svg {
+  max-width: 100%;
+}
+
+@media (min-width: 768px) {
+  .page-header__logo {
+    width: 12rem;
+  }
 }
 
 .newsletter {

@@ -1076,7 +1076,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(11);
-module.exports = __webpack_require__(51);
+module.exports = __webpack_require__(54);
 
 
 /***/ }),
@@ -1100,7 +1100,7 @@ Vue.component('newsletter-form', __webpack_require__(34));
 Vue.component('purchase-job-form', __webpack_require__(37));
 Vue.component('type-select-input', __webpack_require__(45));
 Vue.component('logo-file-input', __webpack_require__(48));
-Vue.component('image-upload', __webpack_require__(59));
+Vue.component('image-upload', __webpack_require__(51));
 
 var app = new Vue({
     el: '#app'
@@ -31668,27 +31668,14 @@ if (false) {
 
 /***/ }),
 /* 51 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 52 */,
-/* 53 */,
-/* 54 */,
-/* 55 */,
-/* 56 */,
-/* 57 */,
-/* 58 */,
-/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(61)
+var __vue_script__ = __webpack_require__(52)
 /* template */
-var __vue_template__ = __webpack_require__(60)
+var __vue_template__ = __webpack_require__(53)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -31727,7 +31714,52 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 60 */
+/* 52 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['logo'],
+
+    data: function data() {
+        return {
+            imageFile: undefined,
+            imagePath: this.logo
+        };
+    },
+
+    methods: {
+        handleFileChange: function handleFileChange(image) {
+            this.imageFile = image;
+            this.uploadImage();
+            // this.uploadImage();
+        },
+        uploadImage: function uploadImage() {
+            var _this = this;
+
+            var formData = new FormData();
+            formData.append('image', this.imageFile);
+            axios.post('/images/upload', formData).then(function (response) {
+                _this.imagePath = response.data.path;
+            }).catch(function (errpr) {
+                _this.loading = false;
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -31777,49 +31809,10 @@ if (false) {
 }
 
 /***/ }),
-/* 61 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/* 54 */
+/***/ (function(module, exports) {
 
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['logo'],
-
-    data: function data() {
-        return {
-            imageFile: undefined,
-            imagePath: this.logo
-        };
-    },
-
-    methods: {
-        handleFileChange: function handleFileChange(image) {
-            this.imageFile = image;
-            this.uploadImage();
-            // this.uploadImage();
-        },
-        uploadImage: function uploadImage() {
-            var _this = this;
-
-            var formData = new FormData();
-            formData.append('image', this.imageFile);
-            axios.post('/images/upload', formData).then(function (response) {
-                _this.imagePath = response.data.path;
-            }).catch(function (errpr) {
-                _this.loading = false;
-            });
-        }
-    }
-});
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
