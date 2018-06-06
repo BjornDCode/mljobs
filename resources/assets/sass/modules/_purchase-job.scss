@@ -1,22 +1,79 @@
 .purchase-job {
     margin-top: 4rem;
 
-    .benefits {
-        margin-bottom: 4rem;
+    h1 {
+        margin-bottom: $space-8;
     }
 
-    .benefit {
+    .plans {
         display: flex;
-        align-items: center;
-        color: $color__dark;
+        flex-wrap: wrap;
+        margin-bottom: $space-8;
+    }
+
+    .plan {
+        width: 100%;
         margin-bottom: $space-4;
 
-        .icon {
-            width: 2rem;
-            stroke: $color__success;
-            stroke-width: 1px;
-            margin-right: $space-4;
+        input {
+            display: none;
         }
+
+        label {
+            display: block;
+            padding: $space-6;
+            background-color: $color__light--dark;
+            cursor: pointer;
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        h4 {
+            font-size: $text-xl;
+            margin-bottom: $space-4;
+
+            span {
+                font-weight: normal;
+            }
+        }
+
+        li {
+            font-size: $text-lg;
+            color: $color__dark--lighter;
+            padding-left: $space-6;
+            line-height: $leading-normal;
+            position: relative;
+
+            &.highlighted {
+                font-weight: $weight-bold;
+            }
+
+            &:before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 6px;
+                width: 18px;
+                height: 14px;
+                background-image: url('/icons/check_grey.svg');
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+        }
+
+        input:checked + label {
+            background: $color__primary;
+
+            h4, li {
+                color: $color__light;
+            }
+
+            li:before {
+                background-image: url('/icons/check_white.svg');
+            }
+        }
+
     }
 
     .form-group {
@@ -56,10 +113,12 @@
 
     @include breakpoint('tablet') {
 
-        .benefit {
-            font-size: $text-2xl;
-            .icon {
-                width: 3rem;
+        .plan {
+            width: auto;
+            flex: 1;
+
+            &:first-of-type {
+                margin-right: 30px;
             }
         }
 

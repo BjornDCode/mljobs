@@ -157,6 +157,17 @@ table {
   }
 }
 
+.fade-in-enter-active,
+.fade-in-leave-active {
+  -webkit-transition: opacity 150ms;
+  transition: opacity 150ms;
+}
+
+.fade-in-enter,
+.fade-in-leave-to {
+  opacity: 0;
+}
+
 @font-face {
   font-family: "Fira Sans";
   font-weight: 400;
@@ -512,26 +523,83 @@ a {
   margin-top: 4rem;
 }
 
-.purchase-job .benefits {
-  margin-bottom: 4rem;
+.purchase-job h1 {
+  margin-bottom: 2rem;
 }
 
-.purchase-job .benefit {
+.purchase-job .plans {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  color: #1B1B1B;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.purchase-job .plan {
+  width: 100%;
   margin-bottom: 1rem;
 }
 
-.purchase-job .benefit .icon {
-  width: 2rem;
-  stroke: #20bf6b;
-  stroke-width: 1px;
-  margin-right: 1rem;
+.purchase-job .plan input {
+  display: none;
+}
+
+.purchase-job .plan label {
+  display: block;
+  padding: 1.5rem;
+  background-color: #F7F7F7;
+  cursor: pointer;
+  height: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.purchase-job .plan h4 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.purchase-job .plan h4 span {
+  font-weight: normal;
+}
+
+.purchase-job .plan li {
+  font-size: 1.125rem;
+  color: #757575;
+  padding-left: 1.5rem;
+  line-height: 1.5;
+  position: relative;
+}
+
+.purchase-job .plan li.highlighted {
+  font-weight: 700;
+}
+
+.purchase-job .plan li:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 18px;
+  height: 14px;
+  background-image: url("/icons/check_grey.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.purchase-job .plan input:checked + label {
+  background: #465064;
+}
+
+.purchase-job .plan input:checked + label h4,
+.purchase-job .plan input:checked + label li {
+  color: #ffffff;
+}
+
+.purchase-job .plan input:checked + label li:before {
+  background-image: url("/icons/check_white.svg");
 }
 
 .purchase-job .form-group {
@@ -570,12 +638,15 @@ a {
 }
 
 @media (min-width: 768px) {
-  .purchase-job .benefit {
-    font-size: 1.5rem;
+  .purchase-job .plan {
+    width: auto;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
   }
 
-  .purchase-job .benefit .icon {
-    width: 3rem;
+  .purchase-job .plan:first-of-type {
+    margin-right: 30px;
   }
 
   .purchase-job .form-group {

@@ -377,33 +377,6 @@ module.exports = {
 /* 1 */
 /***/ (function(module, exports) {
 
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
 /* globals __VUE_SSR_CONTEXT__ */
 
 // IMPORTANT: Do NOT use ES2015 features in this file.
@@ -507,6 +480,33 @@ module.exports = function normalizeComponent (
     options: options
   }
 }
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
 
 
 /***/ }),
@@ -1076,7 +1076,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(11);
-module.exports = __webpack_require__(48);
+module.exports = __webpack_require__(51);
 
 
 /***/ }),
@@ -1098,8 +1098,8 @@ window.Vue = __webpack_require__(31);
 
 Vue.component('newsletter-form', __webpack_require__(34));
 Vue.component('purchase-job-form', __webpack_require__(37));
-Vue.component('type-select-input', __webpack_require__(42));
-Vue.component('logo-file-input', __webpack_require__(45));
+Vue.component('type-select-input', __webpack_require__(45));
+Vue.component('logo-file-input', __webpack_require__(48));
 
 var app = new Vue({
     el: '#app'
@@ -12957,7 +12957,7 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(32).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(32).setImmediate))
 
 /***/ }),
 /* 32 */
@@ -13024,7 +13024,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
 /* 33 */
@@ -13217,14 +13217,14 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(5)))
 
 /***/ }),
 /* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(35)
 /* template */
@@ -13464,11 +13464,11 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(38)
 /* template */
-var __vue_template__ = __webpack_require__(41)
+var __vue_template__ = __webpack_require__(44)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -13514,6 +13514,38 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__CreditCardInput__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__CreditCardInput___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__CreditCardInput__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -13588,22 +13620,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-var stripe = Stripe(window.AIJobs.stripe.publicKey);
-var elements = stripe.elements();
-
-var cardOptions = {
-    style: {
-        base: {
-            fontSize: '16px',
-            lineHeight: '2.5rem',
-            fontFamily: 'Ubuntu',
-            fontWeight: 'bold'
-        }
-    }
-};
-var card = elements.create('card', cardOptions);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    components: {
+        CreditCardInput: __WEBPACK_IMPORTED_MODULE_1__CreditCardInput___default.a
+    },
     data: function data() {
         return {
             errors: {},
@@ -13622,7 +13643,8 @@ var card = elements.create('card', cardOptions);
                     location: '',
                     salary: '',
                     type: '',
-                    apply_url: ''
+                    apply_url: '',
+                    featured: null
                 }
             }
         };
@@ -13636,13 +13658,11 @@ var card = elements.create('card', cardOptions);
         },
         formHasErrors: function formHasErrors() {
             return !Object(__WEBPACK_IMPORTED_MODULE_0_lodash__["isEmpty"])(this.errors);
+        },
+        price: function price() {
+            return this.form.job.featured === 1 ? 99 : 49;
         }
     },
-
-    mounted: function mounted() {
-        card.mount(this.$refs.card);
-    },
-
 
     methods: {
         hasError: function hasError(field) {
@@ -13653,7 +13673,7 @@ var card = elements.create('card', cardOptions);
 
             this.loading = true;
 
-            stripe.createToken(card).then(function (result) {
+            this.$refs.cardInput.createToken().then(function (result) {
                 if (result.error) {
                     _this.loading = false;
                     return;
@@ -13683,8 +13703,8 @@ var card = elements.create('card', cardOptions);
         createJob: function createJob() {
             var _this3 = this;
 
-            axios.post('/featured-job/store', this.form).then(function (response) {
-                _this3.job = response.data;
+            axios.post('/job/store', this.form).then(function (response) {
+                _this3.job = response.data.job;
                 _this3.errors = {};
                 _this3.loading = false;
                 _this3.successful = true;
@@ -30800,7 +30820,7 @@ var card = elements.create('card', cardOptions);
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(40)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(40)(module)))
 
 /***/ }),
 /* 40 */
@@ -30834,301 +30854,507 @@ module.exports = function(module) {
 /* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(42)
+/* template */
+var __vue_template__ = __webpack_require__(43)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/CreditCardInput.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3419338c", Component.options)
+  } else {
+    hotAPI.reload("data-v-3419338c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 42 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mounted: function mounted() {
+        this.stripe = Stripe(window.AIJobs.stripe.publicKey);
+        this.elements = this.stripe.elements();
+
+        var cardOptions = {
+            style: {
+                base: {
+                    fontSize: '16px',
+                    lineHeight: '2.5rem',
+                    fontFamily: 'Ubuntu',
+                    fontWeight: 'bold'
+                }
+            }
+        };
+        this.card = this.elements.create('card', cardOptions);
+
+        this.card.mount(this.$el);
+    },
+
+    methods: {
+        createToken: function createToken() {
+            return this.stripe.createToken(this.card);
+        }
+    }
+});
+
+/***/ }),
+/* 43 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "credit-card-input" })
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3419338c", module.exports)
+  }
+}
+
+/***/ }),
+/* 44 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "form",
-    {
-      attrs: { method: "post", enctype: "multipart/form-data" },
-      on: {
-        submit: function($event) {
-          $event.preventDefault()
-          return _vm.handleFormSubmit($event)
-        }
-      }
-    },
+    "div",
     [
-      _c("div", { staticClass: "form-group" }, [
-        _c("span", { staticClass: "form-group__label hide-mobile" }, [
-          _vm._v("Job")
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.form.job.title,
-              expression: "form.job.title"
-            }
-          ],
-          class: { "has-error": _vm.hasError("job.title") },
-          attrs: { type: "text", placeholder: "Title*", required: "" },
-          domProps: { value: _vm.form.job.title },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.form.job, "title", $event.target.value)
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("textarea", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.form.job.description,
-              expression: "form.job.description"
-            }
-          ],
-          class: { "has-error": _vm.hasError("job.description") },
-          attrs: {
-            placeholder: "Description* (Supports Markdown)",
-            required: ""
-          },
-          domProps: { value: _vm.form.job.description },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.form.job, "description", $event.target.value)
-            }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "form-group" },
-        [
-          _c("span", { staticClass: "form-group__label hide-mobile" }, [
-            _vm._v("Company")
-          ]),
-          _vm._v(" "),
+      _c("div", { staticClass: "plans" }, [
+        _c("div", { staticClass: "plan" }, [
           _c("input", {
             directives: [
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.form.job.company,
-                expression: "form.job.company"
+                value: _vm.form.job.featured,
+                expression: "form.job.featured"
               }
             ],
-            attrs: { type: "text", placeholder: "Company Name" },
-            domProps: { value: _vm.form.job.company },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.form.job, "company", $event.target.value)
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("logo-file-input", {
+            attrs: { id: "basic", type: "radio", name: "featured" },
+            domProps: { value: 0, checked: _vm._q(_vm.form.job.featured, 0) },
             on: {
               change: function($event) {
-                _vm.imageFile = $event
-              }
-            }
-          })
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "form-group inline-group" },
-        [
-          _c("span", { staticClass: "form-group__label hide-mobile" }, [
-            _vm._v("Details")
-          ]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.form.job.location,
-                expression: "form.job.location"
-              }
-            ],
-            attrs: { type: "text", placeholder: "Location (e.g. London, UK)" },
-            domProps: { value: _vm.form.job.location },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.form.job, "location", $event.target.value)
+                _vm.$set(_vm.form.job, "featured", 0)
               }
             }
           }),
           _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.form.job.salary,
-                expression: "form.job.salary"
-              }
-            ],
-            attrs: { type: "text", placeholder: "Salary (e.g. 100k)" },
-            domProps: { value: _vm.form.job.salary },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.form.job, "salary", $event.target.value)
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("type-select-input", {
-            model: {
-              value: _vm.form.job.type,
-              callback: function($$v) {
-                _vm.$set(_vm.form.job, "type", $$v)
-              },
-              expression: "form.job.type"
-            }
-          }),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.form.job.apply_url,
-                expression: "form.job.apply_url"
-              }
-            ],
-            class: { "has-error": _vm.hasError("job.apply_url") },
-            attrs: { type: "url", placeholder: "URL*", required: "" },
-            domProps: { value: _vm.form.job.apply_url },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.form.job, "apply_url", $event.target.value)
-              }
-            }
-          })
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c("span", { staticClass: "form-group__label hide-mobile" }, [
-          _vm._v("Billing")
+          _vm._m(0)
         ]),
         _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.form.email,
-              expression: "form.email"
-            }
-          ],
-          class: { "has-error": _vm.hasError("email") },
-          attrs: { type: "email", placeholder: "Email*", required: "" },
-          domProps: { value: _vm.form.email },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+        _c("div", { staticClass: "plan" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.job.featured,
+                expression: "form.job.featured"
               }
-              _vm.$set(_vm.form, "email", $event.target.value)
+            ],
+            attrs: { id: "featured", type: "radio", name: "featured" },
+            domProps: { value: 1, checked: _vm._q(_vm.form.job.featured, 1) },
+            on: {
+              change: function($event) {
+                _vm.$set(_vm.form.job, "featured", 1)
+              }
             }
-          }
-        }),
-        _vm._v(" "),
-        _c("div", { ref: "card", staticClass: "credit-card-input" })
+          }),
+          _vm._v(" "),
+          _vm._m(1)
+        ])
       ]),
       _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "button",
-          class: { loading: _vm.loading, successful: _vm.successful },
-          attrs: { disabled: _vm.loading || _vm.successful }
-        },
-        [
-          _c("span", { staticClass: "success" }, [
-            _c(
-              "svg",
+      _c("transition", { attrs: { name: "fade-in" } }, [
+        _vm.form.job.featured !== null
+          ? _c(
+              "form",
               {
-                attrs: {
-                  xmlns: "http://www.w3.org/2000/svg",
-                  width: "512",
-                  height: "512",
-                  viewBox: "0 0 442.533 442.533"
+                attrs: { method: "post", enctype: "multipart/form-data" },
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.handleFormSubmit($event)
+                  }
                 }
               },
               [
-                _c("path", {
-                  attrs: {
-                    d:
-                      "M434.539 98.499l-38.828-38.828c-5.324-5.328-11.799-7.993-19.41-7.993-7.618 0-14.093 2.665-19.417 7.993L169.59 247.248l-83.939-84.225c-5.33-5.33-11.801-7.992-19.412-7.992-7.616 0-14.087 2.662-19.417 7.992L7.994 201.852C2.664 207.181 0 213.654 0 221.269c0 7.609 2.664 14.088 7.994 19.416l103.351 103.349 38.831 38.828c5.327 5.332 11.8 7.994 19.414 7.994 7.611 0 14.084-2.669 19.414-7.994l38.83-38.828L434.539 137.33c5.325-5.33 7.994-11.802 7.994-19.417.004-7.611-2.669-14.084-7.994-19.414z"
-                  }
-                })
+                _c("div", { staticClass: "form-group" }, [
+                  _c("span", { staticClass: "form-group__label hide-mobile" }, [
+                    _vm._v("Job")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.job.title,
+                        expression: "form.job.title"
+                      }
+                    ],
+                    class: { "has-error": _vm.hasError("job.title") },
+                    attrs: {
+                      type: "text",
+                      placeholder: "Title*",
+                      required: ""
+                    },
+                    domProps: { value: _vm.form.job.title },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.form.job, "title", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.job.description,
+                        expression: "form.job.description"
+                      }
+                    ],
+                    class: { "has-error": _vm.hasError("job.description") },
+                    attrs: {
+                      placeholder: "Description* (Supports Markdown)",
+                      required: ""
+                    },
+                    domProps: { value: _vm.form.job.description },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.form.job,
+                          "description",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c(
+                      "span",
+                      { staticClass: "form-group__label hide-mobile" },
+                      [_vm._v("Company")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.job.company,
+                          expression: "form.job.company"
+                        }
+                      ],
+                      attrs: { type: "text", placeholder: "Company Name" },
+                      domProps: { value: _vm.form.job.company },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form.job, "company", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("logo-file-input", {
+                      on: {
+                        change: function($event) {
+                          _vm.imageFile = $event
+                        }
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "form-group inline-group" },
+                  [
+                    _c(
+                      "span",
+                      { staticClass: "form-group__label hide-mobile" },
+                      [_vm._v("Details")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.job.location,
+                          expression: "form.job.location"
+                        }
+                      ],
+                      attrs: {
+                        type: "text",
+                        placeholder: "Location (e.g. London, UK)"
+                      },
+                      domProps: { value: _vm.form.job.location },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.form.job,
+                            "location",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.job.salary,
+                          expression: "form.job.salary"
+                        }
+                      ],
+                      attrs: {
+                        type: "text",
+                        placeholder: "Salary (e.g. 100k)"
+                      },
+                      domProps: { value: _vm.form.job.salary },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form.job, "salary", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("type-select-input", {
+                      model: {
+                        value: _vm.form.job.type,
+                        callback: function($$v) {
+                          _vm.$set(_vm.form.job, "type", $$v)
+                        },
+                        expression: "form.job.type"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.job.apply_url,
+                          expression: "form.job.apply_url"
+                        }
+                      ],
+                      class: { "has-error": _vm.hasError("job.apply_url") },
+                      attrs: { type: "url", placeholder: "URL*", required: "" },
+                      domProps: { value: _vm.form.job.apply_url },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.form.job,
+                            "apply_url",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c(
+                      "span",
+                      { staticClass: "form-group__label hide-mobile" },
+                      [_vm._v("Billing")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.email,
+                          expression: "form.email"
+                        }
+                      ],
+                      class: { "has-error": _vm.hasError("email") },
+                      attrs: {
+                        type: "email",
+                        placeholder: "Email*",
+                        required: ""
+                      },
+                      domProps: { value: _vm.form.email },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form, "email", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("credit-card-input", { ref: "cardInput" })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "button",
+                    class: { loading: _vm.loading, successful: _vm.successful },
+                    attrs: { disabled: _vm.loading || _vm.successful }
+                  },
+                  [
+                    _c("span", { staticClass: "success" }, [
+                      _c(
+                        "svg",
+                        {
+                          attrs: {
+                            xmlns: "http://www.w3.org/2000/svg",
+                            width: "512",
+                            height: "512",
+                            viewBox: "0 0 442.533 442.533"
+                          }
+                        },
+                        [
+                          _c("path", {
+                            attrs: {
+                              d:
+                                "M434.539 98.499l-38.828-38.828c-5.324-5.328-11.799-7.993-19.41-7.993-7.618 0-14.093 2.665-19.417 7.993L169.59 247.248l-83.939-84.225c-5.33-5.33-11.801-7.992-19.412-7.992-7.616 0-14.087 2.662-19.417 7.992L7.994 201.852C2.664 207.181 0 213.654 0 221.269c0 7.609 2.664 14.088 7.994 19.416l103.351 103.349 38.831 38.828c5.327 5.332 11.8 7.994 19.414 7.994 7.611 0 14.084-2.669 19.414-7.994l38.83-38.828L434.539 137.33c5.325-5.33 7.994-11.802 7.994-19.417.004-7.611-2.669-14.084-7.994-19.414z"
+                            }
+                          })
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "loader" }, [
+                      _c("span", { staticClass: "circle" })
+                    ]),
+                    _vm._v(" "),
+                    _c("span", [
+                      _vm._v(
+                        "Purchase Job Listing ($" + _vm._s(_vm.price) + ")"
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.job,
+                        expression: "job"
+                      }
+                    ],
+                    staticClass: "form-success"
+                  },
+                  [
+                    _c("p", [
+                      _vm._v(
+                        "\n                    Thank you for purchasing a featured job. You can view it right "
+                      ),
+                      _c("a", { attrs: { href: _vm.jobUrl } }, [
+                        _vm._v("here")
+                      ]),
+                      _vm._v(".\n                ")
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _vm.formHasErrors
+                  ? _c("div", { staticClass: "form-errors" }, [
+                      _c(
+                        "ul",
+                        _vm._l(_vm.errors, function(error) {
+                          return _c("li", [_vm._v(_vm._s(error[0]))])
+                        })
+                      )
+                    ])
+                  : _vm._e()
               ]
             )
-          ]),
-          _vm._v(" "),
-          _vm._m(0),
-          _vm._v(" "),
-          _c("span", [_vm._v("Purchase Job Listing ($49)")])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.job,
-              expression: "job"
-            }
-          ],
-          staticClass: "form-success"
-        },
-        [
-          _c("p", [
-            _vm._v(
-              "\n            Thank you for purchasing a featured job. You can view it right "
-            ),
-            _c("a", { attrs: { href: _vm.jobUrl } }, [_vm._v("here")]),
-            _vm._v(".\n        ")
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _vm.formHasErrors
-        ? _c("div", { staticClass: "form-errors" }, [
-            _c(
-              "ul",
-              _vm._l(_vm.errors, function(error) {
-                return _c("li", [_vm._v(_vm._s(error[0]))])
-              })
-            )
-          ])
-        : _vm._e()
-    ]
+          : _vm._e()
+      ])
+    ],
+    1
   )
 }
 var staticRenderFns = [
@@ -31136,8 +31362,40 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "loader" }, [
-      _c("span", { staticClass: "circle" })
+    return _c("label", { attrs: { for: "basic" } }, [
+      _c("h4", [_vm._v("Basic "), _c("span", [_vm._v("- $49")])]),
+      _vm._v(" "),
+      _c("ul", [
+        _c("li", [_vm._v("Active for 30 days")]),
+        _vm._v(" "),
+        _c("li", [_vm._v("Receive only relevant job applications")]),
+        _vm._v(" "),
+        _c("li", [_vm._v("Emailed to all newsletter subscribers")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "featured" } }, [
+      _c("h4", [_vm._v("Featured "), _c("span", [_vm._v("- $99")])]),
+      _vm._v(" "),
+      _c("ul", [
+        _c("li", [_vm._v("Active for 30 days")]),
+        _vm._v(" "),
+        _c("li", [_vm._v("Receive only relevant job applications")]),
+        _vm._v(" "),
+        _c("li", [_vm._v("Emailed to all newsletter subscribers")]),
+        _vm._v(" "),
+        _c("li", { staticClass: "highlighted" }, [
+          _vm._v("Highlighted at the top of the page")
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "highlighted" }, [
+          _vm._v("Shared on Twitter page")
+        ])
+      ])
     ])
   }
 ]
@@ -31151,15 +31409,15 @@ if (false) {
 }
 
 /***/ }),
-/* 42 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(43)
+var __vue_script__ = __webpack_require__(46)
 /* template */
-var __vue_template__ = __webpack_require__(44)
+var __vue_template__ = __webpack_require__(47)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -31198,7 +31456,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 43 */
+/* 46 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -31229,7 +31487,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 44 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -31272,15 +31530,15 @@ if (false) {
 }
 
 /***/ }),
-/* 45 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(46)
+var __vue_script__ = __webpack_require__(49)
 /* template */
-var __vue_template__ = __webpack_require__(47)
+var __vue_template__ = __webpack_require__(50)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -31319,7 +31577,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 46 */
+/* 49 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -31363,7 +31621,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 47 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -31401,7 +31659,7 @@ if (false) {
 }
 
 /***/ }),
-/* 48 */
+/* 51 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
