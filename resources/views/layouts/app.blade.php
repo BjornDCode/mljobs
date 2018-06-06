@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <meta property="og:url" content="{{ url() }}" />
+    <meta property="og:url" content="{{ Request::url() }}" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="AI Jobs - Find a job in the AI and Machine Learning Industry" />
     <meta property="og:description" content="A daily curated list of jobs in the field of AI and Machine Learning." />
     <meta property="og:image" content="/images/facebook.png" />
 
     <meta name="twitter:site" content="summary"></meta>
-    <meta name="twitter:card" content="@aijobs_work"></meta>
-    <meta name="twitter:creator" content="@bjornlindholmdk"></meta>
+    <meta name="twitter:card" content="aijobs_work"></meta>
+    <meta name="twitter:creator" content="bjornlindholmdk"></meta>
     <meta name="twitter:image" content="/images/twitter.png"></meta>
 
     <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon.png">
