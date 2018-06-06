@@ -1,7 +1,7 @@
 <template>
     <label class="file-input" 
-        :class="{'has-preview': this.logoPreview}"
-        :style="this.logoPreview ? `background-image: url('${this.logoPreview}');` : ''"
+        :class="{'has-preview': this.logoPreview || this.existingLogo}"
+        :style="this.logoPreview || this.existingLogo ? `background-image: url('${this.logoPreviewUrl}');` : ''"
     >
         <span>Logo</span>
         <input type="file" @change="updateLogoPreview" accept="image/*" :value="value">
@@ -10,11 +10,17 @@
 
 <script>
     export default {
-        props: ['value'],
+        props: ['value', 'existingLogo'],
 
         data() {
             return {
                 logoPreview: null
+            }
+        },
+
+        computed: {
+            logoPreviewUrl() {
+                return this.logoPreview ? this.logoPreview : '/' + this.existingLogo;
             }
         },
 

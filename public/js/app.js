@@ -1100,6 +1100,7 @@ Vue.component('newsletter-form', __webpack_require__(34));
 Vue.component('purchase-job-form', __webpack_require__(37));
 Vue.component('type-select-input', __webpack_require__(45));
 Vue.component('logo-file-input', __webpack_require__(48));
+Vue.component('image-upload', __webpack_require__(59));
 
 var app = new Vue({
     el: '#app'
@@ -13688,7 +13689,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             });
         },
-        uploadImage: function uploadImage(callback) {
+        uploadImage: function uploadImage() {
             var _this2 = this;
 
             var formData = new FormData();
@@ -31594,7 +31595,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['value'],
+    props: ['value', 'existingLogo'],
 
     data: function data() {
         return {
@@ -31602,6 +31603,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
 
+
+    computed: {
+        logoPreviewUrl: function logoPreviewUrl() {
+            return this.logoPreview ? this.logoPreview : '/' + this.existingLogo;
+        }
+    },
 
     methods: {
         updateLogoPreview: function updateLogoPreview(e) {
@@ -31632,10 +31639,11 @@ var render = function() {
     "label",
     {
       staticClass: "file-input",
-      class: { "has-preview": this.logoPreview },
-      style: this.logoPreview
-        ? "background-image: url('" + this.logoPreview + "');"
-        : ""
+      class: { "has-preview": this.logoPreview || this.existingLogo },
+      style:
+        this.logoPreview || this.existingLogo
+          ? "background-image: url('" + this.logoPreviewUrl + "');"
+          : ""
     },
     [
       _c("span", [_vm._v("Logo")]),
@@ -31663,6 +31671,155 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */,
+/* 56 */,
+/* 57 */,
+/* 58 */,
+/* 59 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(61)
+/* template */
+var __vue_template__ = __webpack_require__(60)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/ImageUpload.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-319f68d5", Component.options)
+  } else {
+    hotAPI.reload("data-v-319f68d5", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("logo-file-input", {
+        attrs: { "existing-logo": _vm.logo },
+        on: { change: _vm.handleFileChange }
+      }),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.imagePath,
+            expression: "imagePath"
+          }
+        ],
+        attrs: { type: "text", name: "company_logo" },
+        domProps: { value: _vm.imagePath },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.imagePath = $event.target.value
+          }
+        }
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-319f68d5", module.exports)
+  }
+}
+
+/***/ }),
+/* 61 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['logo'],
+
+    data: function data() {
+        return {
+            imageFile: undefined,
+            imagePath: this.logo
+        };
+    },
+
+    methods: {
+        handleFileChange: function handleFileChange(image) {
+            this.imageFile = image;
+            this.uploadImage();
+            // this.uploadImage();
+        },
+        uploadImage: function uploadImage() {
+            var _this = this;
+
+            var formData = new FormData();
+            formData.append('image', this.imageFile);
+            axios.post('/images/upload', formData).then(function (response) {
+                _this.imagePath = response.data.path;
+            }).catch(function (errpr) {
+                _this.loading = false;
+            });
+        }
+    }
+});
 
 /***/ })
 /******/ ]);

@@ -170,7 +170,7 @@
                     })
             },
 
-            uploadImage(callback) {
+            uploadImage() {
                 let formData = new FormData();
                 formData.append('image', this.imageFile)
                 axios.post('/images/upload', formData)

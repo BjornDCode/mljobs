@@ -34,8 +34,7 @@
         </div>
         <div class="group">
             <label>Company Logo</label>
-            <img src="{{ $job->company_logo }}" alt="No logo">
-            <input type="text" name="company_logo" value="{{ $job->company_logo }}">
+            <image-upload logo="{{ $job->company_logo }}"></image-upload>
         </div>
         <button type="submit" class="button">Publish</button>
     </form>
