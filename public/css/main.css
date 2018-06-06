@@ -709,7 +709,6 @@ a {
 .job-card > a {
   width: 100%;
   padding: 0 0.75rem;
-  padding-top: 0.75rem;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   background-color: #F7F7F7;
