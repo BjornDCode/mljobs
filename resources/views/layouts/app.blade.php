@@ -25,6 +25,9 @@
                 <a href="/" class="page-header__logo">
                     @svg('logo')
                 </a>
+                @if( auth()->check() && auth()->user()->isAdmin() )
+                    <a href="/dashboard">Dashboard</a>
+                @endif()
                 @if (!request()->is('featured-job/create'))
                     <a class="button" href="/job/create">Post a job</a>
                 @endif
