@@ -17,7 +17,7 @@ class CreatePaymentsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('job_id');
             $table->unsignedInteger('customer_id');
-            $table->unsignedInteger('stripe_charge_id');
+            $table->string('stripe_charge_id');
             $table->unsignedInteger('amount');
             $table->timestamps();
         });
