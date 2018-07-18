@@ -12,6 +12,7 @@
         "laravel/framework": "5.6.*",
         "laravel/tinker": "^1.0",
         "nothingworks/blade-svg": "^0.2.2",
+        "spatie/laravel-cookie-consent": "^2.4",
         "spatie/laravel-newsletter": "^4.2",
         "stripe/stripe-php": "^6.6"
     },

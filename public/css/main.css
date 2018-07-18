@@ -927,6 +927,46 @@ a {
   }
 }
 
+.cookie-consent {
+  background-color: #1B1B1B;
+  color: #ffffff;
+  font-family: "Fira Sans";
+  line-height: 1.25;
+  padding: 0.5rem;
+  z-index: 9999;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.cookie-consent button {
+  background-color: #ffffff;
+  border: none;
+  padding: 0.5rem;
+  display: block;
+  margin-top: 0.5rem;
+  cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .cookie-consent {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+
+  .cookie-consent button {
+    margin-top: 0;
+    margin-left: 1rem;
+  }
+}
+
 .button {
   height: 2.5rem;
   padding: 0 2rem;

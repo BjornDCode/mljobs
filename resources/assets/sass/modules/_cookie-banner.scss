@@ -1,0 +1,31 @@
+.cookie-consent {
+    background-color: $color__dark;
+    color: $color__light;
+    font-family: $font-primary;
+    line-height: $leading-tight;
+    padding: $space-2;
+    z-index: 9999;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+
+    button {
+        background-color: $color__light;
+        border: none;
+        padding: 0.5rem;
+        display: block;
+        margin-top: $space-2;
+        cursor: pointer;
+    }
+
+    @include breakpoint('tablet') {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        button {
+            margin-top: 0;
+            margin-left: $space-4;
+        }
+    }
+}
